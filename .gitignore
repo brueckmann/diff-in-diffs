@@ -35,6 +35,9 @@ vignettes/*.pdf
 # sample_descriptives.html
 # sample_descriptives.md
 
+# do not track data that can be generated using code
+01_data/processed/
+
 # anything in my input
 # /input_data
 *.csv
