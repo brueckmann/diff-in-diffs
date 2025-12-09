@@ -149,7 +149,7 @@ Replication_data$area_b_cost_fact<-factor(Replication_data$cost_area_b,
 
 
 
-# remove haven labels.
-data <- Replication_data |> haven::zap_label()
+# remove all haven labels.
+data <- Replication_data |> haven::zap_label()  |> haven::zap_labels()
 
 save(data, file = "./01_data/processed/data.Rdata")
