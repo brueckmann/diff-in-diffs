@@ -130,8 +130,26 @@ Replication_data$female_rc2 <- factor(
   labels = c("Male", "Female")
 )
 
-table(Replication_data$female_rc2)
 
-data <- Replication_data
+### Area_B_costs
+
+
+Replication_data$diesel_euro4_fac<-factor(Replication_data$diesel_euro4)
+Replication_data$area_b_cost_fact<-factor(Replication_data$cost_area_b, 
+                                          levels=c(1,2,3,4,5,6,7,8),
+                                          labels = c("No cost",
+                                                     "Less than EUR 500", 
+                                                     "EUR 500 - EUR 1,500", 
+                                                     "EUR 1,500  - EUR 2,500",
+                                                     "EUR 2,500 - EUR 5,000",
+                                                     "EUR 5,000 - EUR 10,000", 
+                                                     "Above EUR 10,000", 
+                                                     "Don't know"))
+
+
+
+
+# remove haven labels.
+data <- Replication_data |> haven::zap_label()
 
 save(data, file = "./01_data/processed/data.Rdata")
