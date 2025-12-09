@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Output of Diff-in-Diff-Replication</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Comparison_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Comparison_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Comparison_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Comparison_files/libs/quarto-html/popper.min.js"></script>
+<script src="Comparison_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Comparison_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Comparison_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Comparison_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Comparison_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Comparison_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Comparison_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Output of Diff-in-Diff-Replication</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This gives you <a href="#tbl-one" class="quarto-xref">Table&nbsp;1</a>.</p>
+<div class="cell" data-tbl-pos="H">
+<div id="tbl-one" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-pos="H">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Descriptive statistics by treatment
+</figcaption>
+<div aria-describedby="tbl-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_hin2prv8fuvdjfeh2hl0 = TinyTable.createTableFunctions("tinytable_hin2prv8fuvdjfeh2hl0");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '18', j: 1 }, { i: '18', j: 2 }, { i: '18', j: 3 }, { i: '18', j: 4 }, { i: '18', j: 5 }, { i: '18', j: 6 } ], css_id: 'tinytable_css_itxv69fnphql9tcjcsmi',}, 
+          { positions: [ { i: '6', j: 1 }, { i: '8', j: 1 }, { i: '12', j: 1 }, { i: '6', j: 2 }, { i: '8', j: 2 }, { i: '12', j: 2 }, { i: '6', j: 3 }, { i: '8', j: 3 }, { i: '12', j: 3 }, { i: '6', j: 4 }, { i: '8', j: 4 }, { i: '12', j: 4 }, { i: '6', j: 5 }, { i: '8', j: 5 }, { i: '12', j: 5 }, { i: '6', j: 6 }, { i: '8', j: 6 }, { i: '12', j: 6 } ], css_id: 'tinytable_css_tepv9tvnq2zgn0ub8s0q',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_cqb2ny618aqqgq3yxxlr',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_hin2prv8fuvdjfeh2hl0.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_hin2prv8fuvdjfeh2hl0 td.tinytable_css_itxv69fnphql9tcjcsmi, #tinytable_hin2prv8fuvdjfeh2hl0 th.tinytable_css_itxv69fnphql9tcjcsmi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_hin2prv8fuvdjfeh2hl0 td.tinytable_css_tepv9tvnq2zgn0ub8s0q, #tinytable_hin2prv8fuvdjfeh2hl0 th.tinytable_css_tepv9tvnq2zgn0ub8s0q {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_hin2prv8fuvdjfeh2hl0 td.tinytable_css_cqb2ny618aqqgq3yxxlr, #tinytable_hin2prv8fuvdjfeh2hl0 th.tinytable_css_cqb2ny618aqqgq3yxxlr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_hin2prv8fuvdjfeh2hl0" style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">Variables</th>
+                <th scope="col" data-row="0" data-col="2">Full Sample</th>
+                <th scope="col" data-row="0" data-col="3">Diesel Euro 4</th>
+                <th scope="col" data-row="0" data-col="4">Diesel Euro 5</th>
+                <th scope="col" data-row="0" data-col="5">Petrol Euro 4</th>
+                <th scope="col" data-row="0" data-col="6">Petrol Euro 5</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">18-24</td>
+                  <td data-row="1" data-col="2">2.7</td>
+                  <td data-row="1" data-col="3">1.4</td>
+                  <td data-row="1" data-col="4">1.7</td>
+                  <td data-row="1" data-col="5">2.5</td>
+                  <td data-row="1" data-col="6">2.4</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">25-34</td>
+                  <td data-row="2" data-col="2">10.8</td>
+                  <td data-row="2" data-col="3">6.1</td>
+                  <td data-row="2" data-col="4">13.3</td>
+                  <td data-row="2" data-col="5">15.6</td>
+                  <td data-row="2" data-col="6">19.4</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">35-44</td>
+                  <td data-row="3" data-col="2">34.7</td>
+                  <td data-row="3" data-col="3">43.3</td>
+                  <td data-row="3" data-col="4">21.7</td>
+                  <td data-row="3" data-col="5">32</td>
+                  <td data-row="3" data-col="6">23.5</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">45-54</td>
+                  <td data-row="4" data-col="2">31.3</td>
+                  <td data-row="4" data-col="3">42</td>
+                  <td data-row="4" data-col="4">35</td>
+                  <td data-row="4" data-col="5">23</td>
+                  <td data-row="4" data-col="6">26.5</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">55+</td>
+                  <td data-row="5" data-col="2">20.5</td>
+                  <td data-row="5" data-col="3">7.2</td>
+                  <td data-row="5" data-col="4">28.3</td>
+                  <td data-row="5" data-col="5">27</td>
+                  <td data-row="5" data-col="6">28.2</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">Male</td>
+                  <td data-row="6" data-col="2">52</td>
+                  <td data-row="6" data-col="3">69</td>
+                  <td data-row="6" data-col="4">62</td>
+                  <td data-row="6" data-col="5">43</td>
+                  <td data-row="6" data-col="6">45</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Female</td>
+                  <td data-row="7" data-col="2">48</td>
+                  <td data-row="7" data-col="3">31</td>
+                  <td data-row="7" data-col="4">38</td>
+                  <td data-row="7" data-col="5">57</td>
+                  <td data-row="7" data-col="6">55</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">High school diploma</td>
+                  <td data-row="8" data-col="2">33.74</td>
+                  <td data-row="8" data-col="3">16.04</td>
+                  <td data-row="8" data-col="4">36.67</td>
+                  <td data-row="8" data-col="5">48.36</td>
+                  <td data-row="8" data-col="6">41.2</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Bachelors</td>
+                  <td data-row="9" data-col="2">27.21</td>
+                  <td data-row="9" data-col="3">30.72</td>
+                  <td data-row="9" data-col="4">27.5</td>
+                  <td data-row="9" data-col="5">22.95</td>
+                  <td data-row="9" data-col="6">27.1</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">MA or higher</td>
+                  <td data-row="10" data-col="2">38.49</td>
+                  <td data-row="10" data-col="3">52.56</td>
+                  <td data-row="10" data-col="4">35</td>
+                  <td data-row="10" data-col="5">27.87</td>
+                  <td data-row="10" data-col="6">30.6</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Unknown</td>
+                  <td data-row="11" data-col="2">0.56</td>
+                  <td data-row="11" data-col="3">0.68</td>
+                  <td data-row="11" data-col="4">0.83</td>
+                  <td data-row="11" data-col="5">0.82</td>
+                  <td data-row="11" data-col="6">1.2</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">Less than 14.999 EUR per year</td>
+                  <td data-row="12" data-col="2">6.9</td>
+                  <td data-row="12" data-col="3">4.4</td>
+                  <td data-row="12" data-col="4">5.8</td>
+                  <td data-row="12" data-col="5">18.9</td>
+                  <td data-row="12" data-col="6">12</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">From 15.000 EUR to 29.999 EUR per year</td>
+                  <td data-row="13" data-col="2">20.3</td>
+                  <td data-row="13" data-col="3">7.8</td>
+                  <td data-row="13" data-col="4">24.2</td>
+                  <td data-row="13" data-col="5">29.5</td>
+                  <td data-row="13" data-col="6">30</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">From 30.000 EUR to 44.999 EUR per year</td>
+                  <td data-row="14" data-col="2">21.7</td>
+                  <td data-row="14" data-col="3">30</td>
+                  <td data-row="14" data-col="4">16.7</td>
+                  <td data-row="14" data-col="5">19.7</td>
+                  <td data-row="14" data-col="6">21</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">From 45.000 EUR 69.999 EUR per year</td>
+                  <td data-row="15" data-col="2">14.9</td>
+                  <td data-row="15" data-col="3">14.7</td>
+                  <td data-row="15" data-col="4">20.8</td>
+                  <td data-row="15" data-col="5">9</td>
+                  <td data-row="15" data-col="6">13</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1">From 70.000 EUR and more</td>
+                  <td data-row="16" data-col="2">26.8</td>
+                  <td data-row="16" data-col="3">38.6</td>
+                  <td data-row="16" data-col="4">20</td>
+                  <td data-row="16" data-col="5">5.7</td>
+                  <td data-row="16" data-col="6">12</td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">No Answer / DK</td>
+                  <td data-row="17" data-col="2">9.3</td>
+                  <td data-row="17" data-col="3">4.4</td>
+                  <td data-row="17" data-col="4">12.5</td>
+                  <td data-row="17" data-col="5">17.2</td>
+                  <td data-row="17" data-col="6">12</td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">N</td>
+                  <td data-row="18" data-col="2">1073</td>
+                  <td data-row="18" data-col="3">293</td>
+                  <td data-row="18" data-col="4">120</td>
+                  <td data-row="18" data-col="5">122</td>
+                  <td data-row="18" data-col="6">170</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In sum, 705 car info data is available, for, in sum 1073 respondents.</p>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

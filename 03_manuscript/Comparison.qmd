@@ -1,0 +1,85 @@
+---
+title: "Output of Diff-in-Diff-Replication"
+format: html
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+#| echo: false
+
+
+packs <- c( 'tidyverse', 'tinytable', 'modelsummary', 'this.path')
+success <- suppressWarnings(sapply(packs, require, character.only = TRUE))
+install.packages(names(success)[!success])
+sapply(names(success)[!success], require, character.only = TRUE)
+
+# set options
+options(modelsummary_format_numeric_latex = "plain")
+options(tinytable_latex_placement = "H")
+
+
+# Note current script location
+current_script_dir <- this.path::this.dir()
+cat("Script directory:", current_script_dir, "\n")
+
+# Set project root 
+project_root <- this.path::dirname2(current_script_dir)
+setwd(project_root)
+cat("Project root set to:", getwd(), "\n")
+
+```
+
+```{r}
+#| label: prepare-table-1
+#| include: false
+
+
+# Source local code
+source(file.path(project_root, "02_analysis/02_descriptives.R"))
+
+```
+
+This gives you @tbl-one. 
+
+
+
+```{r}
+#| label: tbl-one 
+#| tbl-cap: Descriptive statistics by treatment 
+#| echo: false
+#| message: false
+#| warning: false
+#| tbl-pos: H
+
+tab_1 |>
+  setNames(c("Variables", "Full Sample", 
+             "Diesel Euro 4",
+             "Diesel Euro 5",
+             "Petrol Euro 4",
+             "Petrol Euro 5")) |>
+style_tt(i = 6, line = "t") |>
+  style_tt(i = 8, line = "t") |>
+  style_tt(i = 12, line = "t") |>
+  style_tt(i = 18, line = "t")
+  
+```
+
+```{r}
+#| label: generate_nobs
+#| include: false
+#| echo: false
+#| message: false
+#| warning: false
+
+# load data
+# load(file.path(project_root, "01_data/processed/data.Rdata"))
+
+## generate important variable for obs in the data.
+
+n_carinfo <- data |> summarise(total = sum(!is.na( groups))) |> pull()
+n_all <- nrow(data)
+```
+
+In sum, `r n_carinfo` car info data is available, for, in sum `r n_all` respondents.
