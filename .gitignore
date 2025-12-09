@@ -27,18 +27,18 @@ vignettes/*.html
 vignettes/*.pdf
 
 # produced output
-/outputs
-*.png
-*.pdf
-*.html
+# /outputs
+# *.png
+# *.pdf
+# *.html
 
-sample_descriptives.html
-sample_descriptives.md
+# sample_descriptives.html
+# sample_descriptives.md
 
 # anything in my input
-/input_data
+# /input_data
 *.csv
-*.Rdata
+# *.Rdata
 
 # Anything in the Archive
 /Z_Archiv
