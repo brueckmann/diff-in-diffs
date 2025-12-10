@@ -1,4 +1,4 @@
-# Example of a Difference-in-difference Project
+# Example of a Difference-in-differences project
 
 
 ## Directory Structure
