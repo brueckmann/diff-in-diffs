@@ -1,0 +1,80 @@
+---
+title: "Difference-in-Differences"
+author: "G.Brueckmann"
+format: revealjs
+---
+
+## What is the most basic Difference-in-Differences?
+
+Using the interaction of time and random assignment to the intervention to estimate the causal effect from the intervention. 
+
+
+
+## Let's look in The Effect
+
+https://theeffectbook.net/ch-DifferenceinDifference.html
+
+
+
+## An example {.scrollable}
+
+```{r}
+#| label: setup
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(modelsummary)
+library(fixest)
+
+# import data
+od <- causaldata::organ_donations
+
+# Treatment variable
+od <- od %>%
+     mutate(Treated = State == 'California' & 
+            Quarter %in% c('Q32011','Q42011','Q12012'))
+
+# feols clusters by the first
+# fixed effect by default, no adjustment necessary
+clfe <- feols(Rate ~ Treated | State + Quarter,
+           data = od)
+msummary(clfe, stars = c('*' = .1, '**' = .05, '***' = .01))
+
+```
+
+## Additional Resources
+
+### Basics: 
+
+https://statisticsglobe.com/fixed-effects-linear-regression
+
+https://rpubs.com/corinne-riddell/guide-to-did-estimators
+
+### Advanced:
+
+https://psantanna.com/did-resources/
+
+(has many resources!)
+
+
+
+## Important R packages: 
+
+```{r}
+#| label: otherpackages
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+library(fixest) # see above
+library(lfe)
+twfe <- felm(Rate ~ Treated | State + Quarter | 0  , od)
+summary(twfe)
+
+
+```
+
+
