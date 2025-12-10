@@ -10,17 +10,9 @@ format:
 
 ## What is the most basic Difference-in-Differences?
 
-Using the interaction of time and random assignment to the intervention to estimate the causal effect from the intervention. 
+Using the interaction of time and random assignment to the intervention to estimate the causal effect from the intervention.
 
-
-
-## Let's look in The Effect
-
-[https://theeffectbook.net/ch-DifferenceinDifference.html](https://theeffectbook.net/ch-DifferenceinDifference.html)
-
-
-
-## An example {.scrollable}
+## The Set-Up in R
 
 ```{r}
 #| label: setup
@@ -30,57 +22,261 @@ Using the interaction of time and random assignment to the intervention to estim
 #| warning: false
 
 library(tidyverse)
+library(tinytable)
 library(modelsummary)
 library(fixest)
+
+```
+
+## Let's look in The Effect
+
+[https://theeffectbook.net/ch-DifferenceinDifference.html](https://theeffectbook.net/ch-DifferenceinDifference.html)
+
+## Example 1: Cholera in London example
+Huntington-Klein in [The Effect](https://theeffectbook.net/ch-DifferenceinDifference.html) cites John Snows' (1855) study on cholera transmission (through fecal matters) in London's drinking water. Between 1849 and 1854 Lambeth moved their well upstream.
+
+```{r}
+#| label: tbl-lndtable
+#| tbl-cap: From the The Effect book
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+
+
+lnddata <- tibble::tribble(~'Water Supplier', ~ 'Death Rate in 1849',  ~ 'Death Rate in 1854',
+'Non-Lambeth', 134.9, 146.6,
+'Lambeth', 130.1, 84.9)
+
+tt(lnddata, width = 1)
+```
+
+
+## Ex1: Compute the diff-in-diffs
+
+```{r}
+#| label: tbl-lnddiff
+#| tbl-cap: Differences in death rates between water suppliers ...
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+
+diffs <- lnddata %>%
+  summarise(
+    `in 1849` = first(`Death Rate in 1849`) - last(`Death Rate in 1849`),
+    `in 1854` =   first(`Death Rate in 1854`) - last(`Death Rate in 1854`)
+  )
+
+diffs2  <- cbind(diffs, NA)
+
+tt(diffs2, width = 1) |>
+  setNames(c("in 1849", "in 1854", ""))   |>
+  format_tt(replace = "") |>
+  theme_tt("revealjs")
+
+```
+
+. . . 
+
+
+```{r}
+#| label: tbl-lnddiffindiff
+#| tbl-cap: Differences in differences over time
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+lnddid <- diffs %>%
+  mutate(`1854-1849` =  `in 1854` - `in 1849`)
+
+tt(lnddid, width = 1) |> theme_tt("revealjs")
+
+lnd_diff_in_diffs <- lnddid %>% select(`1854-1849`) %>% pull()
+```
+This gave you the diff-in-diffs estimate of `r lnd_diff_in_diffs`.
+
+
+
+## Graphical representation
+
+```{r}
+#| label: fig-lnd
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-cap: Plotting of the London water example
+#| fig-height: 5
+#| fig-width: 10
+#| out-width: 100%
+
+# make data from wide to long format for plotting
+lnddata_long <- lnddata %>%
+  pivot_longer(
+    cols = -`Water Supplier`,
+    names_to = "Year",
+    values_to = "Death_Rate",
+    names_transform = list(Year = parse_number) ### only keep the year not the text before
+  )  %>% rename(Supplier = `Water Supplier`)
+
+ggplot(lnddata_long, aes(Year, Death_Rate)) +
+  geom_point(aes(
+    colour = Supplier,
+    # outline colour
+    shape  = Supplier
+  ), size = 9) +
+  geom_smooth(
+    aes(colour = Supplier),
+    # one line per supplier
+    method  = "lm",
+    formula = y ~ x,
+    linewidth = 0.6,
+    # smaller value = thinner line
+    alpha   = 0.1 ,
+    # set line transparency
+    show.legend = FALSE
+  ) +
+  scale_shape_manual(
+    values = c(
+      "Lambeth" = "square cross",
+      # treated gets a square
+      "Non-Lambeth" = "circle plus"     # circle for control
+    ),
+    labels = c("Lambeth" = "Lambeth (treated in 1854)", "Non-Lambeth"     = "Non-Lambeth (Control)")
+  )   +
+  # set outline colours manually and rename
+  scale_colour_manual(
+    values = c(
+      "Lambeth" = "#5DC863",
+      # viridis light green-ish
+      "Non-Lambeth"     = "#440154"   # viridis purple-ish
+    ),
+    labels = c("Lambeth" = "Lambeth (treated in 1854)", "Non-Lambeth"     = "Non-Lambeth (Control)")
+  ) +
+  scale_x_continuous(
+    labels = c("1849", "1854"),
+    breaks = c(1849, 1854),
+    minor_breaks = seq(1849, 1854, 1)
+  ) +
+  labs(y = "Death rate")   +
+  coord_fixed(ratio = 0.08,
+              expand = TRUE,
+              reverse = "y")   + ### make the plot more squared
+  theme_minimal(base_size = 20) +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_rect(fill = NA, color = NA),
+    # remove grey fill
+    strip.background = element_blank(),
+    panel.border = element_blank(),
+    plot.title = element_text(size = 22, colour = "black"),
+    # no hjust for centered titles
+    axis.line.y.left = element_line(colour = "black"),
+    axis.line.x.bottom  =   element_line(colour = "black"),
+    axis.text = element_text(size = 18, colour = "black"),
+    axis.title.y = element_text(size = 18, colour = "black"),
+    legend.text = element_text(size = 18, colour = "black"),
+    #
+    legend.position = "right"
+  )
+
+```
+
+::: {.callout-tip collapse="true"}
+## Tip: 
+As an exercise, write the corresponding regression using time and treatment dummies and recall what the different $\beta$ coefficients are in the graph!
+:::
+
+
+
+## Example 2: California's new op-out organ donation sytem {.r-fit-text}
+
+::: {.callout-tip collapse="true"}
+## Tip: 
+Look at the code to recall why there is only one coefficient here.
+:::
+
+```{r}
+#| label: tbl-californiaex
+#| tbl-cap: Two-way fixed effects using the feols package
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
 
 # import data
 od <- causaldata::organ_donations
 
 # Treatment variable
 od <- od %>%
-     mutate(Treated = State == 'California' & 
-            Quarter %in% c('Q32011','Q42011','Q12012'))
+  mutate(Treated = State == 'California' &
+           Quarter %in% c('Q32011', 'Q42011', 'Q12012'))
 
 # feols clusters by the first
 # fixed effect by default, no adjustment necessary
-clfe <- feols(Rate ~ Treated | State + Quarter,
-           data = od)
-msummary(clfe, stars = c('*' = .1, '**' = .05, '***' = .01))
+clfe <- feols(Rate ~ Treated | State + Quarter, data = od)
+modelsummary(
+  clfe,
+  stars = TRUE,
+  vcov = ~ State,  # to display the same SE as in Table 18.2 of The Effect
+  gof_omit = 'AIC|BIC' ,
+  escape = FALSE
+) |> theme_tt("revealjs")
 
 ```
 
-## Additional Resources
-
-### Basics: 
-
-[https://statisticsglobe.com/fixed-effects-linear-regression](https://statisticsglobe.com/fixed-effects-linear-regression)
-
-[https://rpubs.com/corinne-riddell/guide-to-did-estimators](https://rpubs.com/corinne-riddell/guide-to-did-estimators)
-
-### Advanced:
-
-[https://psantanna.com/did-resources/](https://psantanna.com/did-resources/)
-
-(has many resources!)
 
 
-
-## Important R packages: 
+## Important R packages:
 
 `lm`, `fixest`, and `lfe`
 
 ```{r}
-#| label: otherpackages
+#| label: tbl-otherpackages
+#| tbl-cap: Two-way fixed effects using the lfe package
 #| echo: true
 #| code-fold: true
 #| message: false
 #| warning: false
 
 library(lfe)
-twfe <- felm(Rate ~ Treated | State + Quarter | 0  , od)
 
-msummary(twfe, stars = c('*' = .1, '**' = .05, '***' = .01))
+twfe <- list(
+  "Raw SE" <- felm(Rate ~ Treated | State + Quarter | 0 , od) ,  # note: there are only one vertical line (around the fixed-effects)
+  "Clustered SE" <- felm(Rate ~ Treated | State + Quarter | 0  | State, od) # note there is a third line for the clustering of the SEs (by State) at the very end!
+)
+
+modelsummary(twfe,
+             stars = TRUE,
+             gof_omit = 'AIC|BIC' ,
+             escape = FALSE) |> 
+  theme_tt("revealjs")
 
 ```
 
+::: {.callout-note}
+Note that @tbl-otherpackages gives you the same point estimate as @tbl-californiaex in both columns but `modelsummary` (called after estimation for display) does not let you cluster the SEs the same way as in @tbl-californiaex (as `modelsummary` relies on the `sandwich` package, which can't handle `lfe` variance-covariance-matrix estimates, see [https://github.com/jepusto/clubSandwich/issues/40](https://github.com/jepusto/clubSandwich/issues/40)). This means, use the second specification using `| SECLUSTERVAR` if you use `felm` from the `lfe` package.
+:::
 
+## Additional Resources
+
+### Basics:
+
+<https://statisticsglobe.com/fixed-effects-linear-regression>
+
+<https://rpubs.com/corinne-riddell/guide-to-did-estimators>
+
+### Advanced:
+
+[https://asjadnaqvi.github.io/DiD/](https://asjadnaqvi.github.io/DiD/)
+
+<https://psantanna.com/did-resources/>
+
+(has many resources!)
