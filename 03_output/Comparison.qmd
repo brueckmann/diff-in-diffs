@@ -3,6 +3,7 @@ title: "Output of Diff-in-Diff-Replication"
 format: 
  html:
     code-overflow: wrap
+    embed-resources: true
 bibliography: references.yaml
 ---
 

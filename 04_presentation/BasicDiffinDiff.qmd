@@ -2,6 +2,8 @@
 title: "Difference-in-Differences"
 author: "G.Brueckmann"
 format: revealjs
+  html:
+    embed-resources: true
 ---
 
 ## What is the most basic Difference-in-Differences?
