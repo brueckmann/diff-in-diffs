@@ -1,8 +1,10 @@
 ---
 title: "Difference-in-Differences"
+subtitle: "The basics"
+date: 2025-12-10
 author: "G.Brueckmann"
-format: revealjs
-  html:
+format: 
+  revealjs:
     embed-resources: true
 ---
 
@@ -14,7 +16,7 @@ Using the interaction of time and random assignment to the intervention to estim
 
 ## Let's look in The Effect
 
-https://theeffectbook.net/ch-DifferenceinDifference.html
+[https://theeffectbook.net/ch-DifferenceinDifference.html](https://theeffectbook.net/ch-DifferenceinDifference.html)
 
 
 
@@ -51,13 +53,13 @@ msummary(clfe, stars = c('*' = .1, '**' = .05, '***' = .01))
 
 ### Basics: 
 
-https://statisticsglobe.com/fixed-effects-linear-regression
+[https://statisticsglobe.com/fixed-effects-linear-regression](https://statisticsglobe.com/fixed-effects-linear-regression)
 
-https://rpubs.com/corinne-riddell/guide-to-did-estimators
+[https://rpubs.com/corinne-riddell/guide-to-did-estimators](https://rpubs.com/corinne-riddell/guide-to-did-estimators)
 
 ### Advanced:
 
-https://psantanna.com/did-resources/
+[https://psantanna.com/did-resources/](https://psantanna.com/did-resources/)
 
 (has many resources!)
 
@@ -65,17 +67,19 @@ https://psantanna.com/did-resources/
 
 ## Important R packages: 
 
+`lm`, `fixest`, and `lfe`
+
 ```{r}
 #| label: otherpackages
 #| echo: true
 #| code-fold: true
 #| message: false
 #| warning: false
-library(fixest) # see above
+
 library(lfe)
 twfe <- felm(Rate ~ Treated | State + Quarter | 0  , od)
-summary(twfe)
 
+msummary(twfe, stars = c('*' = .1, '**' = .05, '***' = .01))
 
 ```
 

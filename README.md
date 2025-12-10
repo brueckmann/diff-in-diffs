@@ -23,8 +23,13 @@ Below is an overview of the repository layout:
 │   └── README.md           # Summarize presentations (title, date, format)
 ├── 05_misc/                # Supplementary files (proposals, notes, etc.)
 │   └── README.md           # Describe contents
+├── renv/                   # For replicability a renv.lock is used
+│   └── README.md           # Describe contents
+renv.lock
 ├── Diff-in-diffs.Rproj     # The R project (open it using R Studio)
-└── README.md               # Project overview and setup instructions
+└── README.md               # Project overview and setup instructions (this file)
+└── session-info.txt        # Information on the R session
+└── software.bib            # Cites R packages used
 ```
 
 # Acknowledgements: 
