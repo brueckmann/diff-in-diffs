@@ -1,5 +1,6 @@
 #### load packages ####
 library(tidyverse)
+library(modelsummary)
 
 ### Import data ####
 
@@ -37,7 +38,7 @@ dat <- data |>
   select( dummy_diesel_ass, dummy_diesel, dummy_euro_4_ass, dummy_euro_4, no_answer_euro)  
 
 
-datasummary_skim(     dat ,
+modelsummary::datasummary_skim(     dat ,
                       fun_numeric = list(Unique = NUnique,
                                          `Missing Pct.` = PercentMissing, Mean = Mean, `Std. Dev.` = SD, Min = Min, Median = Median,
                                          Max = Max), 
@@ -56,10 +57,10 @@ diesel_tbl
 
 
 
-###### Interessting....
+###### Interesting....
 
 
-Legaswitch_legis_lm_ms<-estimatr::lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
+Legaswitch_legis_lm_ms<-estimatr:: lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
                                             data=data, subset=c(target!=3 & target!=4 & no_answer_euro==0 & no_answer_2018==0))
 
 
@@ -77,15 +78,15 @@ Legaswitch_legis_lm_ms<-estimatr::lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_
 
 # Panel (a) From Legislative Elections 2018  --------
 # 1. no control
-Legaswitch_legis_lm_ms<-estimatr::lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
+Legaswitch_legis_lm_ms<-estimatr:: lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
                                   data=data, subset=c(target!=3 & target!=4 & no_answer_euro==0 & no_answer_2018==0))
 # 2. Including individual controls
-Legaswitch_legis_lm_cont<-estimatr::lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_euro_4+diesel_euro4+
+Legaswitch_legis_lm_cont<-estimatr:: lm_robust(sw_to_lega_18_19~dummy_diesel+dummy_euro_4+diesel_euro4+
                                       age+female+EDU+INC, 
                                     data=data, subset=c(target!=3 & target!=4 & 
                                                                       no_answer_euro==0  & no_answer_2018==0))
 # 3. Including unkowncar and assigning the treatment
-Legaswitch_legis_lm_cont_Unknowncar<-estimatr::lm_robust(sw_to_lega_18_19~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
+Legaswitch_legis_lm_cont_Unknowncar<-estimatr:: lm_robust(sw_to_lega_18_19~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                                  age+female+EDU+INC+dummy_car_unknown, 
                                                data=data, subset=c(target!=3 & no_answer_euro==0 & no_answer_2018==0))
 
@@ -144,15 +145,15 @@ coefplot_2018Legislative<-
 
 # Panel (b) From Regional Elections 2018 --------
 # 1. no control
-Legaswitch_region_lm_ms<-estimatr::lm_robust(sw_to_lega_reg_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
+Legaswitch_region_lm_ms<-estimatr:: lm_robust(sw_to_lega_reg_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
                                    data=data, subset=c(target!=3 & target!=4 & no_answer_euro==0 & no_answer_regional==0))
 # 2. with controls
-Legaswitch_region_lm_cont<-estimatr::lm_robust(sw_to_lega_reg_19~dummy_diesel+dummy_euro_4+diesel_euro4+
+Legaswitch_region_lm_cont<-estimatr:: lm_robust(sw_to_lega_reg_19~dummy_diesel+dummy_euro_4+diesel_euro4+
                                        age+female+EDU+INC, 
                                      data=data, subset=c(target!=3 & target!=4 & 
                                                                        no_answer_euro==0 & no_answer_regional==0))
 # 3. Assigning Unknown-car models based on self-report of ban effect
-Legaswitch_region_lm_cont_Unknowncar<-estimatr::lm_robust(sw_to_lega_reg_19~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
+Legaswitch_region_lm_cont_Unknowncar<-estimatr:: lm_robust(sw_to_lega_reg_19~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                                   age+female+EDU+INC+dummy_car_unknown, 
                                                 data=data, subset=c(target!=3 & no_answer_euro==0 & no_answer_regional==0))
 
@@ -204,17 +205,17 @@ coefplot_2019Regional<-
 
 # Panel (c) From Municipal Elections 2016  ----------
 # 1. no control
-Legaswitch_munic_lm_ms<-estimatr::lm_robust(sw_to_lega_16_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
+Legaswitch_munic_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_19~dummy_diesel+dummy_euro_4+diesel_euro4, 
                                   data=data, subset=c(target!=3 & target!=4 & no_answer_euro==0 & no_answer_municipal==0))
 
 # 2. with controls
-Legaswitch_munic_lm_cont<-estimatr::lm_robust(sw_to_lega_16_19~dummy_diesel+dummy_euro_4+diesel_euro4+
+Legaswitch_munic_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_19~dummy_diesel+dummy_euro_4+diesel_euro4+
                                       age+female+EDU+INC, 
                                     data=data, subset=c(target!=3 & target!=4 & 
                                                                       no_answer_euro==0 & no_answer_municipal==0))
 
 # 3. Assigning Unknown-car models based on self-report of ban effect
-Legaswitch_munic_lm_cont_Unknowncar<-estimatr::lm_robust(sw_to_lega_16_19~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
+Legaswitch_munic_lm_cont_Unknowncar<-estimatr:: lm_robust(sw_to_lega_16_19~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                                  age+female+EDU+INC+dummy_car_unknown, 
                                                data=data, subset=c(target!=3 & no_answer_euro==0 & no_answer_municipal==0))
 
@@ -274,14 +275,14 @@ coefplot_2016Municipal<-
 
 # Panel (a) From municipal 2016 to legislative 2018  -----------
 # 1. no control
-pl16_18v2_lm_ms<-lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4, 
+pl16_18v2_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4, 
                            data=Replication_data, subset=c( target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
 # 2. with controls
-pl16_18v2_lm_cont<-lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4+
+pl16_18v2_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4+
                                age+female+EDU+INC, 
                              data=Replication_data, subset=c(target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 # 3. Including unkown-car and assigning the treatment
-pl16_18v2_lm_cont_Unkncar<-lm_robust(sw_to_lega_16_18~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
+pl16_18v2_lm_cont_Unkncar<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                        age+female+EDU+INC+dummy_car_unknown, 
                                      data=Replication_data, subset=c(target!=3 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 ## Merge all models together
@@ -315,14 +316,14 @@ M.pl16_18v_all_mainsub_Sub$Model2<-factor(M.pl16_18v_all_mainsub_Sub$Model, leve
 
 # Panel (b) From municipal 2016 to regional 2018  ----------
 # 1. no control
-pl16_regv2_lm_ms<-lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4, 
+pl16_regv2_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4, 
                             data=Replication_data, subset=c( target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
 # 2. with controls
-pl16_regv2_lm_cont<-lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4+
+pl16_regv2_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4+
                                 age+female+EDU+INC, 
                               data=Replication_data, subset=c(target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 # 3. Including unkown-car and assigning the treatment
-pl16_regv2_lm_cont_Unkncar<-lm_robust(sw_to_lega_16_reg~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
+pl16_regv2_lm_cont_Unkncar<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                         age+female+EDU+INC+dummy_car_unknown, 
                                       data=Replication_data, subset=c(target!=3 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 
