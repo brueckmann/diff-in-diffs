@@ -1,0 +1,618 @@
+---
+title: "Output of Diff-in-Diff-Replication"
+format: 
+ html:
+    code-overflow: wrap
+bibliography: references.yaml
+---
+
+#### Preparations for Quarto
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: false
+#| warning: false
+#| code-fold: true
+
+
+packs <- c('knitr', 'tidyverse', 'fixest', 'tinytable', 'modelsummary', 'this.path')
+success <- suppressWarnings(sapply(packs, require, character.only = TRUE))
+install.packages(names(success)[!success])
+sapply(names(success)[!success], require, character.only = TRUE)
+
+# set options
+options(modelsummary_format_numeric_latex = "plain")
+options(tinytable_latex_placement = "H")
+
+
+# Note current script location
+current_script_dir <- this.path::this.dir()
+# cat("Script directory:", current_script_dir, "\n")
+
+# Set project root 
+project_root <- this.path::dirname2(current_script_dir)
+opts_knit$set(root.dir = project_root)
+# cat("Project root set to:", getwd(), "\n")
+
+
+```
+
+### Data Cleaning
+
+
+
+```{r}
+#| label: data-cleaning 
+#| echo: true
+#| message: false
+#| warning: false
+#| code-fold: true
+
+
+### Import data ####
+
+Replication_data <- haven::read_dta(file.path(project_root,"01_data/raw/Replication_Dataset.dta"))
+
+### View some variables: 
+
+table(Replication_data$class, exclude = NULL)
+table(Replication_data$fuel, exclude = NULL)
+table(Replication_data$target, exclude = NULL)
+
+
+### Data cleaning of important variables ####
+
+####  Car Emission Groups
+
+Replication_data <- Replication_data |>
+  mutate(dummy_euro_4 = case_when(class==5 ~1, .default = 0),
+         dummy_euro_5 = case_when(class==6 ~1, .default = 0),
+         dummy_diesel = case_when(fuel==1 ~1, .default = 0),
+         dummy_petrol = case_when(fuel==2 ~1, .default = 0)
+         )
+
+Replication_data <- Replication_data |>
+  mutate(
+    groups = case_when(
+      dummy_euro_4 == 1 & dummy_diesel == 1 ~ "Diesel Euro 4",
+      dummy_euro_5 == 1 & dummy_diesel == 1 ~ "Diesel Euro 5",
+      dummy_euro_4 == 1 & dummy_petrol == 1 ~ "Petrol Euro 4",
+      dummy_euro_5 == 1 & dummy_petrol == 1 ~ "Petrol Euro 5"
+    )
+  )
+
+
+### Education
+
+Replication_data <- Replication_data |>
+  mutate(
+    education = case_when(
+      education_level_it_original < 7 ~ 1,
+      education_level_it_original == 7 |
+        education_level_it_original == 9 ~ 2,
+      education_level_it_original == 8 |
+        education_level_it_original == 10 |
+        education_level_it_original == 11 |
+        education_level_it_original == 12 ~ 3,
+      education_level_it_original == 13 |
+        education_level_it_original == 14 ~ 4
+    )
+  )
+
+Replication_data$education_fac <- factor(
+  Replication_data$education,
+  levels = c(1, 2, 3, 4),
+  labels = c("High school diploma", "Bachelors", "MA or higher", "Unknown")
+)
+
+Replication_data$EDU <- factor(Replication_data$education_fac)
+
+#### Income
+
+Replication_data$INC <- factor(Replication_data$profile_gross_personal_eu)
+
+Replication_data <- Replication_data |>
+  mutate(
+    profile_gross_personal_eu_2 = case_when(
+      profile_gross_personal_eu == 1 |
+        profile_gross_personal_eu == 2 |
+        profile_gross_personal_eu == 3 ~ 1,
+      profile_gross_personal_eu ==
+        4 |
+        profile_gross_personal_eu == 5 |
+        profile_gross_personal_eu == 6 ~ 2,
+      profile_gross_personal_eu ==
+        7 |
+        profile_gross_personal_eu == 8 |
+        profile_gross_personal_eu == 9 ~ 3,
+      profile_gross_personal_eu ==
+        10 | profile_gross_personal_eu == 11 |
+        profile_gross_personal_eu == 12 ~ 4,
+      profile_gross_personal_eu ==
+        13 | profile_gross_personal_eu == 14 ~ 5,
+      profile_gross_personal_eu ==
+        98 | profile_gross_personal_eu == 99 ~ 6
+    )
+  )
+
+Replication_data$profile_gross_personal_eu_2_fac <- factor(
+  Replication_data$profile_gross_personal_eu_2,
+  levels = c(1, 2, 3, 4, 5, 6),
+  labels = c(
+    "Less than 14.999 EUR per year",
+    "From 15.000 EUR to 29.999 EUR per year",
+    "From 30.000 EUR to 44.999 EUR per year",
+    "From 45.000 EUR 69.999 EUR per year",
+    "From 70.000 EUR and more",
+    "No Answer / DK"
+  )
+)
+Replication_data$income <- Replication_data$income
+Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
+
+#### Age
+
+Replication_data <- Replication_data |>
+  mutate(
+    age_rc = case_when(
+      age == 18 |
+        age == 19 | age == 20 | age == 21 | age == 22 |
+        age == 23 | age == 24 ~ 1,
+      age == 25 |
+        age == 26 |
+        age == 27 |
+        age == 28 |
+        age == 29 | age == 30 | age == 31 | age == 32 |
+        age == 33 | age == 34 ~ 2,
+      age == 35 |
+        age == 36 |
+        age == 37 |
+        age == 38 |
+        age == 39 | age == 40 | age == 41 | age == 42 |
+        age == 43 | age == 44 ~ 3,
+      age == 45 |
+        age == 46 |
+        age == 47 |
+        age == 48 |
+        age == 49 | age == 50 | age == 51 | age == 52 |
+        age == 53 | age == 54 ~ 4,
+      age == 55 | age > 55 ~ 5
+    )
+  )
+
+Replication_data$age_fac <- factor(
+  Replication_data$age_rc,
+  levels = c(1, 2, 3, 4, 5),
+  labels = c("18-24", "25-34", "35-44", "45-54", "55+")
+)
+
+#### Gender
+Replication_data <- Replication_data |>
+  mutate(female_fac = case_when(female == 1 ~ "Female", female == 0 ~ "Male"))
+
+Replication_data$female_fac <- factor(
+  Replication_data$female_fac,
+  levels = c("Male", "Female"),
+  labels = c("Male", "Female")
+)
+
+
+### Area_B_costs
+
+
+Replication_data$diesel_euro4_fac <- factor(Replication_data$diesel_euro4)
+Replication_data$area_b_cost_fact <- factor(
+  Replication_data$cost_area_b,
+  levels = c(1, 2, 3, 4, 5, 6, 7, 8),
+  labels = c(
+    "No cost",
+    "Less than EUR 500",
+    "EUR 500 - EUR 1,500",
+    "EUR 1,500  - EUR 2,500",
+    "EUR 2,500 - EUR 5,000",
+    "EUR 5,000 - EUR 10,000",
+    "Above EUR 10,000",
+    "Don't know"
+  )
+)
+
+
+# remove all haven labels.
+data <- Replication_data |> haven::zap_label()  |> haven::zap_labels()
+
+rm(Replication_data)
+
+```
+Note the variable `target` that is 4 if the car is unknown! (For some it is also 3, which is also not a car in the `groups` variable.)
+
+##  To display Table 1 in their paper:
+
+```{r}
+#| label: table-2-prep
+#| echo: true
+#| message: false
+#| warning: false
+#| code-fold: true
+
+# Age
+
+age_tbl <- data |>
+  count(age_fac, groups, name = "n") |>
+  pivot_wider(names_from  = groups,
+              values_from = n,
+              values_fill = 0) |>
+  rowwise(age_fac) |>
+  mutate(full_sample = sum(c_across(everything()))) |>
+  ungroup()  |>
+  dplyr::relocate("full_sample") |> ### move to second position
+  dplyr::relocate("age_fac") |> ### move to 1st column
+  select(!contains("NA")) |>   ### remove NA column
+  mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
+
+age_tbl <- tinytable::tt(age_tbl ,
+                         width = c(.5, .1, .1, .1, .1, .1) ,
+                         digits = 2)
+
+# Gender
+
+gender_tbl <- data |>
+  count(female_fac, groups, name = "n") |>
+  pivot_wider(names_from  = groups,
+              values_from = n,
+              values_fill = 0) |>
+  rowwise(female_fac) |>
+  mutate(full_sample = sum(c_across(everything()))) |>
+  ungroup()  |>
+  dplyr::relocate("full_sample") |> ### move to second position
+  dplyr::relocate("female_fac") |> ### move to 1st column
+  select(!contains("NA")) |>   ### remove NA column
+  mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
+
+gender_tbl <- tinytable::tt(gender_tbl ,
+                            width = c(.5, .1, .1, .1, .1, .1) ,
+                            digits = 2)
+
+# Education
+
+educ_tbl <- data |>
+  count(education_fac, groups, name = "n") |>
+  pivot_wider(names_from  = groups,
+              values_from = n,
+              values_fill = 0) |>
+  rowwise(education_fac) |>
+  mutate(full_sample = sum(c_across(everything()))) |>
+  ungroup()  |>
+  dplyr::relocate("full_sample") |> ### move to second position
+  dplyr::relocate("education_fac") |> ### move to 1st column
+  select(!contains("NA")) |>   ### remove NA column
+  mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
+
+educ_tbl <- tinytable::tt(educ_tbl ,
+                          width = c(.5, .1, .1, .1, .1, .1) ,
+                          digits = 2)
+
+# Income
+
+income_tbl <- data |>
+  count(income_fac, groups, name = "n") |>
+  pivot_wider(names_from  = groups,
+              values_from = n,
+              values_fill = 0) |>
+  rowwise(income_fac) |>
+  mutate(full_sample = sum(c_across(everything()))) |>
+  ungroup()  |>
+  dplyr::relocate("full_sample") |> ### move to second position
+  dplyr::relocate("income_fac") |> ### move to 1st column
+  select(!contains("NA")) |>   ### remove NA column
+  mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
+
+income_tbl <- tinytable::tt(income_tbl,
+                            width = c(.5, .1, .1, .1, .1, .1) ,
+                            digits = 2)
+
+# Obs per group
+
+n_tbl <- data |>
+  count(income_fac, groups, name = "n") |>
+  pivot_wider(names_from  = groups,
+              values_from = n,
+              values_fill = 0) |>
+  rowwise(income_fac) |>
+  mutate(full_sample = sum(c_across(everything()))) |>
+  ungroup()  |>
+  dplyr::relocate("full_sample") |> ### move to second position
+  dplyr::relocate("income_fac") |> ### move to 1st column
+  select(!contains("NA")) |>   ### remove NA column
+  summarise(across(where(is.numeric), \(x) sum(x, na.rm = TRUE))) |> ### Make just the sum
+  mutate(N = "N") |>
+  dplyr::relocate("N") ### move N to 1st column
+
+n_tbl <- tinytable::tt(n_tbl  ,
+                       width = c(.5, .1, .1, .1, .1, .1) ,
+                       digits = 2)
+
+# Combine to generate Table 1 in the paper
+
+for_tab_1 <- rbind2(age_tbl, gender_tbl, headers = FALSE, use_names = FALSE)
+for_tab_1 <- rbind2(for_tab_1, educ_tbl, headers = FALSE, use_names = FALSE)
+for_tab_1 <- rbind2(for_tab_1,
+                    income_tbl,
+                    headers = FALSE,
+                    use_names = FALSE)
+tab_1 <- rbind2(for_tab_1, n_tbl, headers = FALSE, use_names = FALSE)
+
+rm(age_tbl, gender_tbl, educ_tbl , income_tbl, n_tbl, for_tab_1)
+
+```
+
+```{r}
+#| label: prepare-table-1
+#| eval: false
+#| message: false
+#| warning: false
+#| include: false
+
+
+# Source local code
+source(file.path(project_root, "02_analysis/02_descriptives.R"))
+
+```
+
+
+
+This gives you @tbl-one.
+
+```{r}
+#| label: tbl-one 
+#| tbl-cap: Descriptive statistics by experimental group 
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+#| tbl-pos: H
+
+tab_1 |>
+  setNames(c("Variables", "Full Sample", 
+             "Diesel Euro 4 (Treated)",
+             "Diesel Euro 5",
+             "Petrol Euro 4",
+             "Petrol Euro 5")) |>
+style_tt(i = 6, line = "t") |>
+  style_tt(i = 8, line = "t") |>
+  style_tt(i = 12, line = "t") |>
+  style_tt(i = 18, line = "t")
+  
+```
+
+```{r}
+#| label: generate_nobs
+#| include: false
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+
+## generate a variable for obs in the data as represented in tab 1
+n_all <- nrow(data)
+n_carinfo <- data |> summarise(total = sum(!is.na( groups))) |> pull()
+n_treatmentgroup <- data |> filter(groups=="Diesel Euro 4") |> summarise(total = sum(!is.na( groups))) |> pull()
+n_diesele5 <- data  |> filter(groups=="Diesel Euro 5") |> summarise(total = sum(!is.na( groups))) |> pull()
+n_petrole4 <- data |> filter(groups=="Petrol Euro 4") |> summarise(total = sum(!is.na( groups))) |> pull()
+n_petrole5 <- data |> filter(groups=="Petrol Euro 5") |> summarise(total = sum(!is.na( groups))) |> pull()
+
+```
+
+In sum, there are `r n_all` respondents but car info for the treatment group (Diesel-Euro4, n=`r n_treatmentgroup`) and the three control group car types (Diesel-Euro5 (n=`r n_diesele5`), Petrol-Euro4 (n=`r n_petrole4`), and Petrol-Euro5 (n=`r n_petrole5`)) is only available for `r n_carinfo` (= `r n_treatmentgroup` + `r n_diesele5` + `r n_petrole4` + `r n_petrole5`), which is `r sprintf( (n_carinfo/n_all)*100, fmt = '%.1f')`% of their "*Full Sample*".
+
+## Preparing the Diff-in-Diffs:
+
+"*In selecting these four groups, our aim is to compare affected car owners to owners of relatively similar-yet-unaffected cars. We do so by estimating difference-in-differences specifications of the following form:* 
+
+$$ 
+Outcome_i = \alpha + \beta Diesel_i + \gamma Euro4_i  + \delta Diesel \times Euro4_{i} + \theta X_i + \epsilon_i 
+$$
+
+*where* $_i$ *denotes individual respondents, Outcome is either vote choice or individual attitudes and behavior.*" [@colantone2024, p.113]
+
+Therefore, the most relevant variables needed are 
+``vote_lega_euro`` as the outcome, 
+``dummy_diesel``, ``dummy_euro_4`` (which allows us to create``dummy_diesel``$\times$``dummy_euro_4``). 
+Additionally, for $X$, this would be for ``age``, ``female``,  ``education``, ``income``, ``vote_lega_2018``, ``vote_lega_regional``, and ``vote_lega_municipal``, following the Table 2 footnote in @colantone2024. 
+
+
+
+### Let's try the regressions from their Table 2:
+
+
+
+```{r}
+#| label: tbl-try-regs
+#| tbl-cap: The most basic diff-in-diff regression
+#| include: true
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+# Similar to their table 1, make Petrol Euro 5 the omitted group
+data$cargroup <- relevel(as.factor(data$groups), "Petrol Euro 5")
+
+# Estimate
+basic_model <- lm(vote_lega_euro ~ cargroup  , data = data)
+
+# Nicer labels
+my_coef_map <- c(
+  "cargroupDiesel Euro 4" = "Diesel EURO 4",
+  "cargroupDiesel Euro 5" = "Diesel EURO 5",
+  "cargroupPetrol Euro 4" = "Petrol EURO 4",
+  "(Intercept)" = "Constant"
+)
+
+# output using modelsummary
+modelsummary(
+  basic_model,
+  vcov = "robust",
+  coef_map = my_coef_map,
+  stars = TRUE,
+  width = 1,
+  gof_omit = 'AIC|BIC|Log.Lik|F|RMSE' ,
+  escape = FALSE
+)
+
+```
+
+@tbl-first-reg gives results (note: I excluded their column 3, given I have no idea what is going on with the `Num. Obs.`).
+
+
+
+```{r}
+#| label: tbl-first-reg
+#| tbl-cap: Similar to their Table 2
+#| include: true
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+# Filter out those who are not in any of the cargroups in data$groups
+data1 <- data |> filter(!is.na(groups))
+
+#generate a vector of models to be exported
+export_models <- list()
+
+# estimate model 1 (similar to above) and save as 1 in the vector
+export_models[['1']] <-   lm(vote_lega_euro ~ dummy_diesel * dummy_euro_4, 
+                            data = data1)
+
+# estimate model 2 (with controls) and save as 2 in the export_models vector
+export_models[['2']] <- lm(vote_lega_euro ~ dummy_diesel * dummy_euro_4 
+                           + age + female + EDU + INC,
+                           data = data1)
+
+# estimate model 4 (with controls plus previous LEGA vote in 2018) and save as 4 in the export_models vector
+export_models[['4']] <-   lm(vote_lega_euro ~ dummy_diesel * dummy_euro_4 
+                             + age + female + EDU + INC +
+                              vote_lega_2018, 
+                             data = data1)
+
+# estimate model 5 (with controls plus previous LEGA vote in regional elections) and save as 5 in the export_models vector
+export_models[['5']]<-   lm(vote_lega_euro ~ dummy_diesel * dummy_euro_4 
+                             + age + female + EDU + INC +
+                              vote_lega_regional, 
+                             data = data1)
+
+# estimate model 6 (with controls plus previous LEGA vote in municipal elections) and save as 6 in the export_models vector
+export_models[['6']] <- lm(vote_lega_euro ~ dummy_diesel * dummy_euro_4 
+                                + age + female + EDU + INC +
+                                vote_lega_municipal, 
+                               data = data1)
+
+
+# generate a tibble with info to be attached to the output table
+rows <- tibble::tribble(~term, ~ '1',  ~ '2',  ~ '4',  ~ '5',  ~ '6',
+                'Age', '-' ,   'Yes',   'Yes' ,   'Yes' ,   'Yes' ,  
+                'Female', '-' ,   'Yes',   'Yes' ,   'Yes' ,   'Yes' ,
+                'Income', '-' ,   'Yes',   'Yes' ,   'Yes' ,   'Yes' ,
+                'Education' , '-' ,   'Yes',   'Yes' ,   'Yes' ,   'Yes' ,
+                'Past Lega Vote', '-',   '-', 'L18', 'R18', 'M16'
+                )
+attr(rows, 'position') <- c(7, 8, 9, 10, 11)
+
+
+## Export the model
+ 
+ modelsummary(
+  export_models,
+  vcov = "robust", # show cluster-and heteroskedasticity robust SEs
+coef_omit = "^(?!dummy_)", # only keep dummies. 
+  stars = TRUE,
+  width = 1, 
+ add_rows = rows, 
+  gof_omit = 'AIC|BIC|Log.Lik|F|RMSE' ,
+escape = FALSE)
+
+```
+
+
+
+In @tbl-fixest-reg, different outcome variables (votes for lega in different years) are used, next to the first column, which (again) uses the EU elections of 2019 (as in @tbl-first-reg) as the DV.
+
+```{r}
+#| label: tbl-fixest-reg
+#| tbl-cap: DV is Lega vote in ...
+#| include: true
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+# Filter out those who are not in data$groups
+data1 <- data |> filter(!is.na(groups))
+
+# run models using feols from fixest with different depvars (see vector)
+mod <- fixest::feols(
+  c(
+    vote_lega_euro,
+    vote_lega_2018,
+    vote_lega_regional,
+    vote_lega_municipal
+  ) ~ i(dummy_diesel, ref = 0) + i(dummy_euro_4, ref = 0) + i(dummy_diesel, dummy_euro_4, ref =
+                                                                0) + age + female |  EDU + INC,
+  data = data1
+)
+
+# give names to each panel using their DV
+panels <- list(
+  "Euro" = mod[grepl("euro", names(mod))],
+  "2018" = mod[grepl("2018", names(mod))],
+  "Regional" = mod[grepl("regional", names(mod))],
+  "Municipal" = mod[grepl("municipal", names(mod))]
+)
+
+modelsummary(
+  panels,
+  vcov = "robust",
+  stars = TRUE,
+  width = 1,
+  gof_omit = 'AIC|BIC|Log.Lik|F|RMSE' ,
+  escape = FALSE
+)
+```
+
+
+## To produce their Figure 3
+
+@fig-three is below.
+
+```{r}
+#| label: fig-three
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-cap: Cost of the Area B Policy
+#| fig-height: 5
+#| fig-width: 5
+#| out-width: 80%
+
+data |>
+  # dplyr::filter(target == 1) |> # Their code
+  dplyr::filter(groups == "Diesel Euro 4") |>
+  mutate(area_b_cost_fact = fct_rev(area_b_cost_fact)) |> # Reorder them
+  ggplot() +
+  aes(area_b_cost_fact) +
+  geom_bar(
+    aes(y = after_stat(count / sum(count))), # Make %
+    fill = "#852525",
+    position = "dodge",
+    width = 0.7,
+    alpha = 0.8
+  ) +
+  coord_flip() +
+  labs(x = "", y = "") +
+  scale_y_continuous(, labels = scales::label_percent()) + # Make axis in %
+  theme_minimal() 
+```

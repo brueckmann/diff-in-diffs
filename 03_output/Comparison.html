@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Output of Diff-in-Diff-Replication</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="Comparison_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Comparison_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Comparison_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Comparison_files/libs/quarto-html/popper.min.js"></script>
+<script src="Comparison_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Comparison_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Comparison_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Comparison_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Comparison_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Comparison_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Comparison_files/libs/bootstrap/bootstrap-cfa1b392b841aeac5a892afccb842d2c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Output of Diff-in-Diff-Replication</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="preparations-for-quarto" class="level4">
+<h4 class="anchored" data-anchor-id="preparations-for-quarto">Preparations for Quarto</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'knitr'</span>, <span class="st">'tidyverse'</span>, <span class="st">'fixest'</span>, <span class="st">'tinytable'</span>, <span class="st">'modelsummary'</span>, <span class="st">'this.path'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>success <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">sapply</span>(packs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">names</span>(success)[<span class="sc">!</span>success])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">names</span>(success)[<span class="sc">!</span>success], require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>named list()</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set options</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">modelsummary_format_numeric_latex =</span> <span class="st">"plain"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tinytable_latex_placement =</span> <span class="st">"H"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Note current script location</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>current_script_dir <span class="ot">&lt;-</span> this.path<span class="sc">::</span><span class="fu">this.dir</span>()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># cat("Script directory:", current_script_dir, "\n")</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set project root </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>project_root <span class="ot">&lt;-</span> this.path<span class="sc">::</span><span class="fu">dirname2</span>(current_script_dir)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>opts_knit<span class="sc">$</span><span class="fu">set</span>(<span class="at">root.dir =</span> project_root)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># cat("Project root set to:", getwd(), "\n")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="data-cleaning" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Import data ####</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="fu">file.path</span>(project_root,<span class="st">"01_data/raw/Replication_Dataset.dta"</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">### View some variables: </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Replication_data<span class="sc">$</span>class, <span class="at">exclude =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  5   6   7 999 
+415 291 303  64 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Replication_data<span class="sc">$</span>fuel, <span class="at">exclude =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2 977 
+555 513   5 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Replication_data<span class="sc">$</span>target, <span class="at">exclude =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4 
+293 412 303  65 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Data cleaning of important variables ####</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">####  Car Emission Groups</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dummy_euro_4 =</span> <span class="fu">case_when</span>(class<span class="sc">==</span><span class="dv">5</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">.default =</span> <span class="dv">0</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">dummy_euro_5 =</span> <span class="fu">case_when</span>(class<span class="sc">==</span><span class="dv">6</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">.default =</span> <span class="dv">0</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">dummy_diesel =</span> <span class="fu">case_when</span>(fuel<span class="sc">==</span><span class="dv">1</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">.default =</span> <span class="dv">0</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">dummy_petrol =</span> <span class="fu">case_when</span>(fuel<span class="sc">==</span><span class="dv">2</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">.default =</span> <span class="dv">0</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">groups =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>      dummy_euro_4 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> dummy_diesel <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Diesel Euro 4"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>      dummy_euro_5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> dummy_diesel <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Diesel Euro 5"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      dummy_euro_4 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> dummy_petrol <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Petrol Euro 4"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>      dummy_euro_5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> dummy_petrol <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Petrol Euro 5"</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="do">### Education</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>      education_level_it_original <span class="sc">&lt;</span> <span class="dv">7</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>      education_level_it_original <span class="sc">==</span> <span class="dv">7</span> <span class="sc">|</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        education_level_it_original <span class="sc">==</span> <span class="dv">9</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>      education_level_it_original <span class="sc">==</span> <span class="dv">8</span> <span class="sc">|</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        education_level_it_original <span class="sc">==</span> <span class="dv">10</span> <span class="sc">|</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        education_level_it_original <span class="sc">==</span> <span class="dv">11</span> <span class="sc">|</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        education_level_it_original <span class="sc">==</span> <span class="dv">12</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>      education_level_it_original <span class="sc">==</span> <span class="dv">13</span> <span class="sc">|</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        education_level_it_original <span class="sc">==</span> <span class="dv">14</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>education_fac <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  Replication_data<span class="sc">$</span>education,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High school diploma"</span>, <span class="st">"Bachelors"</span>, <span class="st">"MA or higher"</span>, <span class="st">"Unknown"</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>EDU <span class="ot">&lt;-</span> <span class="fu">factor</span>(Replication_data<span class="sc">$</span>education_fac)</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="do">#### Income</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>INC <span class="ot">&lt;-</span> <span class="fu">factor</span>(Replication_data<span class="sc">$</span>profile_gross_personal_eu)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">profile_gross_personal_eu_2 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>      profile_gross_personal_eu <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">2</span> <span class="sc">|</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>      profile_gross_personal_eu <span class="sc">==</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>        <span class="dv">4</span> <span class="sc">|</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">5</span> <span class="sc">|</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>      profile_gross_personal_eu <span class="sc">==</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>        <span class="dv">7</span> <span class="sc">|</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">8</span> <span class="sc">|</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">9</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>      profile_gross_personal_eu <span class="sc">==</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>        <span class="dv">10</span> <span class="sc">|</span> profile_gross_personal_eu <span class="sc">==</span> <span class="dv">11</span> <span class="sc">|</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>        profile_gross_personal_eu <span class="sc">==</span> <span class="dv">12</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>      profile_gross_personal_eu <span class="sc">==</span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>        <span class="dv">13</span> <span class="sc">|</span> profile_gross_personal_eu <span class="sc">==</span> <span class="dv">14</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>      profile_gross_personal_eu <span class="sc">==</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>        <span class="dv">98</span> <span class="sc">|</span> profile_gross_personal_eu <span class="sc">==</span> <span class="dv">99</span> <span class="sc">~</span> <span class="dv">6</span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>profile_gross_personal_eu_2_fac <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>  Replication_data<span class="sc">$</span>profile_gross_personal_eu_2,</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>),</span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Less than 14.999 EUR per year"</span>,</span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"From 15.000 EUR to 29.999 EUR per year"</span>,</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"From 30.000 EUR to 44.999 EUR per year"</span>,</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"From 45.000 EUR 69.999 EUR per year"</span>,</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"From 70.000 EUR and more"</span>,</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No Answer / DK"</span></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>income <span class="ot">&lt;-</span> Replication_data<span class="sc">$</span>income</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>income_fac <span class="ot">&lt;-</span> Replication_data<span class="sc">$</span>profile_gross_personal_eu_2_fac</span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="do">#### Age</span></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span></span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_rc =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="dv">18</span> <span class="sc">|</span></span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">19</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">20</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">21</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">22</span> <span class="sc">|</span></span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">23</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">24</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="dv">25</span> <span class="sc">|</span></span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">26</span> <span class="sc">|</span></span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">27</span> <span class="sc">|</span></span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">28</span> <span class="sc">|</span></span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">29</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">30</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">31</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">32</span> <span class="sc">|</span></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">33</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">34</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="dv">35</span> <span class="sc">|</span></span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">36</span> <span class="sc">|</span></span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">37</span> <span class="sc">|</span></span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">38</span> <span class="sc">|</span></span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">39</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">40</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">41</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">42</span> <span class="sc">|</span></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">43</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">44</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="dv">45</span> <span class="sc">|</span></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">46</span> <span class="sc">|</span></span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">47</span> <span class="sc">|</span></span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">48</span> <span class="sc">|</span></span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">49</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">50</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">51</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">52</span> <span class="sc">|</span></span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">==</span> <span class="dv">53</span> <span class="sc">|</span> age <span class="sc">==</span> <span class="dv">54</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="dv">55</span> <span class="sc">|</span> age <span class="sc">&gt;</span> <span class="dv">55</span> <span class="sc">~</span> <span class="dv">5</span></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>age_fac <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>  Replication_data<span class="sc">$</span>age_rc,</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"18-24"</span>, <span class="st">"25-34"</span>, <span class="st">"35-44"</span>, <span class="st">"45-54"</span>, <span class="st">"55+"</span>)</span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="do">#### Gender</span></span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>Replication_data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span></span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_fac =</span> <span class="fu">case_when</span>(female <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Female"</span>, female <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Male"</span>))</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>female_fac <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>  Replication_data<span class="sc">$</span>female_fac,</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>),</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="do">### Area_B_costs</span></span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>diesel_euro4_fac <span class="ot">&lt;-</span> <span class="fu">factor</span>(Replication_data<span class="sc">$</span>diesel_euro4)</span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>Replication_data<span class="sc">$</span>area_b_cost_fact <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a>  Replication_data<span class="sc">$</span>cost_area_b,</span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No cost"</span>,</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Less than EUR 500"</span>,</span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EUR 500 - EUR 1,500"</span>,</span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EUR 1,500  - EUR 2,500"</span>,</span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EUR 2,500 - EUR 5,000"</span>,</span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EUR 5,000 - EUR 10,000"</span>,</span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Above EUR 10,000"</span>,</span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Don't know"</span></span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all haven labels.</span></span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> Replication_data <span class="sc">|&gt;</span> haven<span class="sc">::</span><span class="fu">zap_label</span>()  <span class="sc">|&gt;</span> haven<span class="sc">::</span><span class="fu">zap_labels</span>()</span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(Replication_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Note the variable <code>target</code> that is 4 if the car is unknown! (For some it is also 3, which is also not a car in the <code>groups</code> variable.)</p>
+</section>
+<section id="to-display-table-1-in-their-paper" class="level2">
+<h2 class="anchored" data-anchor-id="to-display-table-1-in-their-paper">To display Table 1 in their paper:</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Age</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>age_tbl <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(age_fac, groups, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from  =</span> groups,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>(age_fac) <span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_sample =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">everything</span>()))) <span class="sc">|&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"full_sample"</span>) <span class="sc">|&gt;</span> <span class="do">### move to second position</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"age_fac"</span>) <span class="sc">|&gt;</span> <span class="do">### move to 1st column</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">"NA"</span>)) <span class="sc">|&gt;</span>   <span class="do">### remove NA column</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>((<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>), <span class="sc">~</span> (.x <span class="sc">/</span> <span class="fu">sum</span>(.x)) <span class="sc">*</span> <span class="dv">100</span>)) <span class="do">### make everything percent</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>age_tbl <span class="ot">&lt;-</span> tinytable<span class="sc">::</span><span class="fu">tt</span>(age_tbl ,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>) ,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Gender</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>gender_tbl <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(female_fac, groups, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from  =</span> groups,</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>(female_fac) <span class="sc">|&gt;</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_sample =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">everything</span>()))) <span class="sc">|&gt;</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"full_sample"</span>) <span class="sc">|&gt;</span> <span class="do">### move to second position</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"female_fac"</span>) <span class="sc">|&gt;</span> <span class="do">### move to 1st column</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">"NA"</span>)) <span class="sc">|&gt;</span>   <span class="do">### remove NA column</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>((<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>), <span class="sc">~</span> (.x <span class="sc">/</span> <span class="fu">sum</span>(.x)) <span class="sc">*</span> <span class="dv">100</span>)) <span class="do">### make everything percent</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>gender_tbl <span class="ot">&lt;-</span> tinytable<span class="sc">::</span><span class="fu">tt</span>(gender_tbl ,</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>                            <span class="at">width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>) ,</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>                            <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Education</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>educ_tbl <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(education_fac, groups, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from  =</span> groups,</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n,</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>(education_fac) <span class="sc">|&gt;</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_sample =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">everything</span>()))) <span class="sc">|&gt;</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"full_sample"</span>) <span class="sc">|&gt;</span> <span class="do">### move to second position</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"education_fac"</span>) <span class="sc">|&gt;</span> <span class="do">### move to 1st column</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">"NA"</span>)) <span class="sc">|&gt;</span>   <span class="do">### remove NA column</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>((<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>), <span class="sc">~</span> (.x <span class="sc">/</span> <span class="fu">sum</span>(.x)) <span class="sc">*</span> <span class="dv">100</span>)) <span class="do">### make everything percent</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>educ_tbl <span class="ot">&lt;-</span> tinytable<span class="sc">::</span><span class="fu">tt</span>(educ_tbl ,</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>                          <span class="at">width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>) ,</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>                          <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Income</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>income_tbl <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(income_fac, groups, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from  =</span> groups,</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n,</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>(income_fac) <span class="sc">|&gt;</span></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_sample =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">everything</span>()))) <span class="sc">|&gt;</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"full_sample"</span>) <span class="sc">|&gt;</span> <span class="do">### move to second position</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"income_fac"</span>) <span class="sc">|&gt;</span> <span class="do">### move to 1st column</span></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">"NA"</span>)) <span class="sc">|&gt;</span>   <span class="do">### remove NA column</span></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>((<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>), <span class="sc">~</span> (.x <span class="sc">/</span> <span class="fu">sum</span>(.x)) <span class="sc">*</span> <span class="dv">100</span>)) <span class="do">### make everything percent</span></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>income_tbl <span class="ot">&lt;-</span> tinytable<span class="sc">::</span><span class="fu">tt</span>(income_tbl,</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>                            <span class="at">width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>) ,</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>                            <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Obs per group</span></span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>n_tbl <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(income_fac, groups, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from  =</span> groups,</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n,</span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>(income_fac) <span class="sc">|&gt;</span></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_sample =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">everything</span>()))) <span class="sc">|&gt;</span></span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"full_sample"</span>) <span class="sc">|&gt;</span> <span class="do">### move to second position</span></span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"income_fac"</span>) <span class="sc">|&gt;</span> <span class="do">### move to 1st column</span></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">"NA"</span>)) <span class="sc">|&gt;</span>   <span class="do">### remove NA column</span></span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), \(x) <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))) <span class="sc">|&gt;</span> <span class="do">### Make just the sum</span></span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">N =</span> <span class="st">"N"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">"N"</span>) <span class="do">### move N to 1st column</span></span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>n_tbl <span class="ot">&lt;-</span> tinytable<span class="sc">::</span><span class="fu">tt</span>(n_tbl  ,</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>                       <span class="at">width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>) ,</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>                       <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine to generate Table 1 in the paper</span></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>for_tab_1 <span class="ot">&lt;-</span> <span class="fu">rbind2</span>(age_tbl, gender_tbl, <span class="at">headers =</span> <span class="cn">FALSE</span>, <span class="at">use_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>for_tab_1 <span class="ot">&lt;-</span> <span class="fu">rbind2</span>(for_tab_1, educ_tbl, <span class="at">headers =</span> <span class="cn">FALSE</span>, <span class="at">use_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>for_tab_1 <span class="ot">&lt;-</span> <span class="fu">rbind2</span>(for_tab_1,</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>                    income_tbl,</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>                    <span class="at">headers =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>                    <span class="at">use_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>tab_1 <span class="ot">&lt;-</span> <span class="fu">rbind2</span>(for_tab_1, n_tbl, <span class="at">headers =</span> <span class="cn">FALSE</span>, <span class="at">use_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(age_tbl, gender_tbl, educ_tbl , income_tbl, n_tbl, for_tab_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>This gives you <a href="#tbl-one" class="quarto-xref">Table&nbsp;1</a>.</p>
+<div class="cell" data-tbl-pos="H">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tab_1 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"Variables"</span>, <span class="st">"Full Sample"</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Diesel Euro 4 (Treated)"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Diesel Euro 5"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Petrol Euro 4"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Petrol Euro 5"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">style_tt</span>(<span class="at">i =</span> <span class="dv">6</span>, <span class="at">line =</span> <span class="st">"t"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style_tt</span>(<span class="at">i =</span> <span class="dv">8</span>, <span class="at">line =</span> <span class="st">"t"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style_tt</span>(<span class="at">i =</span> <span class="dv">12</span>, <span class="at">line =</span> <span class="st">"t"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style_tt</span>(<span class="at">i =</span> <span class="dv">18</span>, <span class="at">line =</span> <span class="st">"t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-one" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-pos="H">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Descriptive statistics by experimental group
+</figcaption>
+<div aria-describedby="tbl-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_2t582lfao1gxxz2cqjem = TinyTable.createTableFunctions("tinytable_2t582lfao1gxxz2cqjem");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '18', j: 1 }, { i: '18', j: 2 }, { i: '18', j: 3 }, { i: '18', j: 4 }, { i: '18', j: 5 }, { i: '18', j: 6 } ], css_id: 'tinytable_css_h0wyksxnkgvo4c8a6lu5',}, 
+          { positions: [ { i: '6', j: 1 }, { i: '8', j: 1 }, { i: '12', j: 1 }, { i: '6', j: 2 }, { i: '8', j: 2 }, { i: '12', j: 2 }, { i: '6', j: 3 }, { i: '8', j: 3 }, { i: '12', j: 3 }, { i: '6', j: 4 }, { i: '8', j: 4 }, { i: '12', j: 4 }, { i: '6', j: 5 }, { i: '8', j: 5 }, { i: '12', j: 5 }, { i: '6', j: 6 }, { i: '8', j: 6 }, { i: '12', j: 6 } ], css_id: 'tinytable_css_fluf86bimrse5l8rmt3x',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_kgtk3eyluxkyse0dn11r',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_2t582lfao1gxxz2cqjem.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_2t582lfao1gxxz2cqjem td.tinytable_css_h0wyksxnkgvo4c8a6lu5, #tinytable_2t582lfao1gxxz2cqjem th.tinytable_css_h0wyksxnkgvo4c8a6lu5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_2t582lfao1gxxz2cqjem td.tinytable_css_fluf86bimrse5l8rmt3x, #tinytable_2t582lfao1gxxz2cqjem th.tinytable_css_fluf86bimrse5l8rmt3x {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_2t582lfao1gxxz2cqjem td.tinytable_css_kgtk3eyluxkyse0dn11r, #tinytable_2t582lfao1gxxz2cqjem th.tinytable_css_kgtk3eyluxkyse0dn11r {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_2t582lfao1gxxz2cqjem" style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">Variables</th>
+                <th scope="col" data-row="0" data-col="2">Full Sample</th>
+                <th scope="col" data-row="0" data-col="3">Diesel Euro 4 (Treated)</th>
+                <th scope="col" data-row="0" data-col="4">Diesel Euro 5</th>
+                <th scope="col" data-row="0" data-col="5">Petrol Euro 4</th>
+                <th scope="col" data-row="0" data-col="6">Petrol Euro 5</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">18-24</td>
+                  <td data-row="1" data-col="2">2.7</td>
+                  <td data-row="1" data-col="3">1.4</td>
+                  <td data-row="1" data-col="4">1.7</td>
+                  <td data-row="1" data-col="5">2.5</td>
+                  <td data-row="1" data-col="6">2.4</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">25-34</td>
+                  <td data-row="2" data-col="2">10.8</td>
+                  <td data-row="2" data-col="3">6.1</td>
+                  <td data-row="2" data-col="4">13.3</td>
+                  <td data-row="2" data-col="5">15.6</td>
+                  <td data-row="2" data-col="6">19.4</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">35-44</td>
+                  <td data-row="3" data-col="2">34.7</td>
+                  <td data-row="3" data-col="3">43.3</td>
+                  <td data-row="3" data-col="4">21.7</td>
+                  <td data-row="3" data-col="5">32</td>
+                  <td data-row="3" data-col="6">23.5</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">45-54</td>
+                  <td data-row="4" data-col="2">31.3</td>
+                  <td data-row="4" data-col="3">42</td>
+                  <td data-row="4" data-col="4">35</td>
+                  <td data-row="4" data-col="5">23</td>
+                  <td data-row="4" data-col="6">26.5</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">55+</td>
+                  <td data-row="5" data-col="2">20.5</td>
+                  <td data-row="5" data-col="3">7.2</td>
+                  <td data-row="5" data-col="4">28.3</td>
+                  <td data-row="5" data-col="5">27</td>
+                  <td data-row="5" data-col="6">28.2</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">Male</td>
+                  <td data-row="6" data-col="2">52</td>
+                  <td data-row="6" data-col="3">69</td>
+                  <td data-row="6" data-col="4">62</td>
+                  <td data-row="6" data-col="5">43</td>
+                  <td data-row="6" data-col="6">45</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Female</td>
+                  <td data-row="7" data-col="2">48</td>
+                  <td data-row="7" data-col="3">31</td>
+                  <td data-row="7" data-col="4">38</td>
+                  <td data-row="7" data-col="5">57</td>
+                  <td data-row="7" data-col="6">55</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">High school diploma</td>
+                  <td data-row="8" data-col="2">33.74</td>
+                  <td data-row="8" data-col="3">16.04</td>
+                  <td data-row="8" data-col="4">36.67</td>
+                  <td data-row="8" data-col="5">48.36</td>
+                  <td data-row="8" data-col="6">41.2</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Bachelors</td>
+                  <td data-row="9" data-col="2">27.21</td>
+                  <td data-row="9" data-col="3">30.72</td>
+                  <td data-row="9" data-col="4">27.5</td>
+                  <td data-row="9" data-col="5">22.95</td>
+                  <td data-row="9" data-col="6">27.1</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">MA or higher</td>
+                  <td data-row="10" data-col="2">38.49</td>
+                  <td data-row="10" data-col="3">52.56</td>
+                  <td data-row="10" data-col="4">35</td>
+                  <td data-row="10" data-col="5">27.87</td>
+                  <td data-row="10" data-col="6">30.6</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Unknown</td>
+                  <td data-row="11" data-col="2">0.56</td>
+                  <td data-row="11" data-col="3">0.68</td>
+                  <td data-row="11" data-col="4">0.83</td>
+                  <td data-row="11" data-col="5">0.82</td>
+                  <td data-row="11" data-col="6">1.2</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">Less than 14.999 EUR per year</td>
+                  <td data-row="12" data-col="2">6.9</td>
+                  <td data-row="12" data-col="3">4.4</td>
+                  <td data-row="12" data-col="4">5.8</td>
+                  <td data-row="12" data-col="5">18.9</td>
+                  <td data-row="12" data-col="6">12</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">From 15.000 EUR to 29.999 EUR per year</td>
+                  <td data-row="13" data-col="2">20.3</td>
+                  <td data-row="13" data-col="3">7.8</td>
+                  <td data-row="13" data-col="4">24.2</td>
+                  <td data-row="13" data-col="5">29.5</td>
+                  <td data-row="13" data-col="6">30</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">From 30.000 EUR to 44.999 EUR per year</td>
+                  <td data-row="14" data-col="2">21.7</td>
+                  <td data-row="14" data-col="3">30</td>
+                  <td data-row="14" data-col="4">16.7</td>
+                  <td data-row="14" data-col="5">19.7</td>
+                  <td data-row="14" data-col="6">21</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">From 45.000 EUR 69.999 EUR per year</td>
+                  <td data-row="15" data-col="2">14.9</td>
+                  <td data-row="15" data-col="3">14.7</td>
+                  <td data-row="15" data-col="4">20.8</td>
+                  <td data-row="15" data-col="5">9</td>
+                  <td data-row="15" data-col="6">13</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1">From 70.000 EUR and more</td>
+                  <td data-row="16" data-col="2">26.8</td>
+                  <td data-row="16" data-col="3">38.6</td>
+                  <td data-row="16" data-col="4">20</td>
+                  <td data-row="16" data-col="5">5.7</td>
+                  <td data-row="16" data-col="6">12</td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">No Answer / DK</td>
+                  <td data-row="17" data-col="2">9.3</td>
+                  <td data-row="17" data-col="3">4.4</td>
+                  <td data-row="17" data-col="4">12.5</td>
+                  <td data-row="17" data-col="5">17.2</td>
+                  <td data-row="17" data-col="6">12</td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">N</td>
+                  <td data-row="18" data-col="2">1073</td>
+                  <td data-row="18" data-col="3">293</td>
+                  <td data-row="18" data-col="4">120</td>
+                  <td data-row="18" data-col="5">122</td>
+                  <td data-row="18" data-col="6">170</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In sum, there are 1073 respondents but car info for the treatment group (Diesel-Euro4, n=293) and the three control group car types (Diesel-Euro5 (n=120), Petrol-Euro4 (n=122), and Petrol-Euro5 (n=170)) is only available for 705 (= 293 + 120 + 122 + 170), which is 65.7% of their “<em>Full Sample</em>”.</p>
+</section>
+<section id="preparing-the-diff-in-diffs" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-diff-in-diffs">Preparing the Diff-in-Diffs:</h2>
+<p>“<em>In selecting these four groups, our aim is to compare affected car owners to owners of relatively similar-yet-unaffected cars. We do so by estimating difference-in-differences specifications of the following form:</em></p>
+<p><span class="math display">\[
+Outcome_i = \alpha + \beta Diesel_i + \gamma Euro4_i  + \delta Diesel \times Euro4_{i} + \theta X_i + \epsilon_i
+\]</span></p>
+<p><em>where</em> <span class="math inline">\(_i\)</span> <em>denotes individual respondents, Outcome is either vote choice or individual attitudes and behavior.</em>” <span class="citation" data-cites="colantone2024">(<a href="#ref-colantone2024" role="doc-biblioref">Colantone et al. 2024, 113</a>)</span></p>
+<p>Therefore, the most relevant variables needed are <code>vote_lega_euro</code> as the outcome, <code>dummy_diesel</code>, <code>dummy_euro_4</code> (which allows us to create<code>dummy_diesel</code><span class="math inline">\(\times\)</span><code>dummy_euro_4</code>). Additionally, for <span class="math inline">\(X\)</span>, this would be for <code>age</code>, <code>female</code>, <code>education</code>, <code>income</code>, <code>vote_lega_2018</code>, <code>vote_lega_regional</code>, and <code>vote_lega_municipal</code>, following the Table 2 footnote in <span class="citation" data-cites="colantone2024">Colantone et al. (<a href="#ref-colantone2024" role="doc-biblioref">2024</a>)</span>.</p>
+<section id="lets-try-the-regressions-from-their-table-2" class="level3">
+<h3 class="anchored" data-anchor-id="lets-try-the-regressions-from-their-table-2">Let’s try the regressions from their Table 2:</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Similar to their table 1, make Petrol Euro 5 the omitted group</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>cargroup <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(data<span class="sc">$</span>groups), <span class="st">"Petrol Euro 5"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>basic_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(vote_lega_euro <span class="sc">~</span> cargroup  , <span class="at">data =</span> data)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Nicer labels</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>my_coef_map <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cargroupDiesel Euro 4"</span> <span class="ot">=</span> <span class="st">"Diesel EURO 4"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cargroupDiesel Euro 5"</span> <span class="ot">=</span> <span class="st">"Diesel EURO 5"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cargroupPetrol Euro 4"</span> <span class="ot">=</span> <span class="st">"Petrol EURO 4"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"(Intercept)"</span> <span class="ot">=</span> <span class="st">"Constant"</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># output using modelsummary</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  basic_model,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">vcov =</span> <span class="st">"robust"</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> my_coef_map,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">1</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_omit =</span> <span class="st">'AIC|BIC|Log.Lik|F|RMSE'</span> ,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">escape =</span> <span class="cn">FALSE</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-try-regs" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-try-regs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The most basic diff-in-diff regression
+</figcaption>
+<div aria-describedby="tbl-try-regs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_jm02illlvrteh6zdmdxu = TinyTable.createTableFunctions("tinytable_jm02illlvrteh6zdmdxu");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '12', j: 2 } ], css_id: 'tinytable_css_f7sxzxs7cdfmez8c8gl3',}, 
+          { positions: [ { i: '8', j: 2 } ], css_id: 'tinytable_css_9ucr55carwkusuj1ht36',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 } ], css_id: 'tinytable_css_h2j24u3w7k0fmyzlvpyj',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_9fzvmsu09wsa0mst8fm5',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_v8jpfbmqtvc5rkor349l',}, 
+          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_1m9c03y2ahej6lj5tzbi',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_5usz10dm6rkia99anzkw',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_9pw20ucb40ng9rht4zfz',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_jm02illlvrteh6zdmdxu.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_f7sxzxs7cdfmez8c8gl3, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_f7sxzxs7cdfmez8c8gl3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_9ucr55carwkusuj1ht36, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_9ucr55carwkusuj1ht36 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_h2j24u3w7k0fmyzlvpyj, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_h2j24u3w7k0fmyzlvpyj { text-align: center }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_9fzvmsu09wsa0mst8fm5, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_9fzvmsu09wsa0mst8fm5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_v8jpfbmqtvc5rkor349l, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_v8jpfbmqtvc5rkor349l {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_1m9c03y2ahej6lj5tzbi, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_1m9c03y2ahej6lj5tzbi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_5usz10dm6rkia99anzkw, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_5usz10dm6rkia99anzkw { text-align: left }
+    #tinytable_jm02illlvrteh6zdmdxu td.tinytable_css_9pw20ucb40ng9rht4zfz, #tinytable_jm02illlvrteh6zdmdxu th.tinytable_css_9pw20ucb40ng9rht4zfz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_jm02illlvrteh6zdmdxu" style="table-layout: fixed; width: 100% !important; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="2">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Diesel EURO 4</td>
+                  <td data-row="1" data-col="2">0.031</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.040)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Diesel EURO 5</td>
+                  <td data-row="3" data-col="2">-0.062</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.046)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Petrol EURO 4</td>
+                  <td data-row="5" data-col="2">-0.031</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.047)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Constant</td>
+                  <td data-row="7" data-col="2">0.212***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.032)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Num.Obs.</td>
+                  <td data-row="9" data-col="2">705</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">R2</td>
+                  <td data-row="10" data-col="2">0.007</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">R2 Adj.</td>
+                  <td data-row="11" data-col="2">0.003</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">Std.Errors</td>
+                  <td data-row="12" data-col="2">HC3</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="#tbl-first-reg" class="quarto-xref">Table&nbsp;3</a> gives results (note: I excluded their column 3, given I have no idea what is going on with the <code>Num. Obs.</code>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out those who are not in any of the cargroups in data$groups</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(groups))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#generate a vector of models to be exported</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>export_models <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate model 1 (similar to above) and save as 1 in the vector</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>export_models[[<span class="st">'1'</span>]] <span class="ot">&lt;-</span>   <span class="fu">lm</span>(vote_lega_euro <span class="sc">~</span> dummy_diesel <span class="sc">*</span> dummy_euro_4, </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data =</span> data1)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate model 2 (with controls) and save as 2 in the export_models vector</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>export_models[[<span class="st">'2'</span>]] <span class="ot">&lt;-</span> <span class="fu">lm</span>(vote_lega_euro <span class="sc">~</span> dummy_diesel <span class="sc">*</span> dummy_euro_4 </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">+</span> age <span class="sc">+</span> female <span class="sc">+</span> EDU <span class="sc">+</span> INC,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> data1)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate model 4 (with controls plus previous LEGA vote in 2018) and save as 4 in the export_models vector</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>export_models[[<span class="st">'4'</span>]] <span class="ot">&lt;-</span>   <span class="fu">lm</span>(vote_lega_euro <span class="sc">~</span> dummy_diesel <span class="sc">*</span> dummy_euro_4 </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                             <span class="sc">+</span> age <span class="sc">+</span> female <span class="sc">+</span> EDU <span class="sc">+</span> INC <span class="sc">+</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                              vote_lega_2018, </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> data1)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate model 5 (with controls plus previous LEGA vote in regional elections) and save as 5 in the export_models vector</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>export_models[[<span class="st">'5'</span>]]<span class="ot">&lt;-</span>   <span class="fu">lm</span>(vote_lega_euro <span class="sc">~</span> dummy_diesel <span class="sc">*</span> dummy_euro_4 </span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                             <span class="sc">+</span> age <span class="sc">+</span> female <span class="sc">+</span> EDU <span class="sc">+</span> INC <span class="sc">+</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                              vote_lega_regional, </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> data1)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate model 6 (with controls plus previous LEGA vote in municipal elections) and save as 6 in the export_models vector</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>export_models[[<span class="st">'6'</span>]] <span class="ot">&lt;-</span> <span class="fu">lm</span>(vote_lega_euro <span class="sc">~</span> dummy_diesel <span class="sc">*</span> dummy_euro_4 </span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>                                <span class="sc">+</span> age <span class="sc">+</span> female <span class="sc">+</span> EDU <span class="sc">+</span> INC <span class="sc">+</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>                                vote_lega_municipal, </span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>                               <span class="at">data =</span> data1)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a tibble with info to be attached to the output table</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>rows <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>term, <span class="sc">~</span> <span class="st">'1'</span>,  <span class="sc">~</span> <span class="st">'2'</span>,  <span class="sc">~</span> <span class="st">'4'</span>,  <span class="sc">~</span> <span class="st">'5'</span>,  <span class="sc">~</span> <span class="st">'6'</span>,</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Age'</span>, <span class="st">'-'</span> ,   <span class="st">'Yes'</span>,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,  </span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Female'</span>, <span class="st">'-'</span> ,   <span class="st">'Yes'</span>,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Income'</span>, <span class="st">'-'</span> ,   <span class="st">'Yes'</span>,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Education'</span> , <span class="st">'-'</span> ,   <span class="st">'Yes'</span>,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,   <span class="st">'Yes'</span> ,</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Past Lega Vote'</span>, <span class="st">'-'</span>,   <span class="st">'-'</span>, <span class="st">'L18'</span>, <span class="st">'R18'</span>, <span class="st">'M16'</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(rows, <span class="st">'position'</span>) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Export the model</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a> <span class="fu">modelsummary</span>(</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>  export_models,</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">vcov =</span> <span class="st">"robust"</span>, <span class="co"># show cluster-and heteroskedasticity robust SEs</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="at">coef_omit =</span> <span class="st">"^(?!dummy_)"</span>, <span class="co"># only keep dummies. </span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">1</span>, </span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a> <span class="at">add_rows =</span> rows, </span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_omit =</span> <span class="st">'AIC|BIC|Log.Lik|F|RMSE'</span> ,</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="at">escape =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-first-reg" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-first-reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Similar to their Table 2
+</figcaption>
+<div aria-describedby="tbl-first-reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_cqebwuenp615s97qw8lc = TinyTable.createTableFunctions("tinytable_cqebwuenp615s97qw8lc");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 }, { i: '15', j: 5 }, { i: '15', j: 6 } ], css_id: 'tinytable_css_8cy0yo7u7dyx4104a8m5',}, 
+          { positions: [ { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 } ], css_id: 'tinytable_css_dxecyr9wu8us6ppjuv5l',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 } ], css_id: 'tinytable_css_ezebsvrzg8fpzvh1qwqq',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_9ikl7eujza01il6yzm1m',}, 
+          { positions: [ { i: '15', j: 1 } ], css_id: 'tinytable_css_1em3a003udaxkg3jybls',}, 
+          { positions: [ { i: '6', j: 1 } ], css_id: 'tinytable_css_0wzxuo91bk0wqldki93a',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 } ], css_id: 'tinytable_css_edqywt12ss012cx34f48',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_dio78rh8mfvcngrjf9u9',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_cqebwuenp615s97qw8lc.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_8cy0yo7u7dyx4104a8m5, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_8cy0yo7u7dyx4104a8m5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_dxecyr9wu8us6ppjuv5l, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_dxecyr9wu8us6ppjuv5l {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_ezebsvrzg8fpzvh1qwqq, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_ezebsvrzg8fpzvh1qwqq { text-align: center }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_9ikl7eujza01il6yzm1m, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_9ikl7eujza01il6yzm1m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_1em3a003udaxkg3jybls, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_1em3a003udaxkg3jybls {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_0wzxuo91bk0wqldki93a, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_0wzxuo91bk0wqldki93a {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_edqywt12ss012cx34f48, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_edqywt12ss012cx34f48 { text-align: left }
+    #tinytable_cqebwuenp615s97qw8lc td.tinytable_css_dio78rh8mfvcngrjf9u9, #tinytable_cqebwuenp615s97qw8lc th.tinytable_css_dio78rh8mfvcngrjf9u9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_cqebwuenp615s97qw8lc" style="table-layout: fixed; width: 100% !important; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">1</th>
+                <th scope="col" data-row="0" data-col="3">2</th>
+                <th scope="col" data-row="0" data-col="4">4</th>
+                <th scope="col" data-row="0" data-col="5">5</th>
+                <th scope="col" data-row="0" data-col="6">6</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="6">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">dummy_diesel</td>
+                  <td data-row="1" data-col="2">-0.062</td>
+                  <td data-row="1" data-col="3">-0.068</td>
+                  <td data-row="1" data-col="4">-0.034</td>
+                  <td data-row="1" data-col="5">0.000</td>
+                  <td data-row="1" data-col="6">0.016</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.046)</td>
+                  <td data-row="2" data-col="3">(0.047)</td>
+                  <td data-row="2" data-col="4">(0.032)</td>
+                  <td data-row="2" data-col="5">(0.033)</td>
+                  <td data-row="2" data-col="6">(0.037)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">dummy_euro_4</td>
+                  <td data-row="3" data-col="2">-0.031</td>
+                  <td data-row="3" data-col="3">-0.037</td>
+                  <td data-row="3" data-col="4">0.014</td>
+                  <td data-row="3" data-col="5">0.013</td>
+                  <td data-row="3" data-col="6">0.002</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.047)</td>
+                  <td data-row="4" data-col="3">(0.050)</td>
+                  <td data-row="4" data-col="4">(0.033)</td>
+                  <td data-row="4" data-col="5">(0.032)</td>
+                  <td data-row="4" data-col="6">(0.036)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">dummy_diesel × dummy_euro_4</td>
+                  <td data-row="5" data-col="2">0.124*</td>
+                  <td data-row="5" data-col="3">0.160*</td>
+                  <td data-row="5" data-col="4">0.079+</td>
+                  <td data-row="5" data-col="5">0.074+</td>
+                  <td data-row="5" data-col="6">0.082</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.063)</td>
+                  <td data-row="6" data-col="3">(0.067)</td>
+                  <td data-row="6" data-col="4">(0.044)</td>
+                  <td data-row="6" data-col="5">(0.045)</td>
+                  <td data-row="6" data-col="6">(0.051)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Age</td>
+                  <td data-row="7" data-col="2">-</td>
+                  <td data-row="7" data-col="3">Yes</td>
+                  <td data-row="7" data-col="4">Yes</td>
+                  <td data-row="7" data-col="5">Yes</td>
+                  <td data-row="7" data-col="6">Yes</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">Female</td>
+                  <td data-row="8" data-col="2">-</td>
+                  <td data-row="8" data-col="3">Yes</td>
+                  <td data-row="8" data-col="4">Yes</td>
+                  <td data-row="8" data-col="5">Yes</td>
+                  <td data-row="8" data-col="6">Yes</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Income</td>
+                  <td data-row="9" data-col="2">-</td>
+                  <td data-row="9" data-col="3">Yes</td>
+                  <td data-row="9" data-col="4">Yes</td>
+                  <td data-row="9" data-col="5">Yes</td>
+                  <td data-row="9" data-col="6">Yes</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">Education</td>
+                  <td data-row="10" data-col="2">-</td>
+                  <td data-row="10" data-col="3">Yes</td>
+                  <td data-row="10" data-col="4">Yes</td>
+                  <td data-row="10" data-col="5">Yes</td>
+                  <td data-row="10" data-col="6">Yes</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Past Lega Vote</td>
+                  <td data-row="11" data-col="2">-</td>
+                  <td data-row="11" data-col="3">-</td>
+                  <td data-row="11" data-col="4">L18</td>
+                  <td data-row="11" data-col="5">R18</td>
+                  <td data-row="11" data-col="6">M16</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">Num.Obs.</td>
+                  <td data-row="12" data-col="2">705</td>
+                  <td data-row="12" data-col="3">705</td>
+                  <td data-row="12" data-col="4">705</td>
+                  <td data-row="12" data-col="5">705</td>
+                  <td data-row="12" data-col="6">705</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">R2</td>
+                  <td data-row="13" data-col="2">0.007</td>
+                  <td data-row="13" data-col="3">0.117</td>
+                  <td data-row="13" data-col="4">0.553</td>
+                  <td data-row="13" data-col="5">0.521</td>
+                  <td data-row="13" data-col="6">0.422</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">R2 Adj.</td>
+                  <td data-row="14" data-col="2">0.003</td>
+                  <td data-row="14" data-col="3">0.087</td>
+                  <td data-row="14" data-col="4">0.537</td>
+                  <td data-row="14" data-col="5">0.504</td>
+                  <td data-row="14" data-col="6">0.402</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">Std.Errors</td>
+                  <td data-row="15" data-col="2">HC3</td>
+                  <td data-row="15" data-col="3">HC3</td>
+                  <td data-row="15" data-col="4">HC3</td>
+                  <td data-row="15" data-col="5">HC3</td>
+                  <td data-row="15" data-col="6">HC3</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In <a href="#tbl-fixest-reg" class="quarto-xref">Table&nbsp;4</a>, different outcome variables (votes for lega in different years) are used, next to the first column, which (again) uses the EU elections of 2019 (as in <a href="#tbl-first-reg" class="quarto-xref">Table&nbsp;3</a>) as the DV.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out those who are not in data$groups</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(groups))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># run models using feols from fixest with different depvars (see vector)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    vote_lega_euro,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    vote_lega_2018,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    vote_lega_regional,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    vote_lega_municipal</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">~</span> <span class="fu">i</span>(dummy_diesel, <span class="at">ref =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="fu">i</span>(dummy_euro_4, <span class="at">ref =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="fu">i</span>(dummy_diesel, dummy_euro_4, <span class="at">ref =</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                                                                <span class="dv">0</span>) <span class="sc">+</span> age <span class="sc">+</span> female <span class="sc">|</span>  EDU <span class="sc">+</span> INC,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data1</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># give names to each panel using their DV</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>panels <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Euro"</span> <span class="ot">=</span> mod[<span class="fu">grepl</span>(<span class="st">"euro"</span>, <span class="fu">names</span>(mod))],</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2018"</span> <span class="ot">=</span> mod[<span class="fu">grepl</span>(<span class="st">"2018"</span>, <span class="fu">names</span>(mod))],</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Regional"</span> <span class="ot">=</span> mod[<span class="fu">grepl</span>(<span class="st">"regional"</span>, <span class="fu">names</span>(mod))],</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Municipal"</span> <span class="ot">=</span> mod[<span class="fu">grepl</span>(<span class="st">"municipal"</span>, <span class="fu">names</span>(mod))]</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  panels,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">vcov =</span> <span class="st">"robust"</span>,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">1</span>,</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_omit =</span> <span class="st">'AIC|BIC|Log.Lik|F|RMSE'</span> ,</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">escape =</span> <span class="cn">FALSE</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-fixest-reg" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fixest-reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: DV is Lega vote in …
+</figcaption>
+<div aria-describedby="tbl-fixest-reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_b97kx6jm8mj823p5vkuk = TinyTable.createTableFunctions("tinytable_b97kx6jm8mj823p5vkuk");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 }, { i: '16', j: 4 }, { i: '16', j: 5 } ], css_id: 'tinytable_css_z88hdyg0n35j2pyhap1z',}, 
+          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 }, { i: '10', j: 4 }, { i: '10', j: 5 } ], css_id: 'tinytable_css_b522a9fn5cb37nhk88ap',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 } ], css_id: 'tinytable_css_lp0jiidohswuzxodyk1c',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_phanttzn1f4kuda2xzn6',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_e0nhax5hz8pmdgg9n1d9',}, 
+          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_uev82towyen9o0yj6r47',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 } ], css_id: 'tinytable_css_tci8wny0zosafmgqbcye',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_k41kp5t629w56t6mfex9',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_b97kx6jm8mj823p5vkuk.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_z88hdyg0n35j2pyhap1z, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_z88hdyg0n35j2pyhap1z {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_b522a9fn5cb37nhk88ap, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_b522a9fn5cb37nhk88ap {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_lp0jiidohswuzxodyk1c, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_lp0jiidohswuzxodyk1c { text-align: center }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_phanttzn1f4kuda2xzn6, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_phanttzn1f4kuda2xzn6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_e0nhax5hz8pmdgg9n1d9, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_e0nhax5hz8pmdgg9n1d9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_uev82towyen9o0yj6r47, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_uev82towyen9o0yj6r47 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_tci8wny0zosafmgqbcye, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_tci8wny0zosafmgqbcye { text-align: left }
+    #tinytable_b97kx6jm8mj823p5vkuk td.tinytable_css_k41kp5t629w56t6mfex9, #tinytable_b97kx6jm8mj823p5vkuk th.tinytable_css_k41kp5t629w56t6mfex9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_b97kx6jm8mj823p5vkuk" style="table-layout: fixed; width: 100% !important; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Euro</th>
+                <th scope="col" data-row="0" data-col="3">2018</th>
+                <th scope="col" data-row="0" data-col="4">Regional</th>
+                <th scope="col" data-row="0" data-col="5">Municipal</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="5">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">dummy_diesel = 1</td>
+                  <td data-row="1" data-col="2">-0.068</td>
+                  <td data-row="1" data-col="3">-0.042</td>
+                  <td data-row="1" data-col="4">-0.090</td>
+                  <td data-row="1" data-col="5">-0.115*</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.046)</td>
+                  <td data-row="2" data-col="3">(0.043)</td>
+                  <td data-row="2" data-col="4">(0.042)</td>
+                  <td data-row="2" data-col="5">(0.036)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">dummy_euro_4 = 1</td>
+                  <td data-row="3" data-col="2">-0.037</td>
+                  <td data-row="3" data-col="3">-0.065</td>
+                  <td data-row="3" data-col="4">-0.065</td>
+                  <td data-row="3" data-col="5">-0.054</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.049)</td>
+                  <td data-row="4" data-col="3">(0.044)</td>
+                  <td data-row="4" data-col="4">(0.046)</td>
+                  <td data-row="4" data-col="5">(0.044)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">dummy_diesel = 1 × dummy_euro_4</td>
+                  <td data-row="5" data-col="2">0.160+</td>
+                  <td data-row="5" data-col="3">0.102</td>
+                  <td data-row="5" data-col="4">0.112</td>
+                  <td data-row="5" data-col="5">0.108</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.066)</td>
+                  <td data-row="6" data-col="3">(0.060)</td>
+                  <td data-row="6" data-col="4">(0.062)</td>
+                  <td data-row="6" data-col="5">(0.056)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">age</td>
+                  <td data-row="7" data-col="2">0.002</td>
+                  <td data-row="7" data-col="3">0.001</td>
+                  <td data-row="7" data-col="4">0.000</td>
+                  <td data-row="7" data-col="5">0.001</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.001)</td>
+                  <td data-row="8" data-col="3">(0.001)</td>
+                  <td data-row="8" data-col="4">(0.001)</td>
+                  <td data-row="8" data-col="5">(0.001)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">female</td>
+                  <td data-row="9" data-col="2">0.153*</td>
+                  <td data-row="9" data-col="3">0.055</td>
+                  <td data-row="9" data-col="4">0.031</td>
+                  <td data-row="9" data-col="5">0.021</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.034)</td>
+                  <td data-row="10" data-col="3">(0.029)</td>
+                  <td data-row="10" data-col="4">(0.030)</td>
+                  <td data-row="10" data-col="5">(0.028)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Num.Obs.</td>
+                  <td data-row="11" data-col="2">705</td>
+                  <td data-row="11" data-col="3">705</td>
+                  <td data-row="11" data-col="4">705</td>
+                  <td data-row="11" data-col="5">705</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">R2</td>
+                  <td data-row="12" data-col="2">0.117</td>
+                  <td data-row="12" data-col="3">0.076</td>
+                  <td data-row="12" data-col="4">0.076</td>
+                  <td data-row="12" data-col="5">0.065</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">R2 Adj.</td>
+                  <td data-row="13" data-col="2">0.087</td>
+                  <td data-row="13" data-col="3">0.045</td>
+                  <td data-row="13" data-col="4">0.044</td>
+                  <td data-row="13" data-col="5">0.033</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">R2 Within</td>
+                  <td data-row="14" data-col="2">0.043</td>
+                  <td data-row="14" data-col="3">0.011</td>
+                  <td data-row="14" data-col="4">0.010</td>
+                  <td data-row="14" data-col="5">0.016</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">R2 Within Adj.</td>
+                  <td data-row="15" data-col="2">0.036</td>
+                  <td data-row="15" data-col="3">0.004</td>
+                  <td data-row="15" data-col="4">0.003</td>
+                  <td data-row="15" data-col="5">0.009</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1">Std.Errors</td>
+                  <td data-row="16" data-col="2">HC1</td>
+                  <td data-row="16" data-col="3">HC1</td>
+                  <td data-row="16" data-col="4">HC1</td>
+                  <td data-row="16" data-col="5">HC1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="to-produce-their-figure-3" class="level2">
+<h2 class="anchored" data-anchor-id="to-produce-their-figure-3">To produce their Figure 3</h2>
+<p><a href="#fig-three" class="quarto-xref">Figure&nbsp;1</a> is below.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dplyr::filter(target == 1) |&gt; # Their code</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(groups <span class="sc">==</span> <span class="st">"Diesel Euro 4"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">area_b_cost_fact =</span> <span class="fu">fct_rev</span>(area_b_cost_fact)) <span class="sc">|&gt;</span> <span class="co"># Reorder them</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(area_b_cost_fact) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(count <span class="sc">/</span> <span class="fu">sum</span>(count))), <span class="co"># Make %</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#852525"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"dodge"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.7</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span> <span class="co"># Make axis in %</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-three" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-three-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Comparison_files/figure-html/fig-three-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-three-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Cost of the Area B Policy
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-colantone2024" class="csl-entry" role="listitem">
+Colantone, Italo, Livio Di Lonardo, Yotam Margalit, and Marco Percoco. 2024. <span>“The Political Consequences of Green Policies: Evidence from Italy.”</span> <em>American Political Science Review</em> 118 (1): 108–26. <a href="https://doi.org/10.1017/S0003055423000308">https://doi.org/10.1017/S0003055423000308</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

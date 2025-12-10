@@ -4,7 +4,22 @@ library(tidyverse)
 
 ### Import data ####
 
-Replication_data <- haven::read_dta("01_data/raw/Replication_Dataset.dta")
+# Note current script location
+current_script_dir <- this.path::this.dir()
+cat("Script directory:", current_script_dir, "\n")
+
+# Set project root
+project_root <- this.path::dirname2(current_script_dir)
+setwd(project_root)
+cat("Project root set to:", getwd(), "\n")
+
+
+# load data
+Replication_data <- haven::read_dta(file.path(project_root, "01_data/raw/Replication_Dataset.dta"))
+
+### Import data ####
+
+# Replication_data <- haven::read_dta("01_data/raw/Replication_Dataset.dta")
 
 ### Data cleaning of important variables ####
 
@@ -54,11 +69,16 @@ Replication_data <- Replication_data %>%
   mutate(
     profile_gross_personal_eu_2 = case_when(
       profile_gross_personal_eu == 1 |
-        profile_gross_personal_eu == 2 | profile_gross_personal_eu == 3 ~ 1,
+        profile_gross_personal_eu == 2 |
+        profile_gross_personal_eu == 3 ~ 1,
       profile_gross_personal_eu ==
-        4 | profile_gross_personal_eu == 5 | profile_gross_personal_eu == 6 ~ 2,
+        4 |
+        profile_gross_personal_eu == 5 |
+        profile_gross_personal_eu == 6 ~ 2,
       profile_gross_personal_eu ==
-        7 | profile_gross_personal_eu == 8 | profile_gross_personal_eu == 9 ~ 3,
+        7 |
+        profile_gross_personal_eu == 8 |
+        profile_gross_personal_eu == 9 ~ 3,
       profile_gross_personal_eu ==
         10 | profile_gross_personal_eu == 11 |
         profile_gross_personal_eu == 12 ~ 4,
@@ -81,7 +101,7 @@ Replication_data$profile_gross_personal_eu_2_fac <- factor(
     "No Answer / DK"
   )
 )
-
+Replication_data$income <- Replication_data$income
 Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
 
 #### Age
@@ -114,7 +134,7 @@ Replication_data <- Replication_data %>%
     )
   )
 
-Replication_data$age_rc2 <- factor(
+Replication_data$age_fac <- factor(
   Replication_data$age_rc,
   levels = c(1, 2, 3, 4, 5),
   labels = c("18-24", "25-34", "35-44", "45-54", "55+")
@@ -122,10 +142,10 @@ Replication_data$age_rc2 <- factor(
 
 #### Gender
 Replication_data <- Replication_data %>%
-  mutate(female_rc2 = case_when(female == 1 ~ "Female", female == 0 ~ "Male"))
+  mutate(female_fac = case_when(female == 1 ~ "Female", female == 0 ~ "Male"))
 
-Replication_data$female_rc2 <- factor(
-  Replication_data$female_rc2,
+Replication_data$female_fac <- factor(
+  Replication_data$female_fac,
   levels = c("Male", "Female"),
   labels = c("Male", "Female")
 )
@@ -134,17 +154,21 @@ Replication_data$female_rc2 <- factor(
 ### Area_B_costs
 
 
-Replication_data$diesel_euro4_fac<-factor(Replication_data$diesel_euro4)
-Replication_data$area_b_cost_fact<-factor(Replication_data$cost_area_b, 
-                                          levels=c(1,2,3,4,5,6,7,8),
-                                          labels = c("No cost",
-                                                     "Less than EUR 500", 
-                                                     "EUR 500 - EUR 1,500", 
-                                                     "EUR 1,500  - EUR 2,500",
-                                                     "EUR 2,500 - EUR 5,000",
-                                                     "EUR 5,000 - EUR 10,000", 
-                                                     "Above EUR 10,000", 
-                                                     "Don't know"))
+Replication_data$diesel_euro4_fac <- factor(Replication_data$diesel_euro4)
+Replication_data$area_b_cost_fact <- factor(
+  Replication_data$cost_area_b,
+  levels = c(1, 2, 3, 4, 5, 6, 7, 8),
+  labels = c(
+    "No cost",
+    "Less than EUR 500",
+    "EUR 500 - EUR 1,500",
+    "EUR 1,500  - EUR 2,500",
+    "EUR 2,500 - EUR 5,000",
+    "EUR 5,000 - EUR 10,000",
+    "Above EUR 10,000",
+    "Don't know"
+  )
+)
 
 
 

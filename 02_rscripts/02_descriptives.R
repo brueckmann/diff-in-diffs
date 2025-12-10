@@ -23,15 +23,15 @@ load(file.path(project_root, "01_data/processed/data.Rdata"))
 # Age
 
 age_tbl <- data |>
-  count(age_rc2, groups, name = "n") |>
+  count(age_fac, groups, name = "n") |>
   pivot_wider(names_from  = groups,
               values_from = n,
               values_fill = 0) |>
-  rowwise(age_rc2) |>
+  rowwise(age_fac) |>
   mutate(full_sample = sum(c_across(everything()))) |>
   ungroup()  |>
   dplyr::relocate("full_sample") |> ### move to second position
-  dplyr::relocate("age_rc2") |> ### move to 1st column
+  dplyr::relocate("age_fac") |> ### move to 1st column
   select(!contains("NA")) |>   ### remove NA column
   mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
 
@@ -42,15 +42,15 @@ age_tbl <- tinytable::tt(age_tbl ,
 # Gender
 
 gender_tbl <- data |>
-  count(female_rc2, groups, name = "n") |>
+  count(female_fac, groups, name = "n") |>
   pivot_wider(names_from  = groups,
               values_from = n,
               values_fill = 0) |>
-  rowwise(female_rc2) |>
+  rowwise(female_fac) |>
   mutate(full_sample = sum(c_across(everything()))) |>
   ungroup()  |>
   dplyr::relocate("full_sample") |> ### move to second position
-  dplyr::relocate("female_rc2") |> ### move to 1st column
+  dplyr::relocate("female_fac") |> ### move to 1st column
   select(!contains("NA")) |>   ### remove NA column
   mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
 
@@ -58,8 +58,8 @@ gender_tbl <- tinytable::tt(gender_tbl ,
                             width = c(.5, .1, .1, .1, .1, .1) ,
                             digits = 2)
 
-# gender_table <- table(data$female_rc2, data$groups)
-# full_sample <- table(data$female_rc2)
+# gender_table <- table(data$female_fac, data$groups)
+# full_sample <- table(data$female_fac)
 #
 # gender_combined <- cbind(full_sample, gender_table)
 #
@@ -128,6 +128,7 @@ income_tbl <- tinytable::tt(income_tbl,
                             width = c(.5, .1, .1, .1, .1, .1) ,
                             digits = 2)
 
+# Obs per group
 
 n_tbl <- data |>
   count(income_fac, groups, name = "n") |>
@@ -165,7 +166,7 @@ n_tbl <- tinytable::tt(n_tbl  ,
 #                          N)
 
 
-# To generate Table 1 in the paper
+# Combine to generate Table 1 in the paper
 
 for_tab_1 <- rbind2(age_tbl, gender_tbl, headers = FALSE, use_names = FALSE)
 for_tab_1 <- rbind2(for_tab_1, educ_tbl, headers = FALSE, use_names = FALSE)
