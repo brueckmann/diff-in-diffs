@@ -28,7 +28,7 @@ execute:
   warning: false
 ---
 
-## Preface:
+## Preface
 
 ::: callout-caution
 #### This document is very information scarce. 
@@ -52,7 +52,7 @@ On using Git and Github in RStudio, the official info is [here](https://docs.pos
 
 - in the correct working directory: initialise the git type in console: `git init`
 
-## Workflow is always:
+## Workflow (in general)
 
 1)  create an issue on GitHub (remember the number of the issue)
 2)  `git pull` to make local an online the same (blue down arrow in RStudio, or with code)
