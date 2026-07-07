@@ -59,7 +59,7 @@ On using Git and Github in RStudio, the official info is [here](https://docs.pos
 3)  Change something to fix it (add/delete,...) 
     - optional: and see the git status (type: `git status`)
 4)  select (far left in RStudio's git panel) or make (lilac symbol in RStudio's git panel) own branch for your changes
-5)  in console type `git add filename` or `git add .` (the point means everything) (in RStudio's git panel tick the files and click on Diff, leftmost arrow)
+5)  in console type `git add filename` or `git add .` (the point means everything) (in RStudio's git panel tick the files and click on Diff, leftmost arrow; without ticking files you won't be able to use commit in the next step)
     - optional: and see the git status (type: `git status`)
 6)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
     - optional: and see the git status (type: `git status`)
