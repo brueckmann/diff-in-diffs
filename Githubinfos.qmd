@@ -26,8 +26,7 @@ type in console: `git init`
 6) in console: `git commit -m "Short note what you did"` commits the changes
 	* optional: and see the git status (type: `git status`)
 	
-## Git Hub
-
+## GitHub
 If you are working with git hub and want to push it into the GitHub
 5) in console type: `git push`
 
