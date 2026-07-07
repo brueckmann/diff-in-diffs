@@ -32,6 +32,10 @@ vignettes/*.pdf
 # *.pdf
 # *.html
 
+# produced output from rendering GitHub infos to HTML format in the main branch
+Githubinfos.html
+
+
 # sample_descriptives.html
 # sample_descriptives.md
 

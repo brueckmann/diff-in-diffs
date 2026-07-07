@@ -1,116 +1,97 @@
 ---
-title: "GitInfo"
-date: 2026-06-25
-author: G. Brückmann
-format: 
-  html:
+title: "Some infos on using Git and GitHub, mostly through CLI and within the RStudio IDE"
+author:
+  - name: G.Brückmann
+    id: gb
+    orcid: 0000-0001-5674-2343
+    email: gracia.brueckmann@unibe.ch
+    url: brueckmann.github.io
+    affiliation: 
+      - name: University of Bern
+  - name: Camilla  Frericks
+    id: cf
+    email: camilla.frericks@uni-mannheim.de
+    affiliation: 
+      - name: University of Mannheim
+
+
+date: last-modified
+date-format: "DD MMM YYYY"
+format:
+  html:   
+    toc: true
+    toc-depth: 2
+    code-line-numbers: true
     embed-resources: true
+execute:
+  echo: true
+  warning: false
 ---
 
+## Preface
 
-### Preparation: 
+::: callout-caution
+#### This document is very information scarce. 
+
+It only covers some basics. 
+:::
+
+
+
+On using Git and Github in RStudio, the official info is [here](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html), but IMHO a good resource is [Happy Git and Github for the useR](https://happygitwithr.com/), which is freely available on [https://happygitwithr.com/](https://happygitwithr.com/). 
+
+
+[There](https://happygitwithr.com/https-pat), I also learned that one should use `HTTPS` with a a personal access token (PAT), not `SSH key pairs`, to connect your RStudio with GitHub. Maybe try these steps? 
+
+
+
+
+## Preparation
+
 - some people need to install git, I am on a Mac, have XCODE installed, so it was already there
 
-- in the correct working directory: initialise the git 
-type in console: `git init` 
+- in the correct working directory: initialise the git type in console: `git init`
 
+## Workflow (in general)
 
-### Workflow is always: 
-1) create an issue on GitHub (remember number of issue)
-2) git pull to make local an online the same (blue arrow in r, or with code)
-3) Change something to fix it (add/delete,...)
-	*optional: and see the git status (type: `git status`)
-4) make own branch for your changes (or select it) 
-5) in console type `git add filename` or `git add .` (the point means everything) 
-	* optional: and see the git status (type: `git status`)
-6) in console: `git commit -m "Short note what you did"` commits the changes
-	* optional: and see the git status (type: `git status`)
-	
-## Git Hub
+1)  create an issue on GitHub (remember the number of the issue)
+2)  `git pull` to make local an online the same (blue down arrow in RStudio, or with code)
+3)  Change something to fix it (add/delete,...) 
+    - optional: and see the git status (type: `git status`)
+4)  select (far left in RStudio's git panel) or make (lilac symbol in RStudio's git panel) own branch for your changes
+5)  in console type `git add filename` or `git add .` (the point means everything) (in RStudio's git panel tick the files and click on Diff, leftmost arrow)
+    - optional: and see the git status (type: `git status`)
+6)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
+    - optional: and see the git status (type: `git status`)
+7)  in console type: `git push` (green up arrow in RStudio, or with code)
+8)  open a pull request for your changes (in GitHub (desktop))
+9)  assign it to the other person to merge it
 
-If you are working with git hub and want to push it into the GitHub
-5) in console type: `git push`
+### Closing an Issue in GitHub {#sec-closing}
 
-### Assume you created a repo in Github
+Mention specific words in your `git commit -m "message"`, e.g., `git commit -m "closes #3 by doing xyz"` 
 
-1) copy its link (HTTPS or SSH, I use SSH) from "<>Code"  in green, "Local" on GitHub
-2) write in console in a folder where you want the new link: ` git clone "the copied link"`
-3) change working directory to the new link
-	* maybe try `git status`
+Find the full list of phrases to close an issue on the [GitHub website](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
 
+::: callout-tip
+#### Trouble?
 
-### Copy a remote from someone else and rename
+When you have any errors, check the list below in @sec-errorhandling or (the classic) search for the error message online.
+:::
 
-#### Step-by-step
-
-1. Wherever you want to have it, open the terminal and a new folder will be created with the clone in it
-```shell
-git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
-```
-2. Make the origin to the original-origin
-```shell
-git remote rename origin original-origin 
-```
-
-3. Create repository on GitHub and add the your github as new remote and set your branch to main
-```shell
-git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
-git branch -M main
-```
-
-4. Push these changes to GitHub
-```shell
-git push -u origin main
-```
-
-#### Full step-by-step code: 
-```shell
-git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
-
-git remote rename origin original-origin 
-
-git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
-git branch -M main
-git push -u origin main
-```
-
-### Closing an Issue in GitHub
-
-Mention specific words in your `git commit -m "message"`, e.g.,  `git commit -m "closes #3 by doing xyz" ` 
-[GitHub](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
-
-
-
-
-
-## Gitignore
-
- A default for R projects: [https://github.com/github/gitignore/blob/main/R.gitignore](https://github.com/github/gitignore/blob/main/R.gitignore)
- 
-
-### When an ignored file is still around: 
-
-1.  __Delete it.__  [Source](https://docs.github.com/en/get-started/git-basics/ignoring-files)  
-2. Remove it from git
-
-```shell
-git rm --cached FILENAME
-```
-
-
-## Git Error Handling
+## Git Error Handling {#sec-errorhandling}
 
 ### Conflict resolution
-```shell
+
+``` shell
 $ git checkout --theirs -- path/to/conflicted-file.txt
 ```
 
-You are good to repeat the process above :) 
-
+You are good to repeat the process above :)
 
 ### Solve error: Unable to create 'Folder/.git/index.lock': File exists.
 
-```shell
+``` shell
 # copy .git directory outside the project  
 cp -r .git ../.git.bc  
   
@@ -123,6 +104,74 @@ rm ../.git.bc/index.lock
 # move back .git  
 mv ../.git.bc .git
 ```
-[Source](https://medium.com/@rizqyhi/how-to-fix-git-error-fatal-unable-to-create-git-index-lock-file-exists-bad8302d283f) 
 
+[Source](https://medium.com/@rizqyhi/how-to-fix-git-error-fatal-unable-to-create-git-index-lock-file-exists-bad8302d283f)
+
+
+
+
+
+
+## Varying other infos
+
+### Assume you created a repo in Github
+
+1)  copy its link (HTTPS or SSH, I use SSH) from "\<\>Code" in green, "Local" on GitHub
+2)  write in console in a folder where you want the new link: `git clone "the copied link"`
+3)  change working directory to the new link
+    - maybe try `git status`
+
+### Copy a remote from someone else and rename
+
+#### Step-by-step
+
+1.  Wherever you want to have it, open the terminal and a new folder will be created with the clone in it
+
+``` shell
+git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
+```
+
+2.  Make the origin to the original-origin
+
+``` shell
+git remote rename origin original-origin 
+```
+
+3.  Create repository on GitHub and add the your github as new remote and set your branch to main
+
+``` shell
+git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
+git branch -M main
+```
+
+4.  Push these changes to GitHub
+
+``` shell
+git push -u origin main
+```
+
+#### Full step-by-step code:
+
+``` shell
+git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
+
+git remote rename origin original-origin 
+
+git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
+git branch -M main
+git push -u origin main
+```
+
+## Gitignore
+
+A default for R projects: <https://github.com/github/gitignore/blob/main/R.gitignore>
+
+### When an ignored file is still around:
+
+1.  **Delete it.** [Source](https://docs.github.com/en/get-started/git-basics/ignoring-files)\
+2.  Remove it from git
+
+``` shell
+git rm --cached FILENAME
+```
 
