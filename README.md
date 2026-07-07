@@ -6,7 +6,7 @@
 Below is an overview of the repository layout:
 
 ```
-.
+
 ├── 01_data/                # All project data
 │   ├── raw/                # Original, immutable data (do not modify)
 │   ├── processed/          # Cleaned/transformed data (outputs from scripts)
