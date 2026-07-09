@@ -83,7 +83,7 @@ When you have any errors, check the list below in @sec-errorhandling or (the cla
 
 ### Conflict resolution
 
-``` shell
+```bash
 $ git checkout --theirs -- path/to/conflicted-file.txt
 ```
 
@@ -91,7 +91,7 @@ You are good to repeat the process above :)
 
 ### Solve error: Unable to create 'Folder/.git/index.lock': File exists.
 
-``` shell
+```bash
 # copy .git directory outside the project  
 cp -r .git ../.git.bc  
   
@@ -127,32 +127,32 @@ mv ../.git.bc .git
 
 1.  Wherever you want to have it, open the terminal and a new folder will be created with the clone in it
 
-``` shell
+```bash
 git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
 ```
 
 2.  Make the origin to the original-origin
 
-``` shell
+```bash
 git remote rename origin original-origin 
 ```
 
 3.  Create repository on GitHub and add the your github as new remote and set your branch to main
 
-``` shell
+```bash
 git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
 git branch -M main
 ```
 
 4.  Push these changes to GitHub
 
-``` shell
+```bash
 git push -u origin main
 ```
 
 #### Full step-by-step code:
 
-``` shell
+```bash
 git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
 
 git remote rename origin original-origin 
@@ -171,7 +171,7 @@ A default for R projects: <https://github.com/github/gitignore/blob/main/R.gitig
 1.  **Delete it.** [Source](https://docs.github.com/en/get-started/git-basics/ignoring-files)\
 2.  Remove it from git
 
-``` shell
+```bash
 git rm --cached FILENAME
 ```
 
