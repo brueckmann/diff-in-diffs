@@ -50,6 +50,9 @@ modelsummary::datasummary_skim(     dat ,
 tabdiesel <- data %>%
   count(dummy_diesel_ass, dummy_diesel, .drop = FALSE)
 
+# table needs better captioning
+
+
 diesel_tbl <- tinytable::tt(tabdiesel,
                             width = 1,
                             digits = 0)
@@ -66,7 +69,7 @@ Legaswitch_legis_lm_ms<-estimatr:: lm_robust(sw_to_lega_18_19~dummy_diesel+dummy
 
 
 
-
+#make table visible and intrepret 
 
 
 
@@ -115,7 +118,7 @@ Legaswitch_legis_all$Model<-factor(Legaswitch_legis_all$Model, levels=c("1","2",
 Legaswitch_legis_all$term3<-factor(Legaswitch_legis_all$term2, 
                                    levels =c("Euro 4", "Diesel", "Diesel Euro 4"))
 
-
+#change the far right panel
 
 # Coefplot for figure 4  a   
 coefplot_2018Legislative<-
@@ -272,6 +275,8 @@ coefplot_2016Municipal<-
 ############
 # Figure 6 #
 ############
+
+# wrong data input from here! 
 
 # Panel (a) From municipal 2016 to legislative 2018  -----------
 # 1. no control

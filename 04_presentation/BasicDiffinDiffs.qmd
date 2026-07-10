@@ -1,43 +1,50 @@
 ---
 title: "Difference-in-Differences"
-subtitle: "The basics"
-date: 2025-12-10
-author: "G.Brueckmann"
+subtitle: "The very basics"
+date: 2026-07-10
+author: "G. Brueckmann"
 format: 
   revealjs:
+    code-summary: "Display R code"
+    code-tools: true
     embed-resources: true
 ---
-
-## What is the most basic Difference-in-Differences?
-
-Using the interaction of time and random assignment to the intervention to estimate the causal effect from the intervention.
-
-## The Set-Up in R
-
+  
+## What is  *Difference-in-Differences*?
+  
+::: {.callout-important collapse="true"}
+### The basic idea of difference-in-differences
+Using the **interaction** of *time* and (quasi-)random *assignment to the intervention* to estimate the causal effect of the intervention.
+:::
+  
+  <!-- ## The Set-Up in R -->
+  
 ```{r}
-#| label: setup
+#| label: setup 
+#| code-summary: "Display R code loading relevant R packages"
 #| echo: true
 #| code-fold: true
 #| message: false
 #| warning: false
 
-library(tidyverse)
-library(tinytable)
-library(modelsummary)
-library(fixest)
+library(tidyverse) # to do data wrangling
+library(tinytable) # to report tables nicely
 
+library(causaldata) # to get data accompanying Huntington-Klein's `The Effect` book¨
+library(modelsummary) # to report results
+
+library(fixest) # for fixed-effects estimation 
 ```
 
-## Let's look in The Effect
+## Example 1: Cholera in London
 
-[https://theeffectbook.net/ch-DifferenceinDifference.html](https://theeffectbook.net/ch-DifferenceinDifference.html)
+In [The Effect (Chapter 18)](https://theeffectbook.net/ch-DifferenceinDifference.html) Huntington-Klein cites *John Snows' (1855) study on cholera transmission* (through fecal matters) in London's drinking water. 
 
-## Example 1: Cholera in London example
-Huntington-Klein in [The Effect](https://theeffectbook.net/ch-DifferenceinDifference.html) cites John Snows' (1855) study on cholera transmission (through fecal matters) in London's drinking water. Between 1849 and 1854 Lambeth moved their well upstream.
+Between 1849 and 1854 Lambeth moved their well upstream, thus the water becomes cleaner.
 
 ```{r}
 #| label: tbl-lndtable
-#| tbl-cap: From the The Effect book
+#| tbl-cap: Death rates by areas with different water suppliers
 #| echo: true
 #| code-fold: true
 #| message: false
@@ -45,86 +52,143 @@ Huntington-Klein in [The Effect](https://theeffectbook.net/ch-DifferenceinDiffer
 
 
 
-lnddata <- tibble::tribble(~'Water Supplier', ~ 'Death Rate in 1849',  ~ 'Death Rate in 1854',
-'Non-Lambeth', 134.9, 146.6,
-'Lambeth', 130.1, 84.9)
-
-tt(lnddata, width = 1)
-```
+lnddata <- tibble::tribble(~'Water Supplier', ~ '1849',  ~ '1854',
+                           'Non-Lambeth', 134.9, 146.6,
+                           'Lambeth', 130.1, 84.9)
 
 
-## Ex1: Compute the diff-in-diffs
-
-```{r}
-#| label: tbl-lnddiff
-#| tbl-cap: Differences in death rates between water suppliers ...
-#| echo: true
-#| code-fold: true
-#| message: false
-#| warning: false
-
-
-diffs <- lnddata %>%
-  summarise(
-    `in 1849` = first(`Death Rate in 1849`) - last(`Death Rate in 1849`),
-    `in 1854` =   first(`Death Rate in 1854`) - last(`Death Rate in 1854`)
-  )
-
-diffs2  <- cbind(diffs, NA)
-
-tt(diffs2, width = 1) |>
-  setNames(c("in 1849", "in 1854", ""))   |>
+tt(lnddata, width = c(0.45, 0.1, 0.1)) |>
   format_tt(replace = "") |>
+  style_tt(j = c(2:3), align = "c") |>
+  group_tt(j = list("Death Rates" = c(2, 3)))  |>
   theme_tt("revealjs")
 
 ```
 
-. . . 
+------------------------------------------------------------------------
+  
+### Ex1: Differences between water suppliers {auto-animate="true"}
+  
+```{r}
+#| label: tbl-lnddiffbetweenwells
+#| tbl-cap: Differences in death rates between water suppliers (at each point in time) 
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
 
 
+diff_row <- lnddata |>
+  summarise(
+    `Water Supplier` = "Difference (between suppliers)",
+    `1849` = `1849`[1] - `1849`[2],
+    `1854` = `1854`[1] - `1854`[2]
+  )
+
+diffs_sup <- bind_rows(lnddata, diff_row)
+
+tt(diffs_sup,width = c(0.45, 0.1, 0.1)) |>
+  format_tt(replace = "") |>
+  style_tt(j = c(2:3), align = "c") |>
+  style_tt(i = 3, bold = TRUE) |> 
+  group_tt(j = list("Death Rates" = c(2, 3)))  |>
+  theme_tt("revealjs")
+```
+
+------------------------------------------------------------------------
+  
+### Ex1: Differences over time {auto-animate="true"}
+  
+```{r}
+#| label: tbl-lnddiffovertime
+#| tbl-cap: Differences in death rates over time (each supplier)
+#| echo: true
+#| code-fold: true
+#| message: false
+#| warning: false
+
+diffs_time <- diffs_sup  |>
+  mutate(
+    `Difference\n(1854-1849)` = 
+      if_else( # use if else to only calculate differences over time per supplier
+        `Water Supplier` %in% c("Non-Lambeth", "Lambeth"),
+        `1854` - `1849` ,
+        NA
+      )
+  )
+
+tt(diffs_time, width = c(0.45, 0.1, 0.1, 0.2))|>
+  group_tt(j = list("Death Rates" = c(2, 3)))  |>
+  format_tt(replace = "") |>
+  style_tt(j = c(2:3), align = "c") |>
+  style_tt(j = 4, bold = TRUE) |> 
+  theme_tt("revealjs")
+
+```
+
+------------------------------------------------------------------------
+  
+### Ex1: Compute the difference-in-differences {auto-animate="true"}
+  
+  
 ```{r}
 #| label: tbl-lnddiffindiff
-#| tbl-cap: Differences in differences over time
+#| tbl-cap: Differences in differnces of death rates over time and between suppliers
 #| echo: true
 #| code-fold: true
 #| message: false
 #| warning: false
 
-lnddid <- diffs %>%
-  mutate(`1854-1849` =  `in 1854` - `in 1849`)
 
-tt(lnddid, width = 1) |> theme_tt("revealjs")
+lnd_diffindiffs <- diffs_time  |>
+  mutate(
+    `Difference\n(1854-1849)` = 
+      `1854` - `1849`
+  )
 
-lnd_diff_in_diffs <- lnddid %>% select(`1854-1849`) %>% pull()
+tt(lnd_diffindiffs, width = c(0.45, 0.1, 0.1, 0.2))|>
+  group_tt(j = list("Death Rates" = c(2, 3)))  |>
+  format_tt(replace = "") |>
+  style_tt(j = c(2:3), align = "c") |>
+  style_tt(i = 3, j = 4, bold = TRUE) |> 
+  style_tt(i = 3, j = 1, bold = TRUE) |> 
+  theme_tt("revealjs")
+
+
+
+lnd_did_pe <- lnd_diffindiffs  |> filter(`Water Supplier` == "Difference (between suppliers)")  |> select(`Difference\n(1854-1849)`)  |> pull()
 ```
-This gave you the diff-in-diffs estimate of `r lnd_diff_in_diffs`.
 
 
-
-## Graphical representation
-
+<!-- This text appears later. -->
+::: {.fragment}
+$\Rightarrow$ Differences in death rates between suppliers (1854-1849) (or differences in death rates over time between suppliers) gave you the diff-in-diffs point estimate of **`{r} lnd_did_pe`**.
+:::
+  
+  
+------------------------------------------------------------------------
+  
+### Ex1: Graphical Representation {.nostretch}
+  
 ```{r}
-#| label: fig-lnd
-#| echo: true
-#| code-fold: true
+#| label: createfigure
+#| code-summary: "Display R code to create the figure"
 #| message: false
 #| warning: false
-#| fig-align: center
-#| fig-cap: Plotting of the London water example
-#| fig-height: 5
-#| fig-width: 10
-#| out-width: 100%
+#| code-fold: true
+
 
 # make data from wide to long format for plotting
-lnddata_long <- lnddata %>%
+lnddata_long <- lnddata |>
   pivot_longer(
     cols = -`Water Supplier`,
     names_to = "Year",
     values_to = "Death_Rate",
-    names_transform = list(Year = parse_number) ### only keep the year not the text before
-  )  %>% rename(Supplier = `Water Supplier`)
+    names_transform = list(Year = parse_number)### only keep the year not any text 
+  )  |> rename(Supplier = `Water Supplier`)
 
-ggplot(lnddata_long, aes(Year, Death_Rate)) +
+londonplot <- 
+  ggplot(lnddata_long, aes(Year, Death_Rate)) +
   geom_point(aes(
     colour = Supplier,
     # outline colour
@@ -147,7 +211,7 @@ ggplot(lnddata_long, aes(Year, Death_Rate)) +
       # treated gets a square
       "Non-Lambeth" = "circle plus"     # circle for control
     ),
-    labels = c("Lambeth" = "Lambeth (treated in 1854)", "Non-Lambeth"     = "Non-Lambeth (Control)")
+    labels = c( "Non-Lambeth"     = "Non-Lambeth", "Lambeth" = "Lambeth")
   )   +
   # set outline colours manually and rename
   scale_colour_manual(
@@ -156,55 +220,164 @@ ggplot(lnddata_long, aes(Year, Death_Rate)) +
       # viridis light green-ish
       "Non-Lambeth"     = "#440154"   # viridis purple-ish
     ),
-    labels = c("Lambeth" = "Lambeth (treated in 1854)", "Non-Lambeth"     = "Non-Lambeth (Control)")
+    labels = c( "Non-Lambeth"     = "Non-Lambeth", "Lambeth" = "Lambeth")
   ) +
   scale_x_continuous(
     labels = c("1849", "1854"),
     breaks = c(1849, 1854),
     minor_breaks = seq(1849, 1854, 1)
   ) +
-  labs(y = "Death rate")   +
+  labs(y = "Death rates")   +
   coord_fixed(ratio = 0.08,
               expand = TRUE,
-              reverse = "y")   + ### make the plot more squared
+              reverse = "y")   +### make the plot more squared
   theme_minimal(base_size = 20) +
   theme(
     panel.grid.minor = element_blank(),
-    legend.title = element_blank(),
-    legend.key = element_rect(fill = NA, color = NA),
     # remove grey fill
     strip.background = element_blank(),
     panel.border = element_blank(),
-    plot.title = element_text(size = 22, colour = "black"),
-    # no hjust for centered titles
+    plot.title = element_blank(),
     axis.line.y.left = element_line(colour = "black"),
     axis.line.x.bottom  =   element_line(colour = "black"),
     axis.text = element_text(size = 18, colour = "black"),
     axis.title.y = element_text(size = 18, colour = "black"),
+    #define the legend
     legend.text = element_text(size = 18, colour = "black"),
-    #
-    legend.position = "right"
+    legend.title = element_blank(),
+    legend.key = element_rect(fill = NA, color = NA),
+    #define the legend inside the plot area
+    legend.position = "inside",
+    legend.justification = c("left", "top")
   )
 
+
+londonplot_sidelegend <- ggplot(lnddata_long, aes(Year, Death_Rate)) +
+  geom_point(aes(
+    colour = Supplier,
+    # outline colour
+    shape  = Supplier
+  ), size = 9) +
+  geom_smooth(
+    aes(colour = Supplier),
+    # one line per supplier
+    method  = "lm",
+    formula = y ~ x,
+    linewidth = 0.6,
+    # smaller value = thinner line
+    alpha   = 0.1 ,
+    # set line transparency
+    show.legend = FALSE
+  ) +
+  scale_shape_manual(
+    values = c(
+      "Lambeth" = "square cross",
+      # treated gets a square
+      "Non-Lambeth" = "circle plus"     # circle for control
+    ),
+    labels = c( "Non-Lambeth"     = "Non-Lambeth (Control)", "Lambeth" = "Lambeth (treated in 1854)")
+  )   +
+  # set outline colours manually and rename
+  scale_colour_manual(
+    values = c(
+      "Lambeth" = "#5DC863",
+      # viridis light green-ish
+      "Non-Lambeth"     = "#440154"   # viridis purple-ish
+    ),
+    labels = c( "Non-Lambeth"     = "Non-Lambeth (Control)", "Lambeth" = "Lambeth (treated in 1854)")
+  ) +
+  scale_x_continuous(
+    labels = c("1849\n(pre-treatment)", "1854\n(post-treatment)"),
+    breaks = c(1849, 1854),
+    minor_breaks = seq(1849, 1854, 1)
+  ) +
+  labs(y = "Death rates")   +
+  coord_fixed(ratio = 0.08,
+              expand = TRUE,
+              reverse = "y")   +### make the plot more squared
+  theme_minimal(base_size = 20) +
+  theme(
+    panel.grid.minor = element_blank(),
+    # remove grey fill
+    strip.background = element_blank(),
+    panel.border = element_blank(),
+    plot.title = element_blank(),
+    axis.line.y.left = element_line(colour = "black"),
+    axis.line.x.bottom  =   element_line(colour = "black"),
+    axis.text = element_text(size = 18, colour = "black"),
+    axis.title.y = element_text(size = 18, colour = "black"),
+    #define the legend
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.title = element_blank(),
+    legend.key = element_rect(fill = NA, color = NA),
+    legend.position = "right")  
+
+```
+::: {data-id="myfig"}
+```{r}
+#| label: fig-lnd
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-align: center
+#| fig-cap: The Cholera in London example, where Lambeth is considered treated in 1854.
+#| fig-height: 5
+#| fig-width: 5
+#| out-width: 55%
+londonplot
+```
+::: 
+  
+------------------------------------------------------------------------
+  
+### Ex1: Suggestions for additional exercises {auto-animate="true" .nostretch}
+::: {data-id="myfig"}
+```{r}
+#| label: lnd-smaller
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-align: center
+#| fig-height: 5
+#| fig-width: 5
+#| out-width: 30%
+londonplot
+```
+:::
+::: {.callout-tip collapse="true"}
+#### Suggestion: As additional exercises ...
+- visualise all differences computed in @tbl-lnddiffindiff in the @fig-lnd
+- write the corresponding regression equation using time and treatment dummies 
+- visualise the resulting different $\beta$ coefficients in @fig-lnd
+:::
+  
+## TEST
+```{r}
+#| label: fig-lnd-test
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-align: center
+#| fig-cap: The Cholera in London example, where Lambeth is considered treated in 1854.
+#| fig-height: 5
+#| fig-width: 5
+
+londonplot_sidelegend
 ```
 
-::: {.callout-tip collapse="true"}
-## Tip: 
-As an exercise, write the corresponding regression using time and treatment dummies and recall what the different $\beta$ coefficients are in the graph!
-:::
 
-
-
-## Example 2: California's new op-out organ donation sytem {.r-fit-text}
+## Example 2: Organ donation system 
+Now, consider California's July 2011 switch from an opt-in to an active choice
+organ donation system. 
 
 ::: {.callout-tip collapse="true"}
-## Tip: 
-Look at the code to recall why there is only one coefficient here.
+#### Suggestion:
+Look at the R code and recall why there is only one coefficient here.
 :::
 
 ```{r}
 #| label: tbl-californiaex
-#| tbl-cap: Two-way fixed effects using the feols package
+#| tbl-cap: Two-way fixed effects using the `feols` package
 #| echo: true
 #| code-fold: true
 #| message: false
@@ -215,7 +388,7 @@ Look at the code to recall why there is only one coefficient here.
 od <- causaldata::organ_donations
 
 # Treatment variable
-od <- od %>%
+od <- od |>
   mutate(Treated = State == 'California' &
            Quarter %in% c('Q32011', 'Q42011', 'Q12012'))
 
@@ -232,15 +405,13 @@ modelsummary(
 
 ```
 
-
-
 ## Important R packages:
 
 `lm`, `fixest`, and `lfe`
 
 ```{r}
 #| label: tbl-otherpackages
-#| tbl-cap: Two-way fixed effects using the lfe package
+#| tbl-cap: Two-way fixed effects using the `lfe` package
 #| echo: true
 #| code-fold: true
 #| message: false
@@ -261,22 +432,22 @@ modelsummary(twfe,
 
 ```
 
-::: {.callout-note}
-Note that @tbl-otherpackages gives you the same point estimate as @tbl-californiaex in both columns but `modelsummary` (called after estimation for display) does not let you cluster the SEs the same way as in @tbl-californiaex (as `modelsummary` relies on the `sandwich` package, which can't handle `lfe` variance-covariance-matrix estimates, see [https://github.com/jepusto/clubSandwich/issues/40](https://github.com/jepusto/clubSandwich/issues/40)). This means, use the second specification using `| SECLUSTERVAR` if you use `felm` from the `lfe` package.
+::: callout-note
+Note that @tbl-otherpackages gives you the same point estimate as @tbl-californiaex in both columns but `modelsummary` (called after estimation for display) does not let you cluster the SEs the same way as in @tbl-californiaex (as `modelsummary` relies on the `sandwich` package, which can't handle `lfe` variance-covariance-matrix estimates, see <https://github.com/jepusto/clubSandwich/issues/40>). This means, use the second specification using `| SECLUSTERVAR` if you use `felm` from the `lfe` package.
 :::
-
+  
 ## Additional Resources
-
+  
 ### Basics:
-
-<https://statisticsglobe.com/fixed-effects-linear-regression>
-
-<https://rpubs.com/corinne-riddell/guide-to-did-estimators>
-
+  
+  <https://statisticsglobe.com/fixed-effects-linear-regression>
+  
+  <https://rpubs.com/corinne-riddell/guide-to-did-estimators>
+  
 ### Advanced:
-
-[https://asjadnaqvi.github.io/DiD/](https://asjadnaqvi.github.io/DiD/)
-
-<https://psantanna.com/did-resources/>
-
-(has many resources!)
+  
+  <https://asjadnaqvi.github.io/DiD/>
+  
+  <https://psantanna.com/did-resources/>
+  
+  (has many resources!)
