@@ -25,11 +25,11 @@ Below is an overview of the repository layout:
 ├── renv/                   # For replicability a renv.lock is used
 │   └── README.md           # Describe contents
 renv.lock                   # r packages used
-├── Diff-in-diffs.Rproj     # The R project (open it using R Studio)
+├── diff_in_diffs.Rproj     # The R project (open it using R Studio)
 └── README.md               # Project overview and setup instructions (this file)
-└── session-info.txt        # Information on the R session
+└── session_info.txt        # Information on the R session
 └── software.bib            # Cites R packages used
-└── Githubinfos.qmd         # Explains the very basics of Git and Github usage
+└── github_infos.qmd        # Explains the very basics of Git and Github usage
 ```
 
 # Acknowledgements: 
