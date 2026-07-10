@@ -29,7 +29,7 @@ renv.lock                   # r packages used
 └── README.md               # Project overview and setup instructions (this file)
 └── session_info.txt        # Information on the R session
 └── software.bib            # Cites R packages used
-└── github_infos.qmd         # Explains the very basics of Git and Github usage
+└── github_infos.qmd        # Explains the very basics of Git and Github usage
 ```
 
 # Acknowledgements: 
