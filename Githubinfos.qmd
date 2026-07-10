@@ -63,14 +63,13 @@ And Linux or WSL users here:  https://git-scm.com/download/linux
     - optional: and see the git status (type: `git status`)
 4)  select (far left in RStudio's git panel) or make (lilac symbol in RStudio's git panel) own branch for your changes
 5)  in console type `git add filename` or `git add .` (the point means everything) 
-6) when you want to sync your local changes with online project: save document
-7) in RStudio's git panel tick the files and click on *Diff* (leftmost option; without ticking files you won't be able to use commit in the next step)
+6) when you want to sync your local changes with online project save document first, then tick in RStudio's git panel the files and click on *Diff* (leftmost option; without ticking files you won't be able to use commit in the next step)
     - optional: and see the git status (type: `git status`)
-6)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
+7)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
     - optional: and see the git status (type: `git status`)
-7)  in console type: `git push` (green up arrow in RStudio, or with code)
-8)  open a pull request for your changes (in GitHub (desktop))
-9)  assign it to the other person to merge it
+8)  in console type: `git push` (green up arrow in RStudio, or with code)
+9)  open a pull request for your changes (in GitHub (desktop))
+10)  assign it to the other person to merge it
 
 ### Closing an Issue in GitHub {#sec-closing}
 
