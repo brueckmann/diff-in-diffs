@@ -41,16 +41,19 @@ It only covers some basics.
 On using Git and Github in RStudio, the official info is [here](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html), but IMHO a good resource is [Happy Git and Github for the useR](https://happygitwithr.com/), which is freely available on [https://happygitwithr.com/](https://happygitwithr.com/). 
 
 
-[There](https://happygitwithr.com/https-pat), I also learned that one should use `HTTPS` with a a personal access token (PAT), not `SSH key pairs`, to connect your RStudio with GitHub. Maybe try these steps? 
+[There](https://happygitwithr.com/https-pat), I also learned that one should use `HTTPS` with a personal access token (PAT), not `SSH key pairs`, to connect your RStudio with GitHub. Maybe try these steps? 
 
 
 
 
 ## Preparation
 
-- some people need to install git, I am on a Mac, have XCODE installed, so it was already there
+- some people need to install git, I am on a Mac, have XCODE installed, so it was already there. For Mac users you can download git here: https://git-scm.com/downloads/mac
+Window users here: https://git-scm.com/downloads/win
+And Linux or WSL users here:  https://git-scm.com/download/linux
 
-- in the correct working directory: initialise the git type in console: `git init`
+- set working directory: cd"*write path*"
+- to create an empty Git repository or reinitialise an existing one: `git init`
 
 ## Workflow (in general)
 
@@ -59,13 +62,14 @@ On using Git and Github in RStudio, the official info is [here](https://docs.pos
 3)  Change something to fix it (add/delete,...) 
     - optional: and see the git status (type: `git status`)
 4)  select (far left in RStudio's git panel) or make (lilac symbol in RStudio's git panel) own branch for your changes
-5)  in console type `git add filename` or `git add .` (the point means everything) (in RStudio's git panel tick the files and click on Diff, leftmost arrow; without ticking files you won't be able to use commit in the next step)
+5)  in console type `git add filename` or `git add .` (the point means everything) 
+6) when you want to sync your local changes with online project save document first, then tick in RStudio's git panel the files and click on *Diff* (leftmost option; without ticking files you won't be able to use commit in the next step)
     - optional: and see the git status (type: `git status`)
-6)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
+7)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
     - optional: and see the git status (type: `git status`)
-7)  in console type: `git push` (green up arrow in RStudio, or with code)
-8)  open a pull request for your changes (in GitHub (desktop))
-9)  assign it to the other person to merge it
+8)  in console type: `git push` (green up arrow in RStudio, or with code)
+9)  open a pull request for your changes (in GitHub (desktop))
+10)  assign it to the other person to merge it
 
 ### Closing an Issue in GitHub {#sec-closing}
 
