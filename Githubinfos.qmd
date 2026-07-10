@@ -118,6 +118,20 @@ mv ../.git.bc .git
 
 ## Varying other infos
 
+### Branches
+
+#### See all remote (=available online) branches
+- run `git branch -d <branch>` (twice) to see and then remove
+
+#### See all your local branches
+ `git branch` 
+ 
+#### See all branches (remote and local) 
+ `git branch -a` 
+ 
+#### Delete your local branches
+ `git branch -d <branch>` 
+
 ### Assume you created a repo in Github
 
 1)  copy its link (HTTPS or SSH, I use SSH) from "\<\>Code" in green, "Local" on GitHub
