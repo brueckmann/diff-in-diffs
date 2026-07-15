@@ -11,16 +11,26 @@ bibliography: references.yaml
 
 ```{r}
 #| label: setup
-#| echo: true
 #| message: false
 #| warning: false
 #| code-fold: true
 
-
 packs <- c('knitr', 'tidyverse', 'fixest', 'tinytable', 'modelsummary', 'this.path')
-success <- suppressWarnings(sapply(packs, require, character.only = TRUE))
-install.packages(names(success)[!success])
-sapply(names(success)[!success], require, character.only = TRUE)
+
+# 1. Check packages without carrying over names
+success <- suppressWarnings(sapply(packs, require, character.only = TRUE, USE.NAMES = FALSE))
+
+# 2. Extract failed packages using indexing instead of names
+failed_packs <- packs[!success]
+
+# 3. Install missing packages
+if (length(failed_packs) > 0) {
+  install.packages(failed_packs)
+  
+  # 4. Retry loading missing packages without names
+  sapply(failed_packs, require, character.only = TRUE, USE.NAMES = FALSE)
+}
+
 
 # set options
 options(modelsummary_format_numeric_latex = "plain")
@@ -32,23 +42,101 @@ current_script_dir <- this.path::this.dir()
 # cat("Script directory:", current_script_dir, "\n")
 
 # Set project root 
-project_root <- this.path::dirname2(current_script_dir)
+project_root <-  this.path::this.proj()
 opts_knit$set(root.dir = project_root)
 # cat("Project root set to:", getwd(), "\n")
 
 
+
 ```
 
-### Data Cleaning
-
-
-
 ```{r}
-#| label: data-cleaning 
+#| label: source-lines-function
 #| echo: true
 #| message: false
 #| warning: false
 #| code-fold: true
+
+#' Source specific lines in an R file (from https://gist.github.com/christophergandrud/1eb4e095974204b12af9#file-source_lines-r)
+#'
+#' @param file character string with the path to the file to source.
+#' @param lines numeric vector of lines to source in \code{file}.
+
+source_lines <- function(file, lines){
+    source(textConnection(readLines(file)[lines]))
+}
+
+```
+
+### View raw data
+
+
+
+```{r}
+#| label: data-import
+#| echo: true
+#| message: false
+#| warning: false
+#| code-fold: true
+
+source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (18:21))
+```
+
+```{r}
+#| label: data-raw-view
+#| echo: true
+#| message: false
+#| warning: false
+#| code-fold: true
+
+
+### View some variables: 
+
+# table(Replication_data$class, exclude = NULL)
+
+Replication_data |>
+  count(class, .drop = FALSE) |>
+  mutate(pct = n / sum(n) * 100)
+
+# table(Replication_data$fuel, exclude = NULL)
+
+Replication_data |>
+  count(fuel, .drop = FALSE) |>
+  mutate(pct = n / sum(n) * 100)
+
+
+# table(Replication_data$target, exclude = NULL)
+Replication_data |>
+  count(target, .drop = FALSE) |>
+  mutate(pct = n / sum(n) * 100)
+
+
+```
+
+### Data cleaning
+
+```{r}
+#| label: data-cleaning
+#| echo: true
+#| message: false
+#| warning: false
+#| code-fold: true
+
+
+# Source local code
+
+source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (23:176))
+
+```
+
+
+```{r}
+#| label: data-cleaning-verbose
+#| eval: false
+#| message: false
+#| warning: false
+#| code-fold: true
+#| include: false
 
 
 ### Import data ####
@@ -149,7 +237,8 @@ Replication_data$profile_gross_personal_eu_2_fac <- factor(
     "No Answer / DK"
   )
 )
-Replication_data$income <- Replication_data$income
+
+
 Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
 
 #### Age
@@ -230,11 +319,12 @@ Note the variable `target` that is 4 if the car is unknown! (For some it is also
 ##  To display Table 1 in their paper:
 
 ```{r}
-#| label: table-2-prep
-#| echo: true
+#| label: table-1-prep-verbose
+#| eval: false
 #| message: false
 #| warning: false
 #| code-fold: true
+#| include: false
 
 # Age
 
@@ -347,16 +437,21 @@ rm(age_tbl, gender_tbl, educ_tbl , income_tbl, n_tbl, for_tab_1)
 
 ```
 
+
+
+
+
 ```{r}
 #| label: prepare-table-1
-#| eval: false
+#| echo: true
 #| message: false
 #| warning: false
-#| include: false
+#| code-fold: true
 
 
 # Source local code
-source(file.path(project_root, "02_analysis/02_descriptives.R"))
+
+source_lines(file.path(project_root, "02_rscripts/02_descriptives.R"), (31:183))
 
 ```
 
