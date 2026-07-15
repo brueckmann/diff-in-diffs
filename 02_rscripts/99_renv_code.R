@@ -4,7 +4,7 @@
 renv::init() #initialise it
 renv::load() # to see if you are in sync
 ### install packages
-packs <- c('causaldata', 'data.table', 'estimatr', 'evaluate', 'fixest', 'ggplot2',
+packs <- c('dataverse', 'causaldata', 'data.table', 'estimatr', 'evaluate', 'fixest', 'ggplot2',
            'haven', 'lfe', 'magrittr', 'modelsummary', 'openssl', 'ragg',
            'softbib', 'stringr', 'this.path', 'tinytable', 'xfun', 'renv'           )
 success <- suppressWarnings(sapply(packs, require, character.only = TRUE))
