@@ -276,15 +276,15 @@ coefplot_2016Municipal<-
 # Panel (a) From municipal 2016 to legislative 2018  -----------
 # 1. no control
 pl16_18v2_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4, 
-                           data=Replication_data, subset=c( target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
+                           data=data, subset=c( target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
 # 2. with controls
 pl16_18v2_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4+
                                age+female+EDU+INC, 
-                             data=Replication_data, subset=c(target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                             data=data, subset=c(target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 # 3. Including unkown-car and assigning the treatment
 pl16_18v2_lm_cont_Unkncar<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                        age+female+EDU+INC+dummy_car_unknown, 
-                                     data=Replication_data, subset=c(target!=3 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                                     data=data, subset=c(target!=3 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 ## Merge all models together
 M.pl16_18v2_lm_ms <-  tidy(pl16_18v2_lm_ms, conf.int = TRUE)
 M.pl16_18v2_lm_cont <-  tidy(pl16_18v2_lm_cont, conf.int = TRUE)
@@ -317,15 +317,15 @@ M.pl16_18v_all_mainsub_Sub$Model2<-factor(M.pl16_18v_all_mainsub_Sub$Model, leve
 # Panel (b) From municipal 2016 to regional 2018  ----------
 # 1. no control
 pl16_regv2_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4, 
-                            data=Replication_data, subset=c( target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
+                            data=data, subset=c( target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
 # 2. with controls
 pl16_regv2_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4+
                                 age+female+EDU+INC, 
-                              data=Replication_data, subset=c(target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                              data=data, subset=c(target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 # 3. Including unkown-car and assigning the treatment
 pl16_regv2_lm_cont_Unkncar<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                         age+female+EDU+INC+dummy_car_unknown, 
-                                      data=Replication_data, subset=c(target!=3 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                                      data=data, subset=c(target!=3 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 
 ## Merge all models together
 M.pl16_regv2_lm_ms <-  tidy(pl16_regv2_lm_ms, conf.int = TRUE)
