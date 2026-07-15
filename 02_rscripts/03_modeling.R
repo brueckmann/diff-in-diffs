@@ -122,7 +122,7 @@ coefplot_2018Legislative<-
   ggplot(Legaswitch_legis_all, aes(term3, estimate,colour=term3, fill=term3))+ 
   scale_fill_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
   scale_colour_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
-  geom_hline(yintercept=0, linetype="longdash", lwd=0.9, size=2, 
+  geom_hline(yintercept=0, linetype="longdash", lwd=0.9, 
              colour = "#6C7B8B", alpha=1) +
   geom_errorbar(stat = "identity", alpha = 1, 
                 position = position_dodge(width = 0.15),
@@ -184,7 +184,7 @@ coefplot_2019Regional<-
   ggplot(Legaswitch_region_all, aes(term3, estimate,colour=term3, fill=term3))+ 
   scale_fill_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
   scale_colour_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
-  geom_hline(yintercept=0, linetype="longdash", lwd=0.9, size=2, 
+  geom_hline(yintercept=0, linetype="longdash", lwd=0.9,  
              colour = "#6C7B8B", alpha=1) +
   geom_errorbar(stat = "identity", alpha = 1, 
                 position = position_dodge(width = 0.15),
