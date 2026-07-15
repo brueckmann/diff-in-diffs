@@ -14,10 +14,16 @@ echo "=========================================="
 echo "Working directory: $SCRIPT_DIR"
 echo ""
 
+# Install R packages
+echo "Installing R packages..."
+Rscript -e "renv::restore()"
+echo "✓ Packages installed"
+echo ""
+
 # Run data cleaning
 echo "Step 1: Running data cleaning..."
 echo "Executing: 01_data_cleaning.R"
-Rscript "$SCRIPT_DIR/01_data_cleaning.R"
+Rscript "$SCRIPT_DIR/02_rscripts/01_data_cleaning.R"
 if [ $? -eq 0 ]; then
     echo "✓ Data cleaning completed successfully"
 else
