@@ -1,18 +1,68 @@
-#!/usr/bin/env bash
-set -euo pipefail
-cd "$(dirname "$0")"
+#!/bin/bash
 
-timestamp() { date -u +"%Y-%m-%dT%H:%M:%SZ"; }
+# Shell script to run all required analysis scripts consecutively
+# This script executes the analysis pipeline in the correct order
 
-LOG=run.log
-echo "$(timestamp) START run.sh" | tee "$LOG"
+set -e  # Exit on any error
 
-# Ensure renv is installed and restore project library
-Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv', repos='https://cran.rstudio.com'); renv::restore()"
+# Define script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Run analysis scripts
-Rscript 02_rscripts/01_data_cleaning.R 2>&1 | tee -a "$LOG"
-Rscript 02_rscripts/02_descriptives.R 2>&1 | tee -a "$LOG"
-Rscript 02_rscripts/03_modeling.R 2>&1 | tee -a "$LOG"
+echo "=========================================="
+echo "Starting Analysis Pipeline"
+echo "=========================================="
+echo "Working directory: $SCRIPT_DIR"
+echo ""
 
-echo "$(timestamp) FINISH run.sh" | tee -a "$LOG"
+# Run data cleaning
+echo "Step 1: Running data cleaning..."
+echo "Executing: 01_data_cleaning.R"
+Rscript "$SCRIPT_DIR/01_data_cleaning.R"
+if [ $? -eq 0 ]; then
+    echo "✓ Data cleaning completed successfully"
+else
+    echo "✗ Data cleaning failed"
+    exit 1
+fi
+echo ""
+
+# Run descriptive statistics
+echo "Step 2: Running descriptive statistics..."
+echo "Executing: 02_descriptives.R"
+Rscript "$SCRIPT_DIR/02_descriptives.R"
+if [ $? -eq 0 ]; then
+    echo "✓ Descriptive statistics completed successfully"
+else
+    echo "✗ Descriptive statistics failed"
+    exit 1
+fi
+echo ""
+
+# Run modeling
+echo "Step 3: Running modeling analysis..."
+echo "Executing: 03_modeling.R"
+Rscript "$SCRIPT_DIR/03_modeling.R"
+if [ $? -eq 0 ]; then
+    echo "✓ Modeling analysis completed successfully"
+else
+    echo "✗ Modeling analysis failed"
+    exit 1
+fi
+echo ""
+
+# Run final code processing
+echo "Step 4: Running final code processing..."
+echo "Executing: 99_code.R"
+Rscript "$SCRIPT_DIR/99_code.R"
+if [ $? -eq 0 ]; then
+    echo "✓ Final code processing completed successfully"
+else
+    echo "✗ Final code processing failed"
+    exit 1
+fi
+echo ""
+
+echo "=========================================="
+echo "Analysis Pipeline Completed Successfully!"
+echo "=========================================="
+
