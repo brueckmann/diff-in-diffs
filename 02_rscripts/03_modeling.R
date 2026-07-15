@@ -47,13 +47,14 @@ dat <- data |>
   select( dummy_diesel_ass, dummy_diesel, dummy_euro_4_ass, dummy_euro_4, no_answer_euro)  
 
 
-modelsummary::datasummary_skim(     dat ,
+dataskim <- modelsummary::datasummary_skim(     dat ,
                       fun_numeric = list(Unique = NUnique,
                                          `Missing Pct.` = PercentMissing, Mean = Mean, `Std. Dev.` = SD, Min = Min, Median = Median,
                                          Max = Max), 
                       width = 1   )  
 
-
+# to view, uncomment: 
+# dataskim 
 
 
 tabdiesel <- data %>%
@@ -149,7 +150,7 @@ coefplot_2018Legislative <-
                         strip.text.x = element_text(size = 14.5),
                         panel.spacing = unit(1.7, "lines"))+
   labs(x = "", y = " ", title="",  
-       colour="", fill="", shape="", group="" ) 
+       colour="", fill="" ) 
 
 
 pdf(this.path::path.join(fig_dir, "fig4a.pdf"))
@@ -212,7 +213,7 @@ coefplot_2019Regional <-
                         strip.text.x = element_text(size = 14.5),
                         panel.spacing = unit(1.7, "lines"))+  
   labs(x = "", y = " ", title="",  
-       colour="", fill="", shape="", group="" ) 
+       colour="", fill="" ) 
 
 
 pdf(this.path::path.join(fig_dir, "fig4b.pdf"))
@@ -279,7 +280,7 @@ coefplot_2016Municipal<-
                         strip.text.x = element_text(size = 14.5),
                         panel.spacing = unit(1.7, "lines"))+
   labs(x = "", y = " ", title="",  
-       colour="", fill="", shape="", group="" ) 
+       colour="", fill="" ) 
 
 
 pdf(this.path::path.join(fig_dir, "fig4c.pdf"))
@@ -406,8 +407,7 @@ coef_switch_16_19_placebo<- ggplot(switch_16_19_placebo, aes(Model2, estimate))+
                         axis.text.y=element_text(size=13.5, colour = "#000000"),
                         strip.text.x = element_text(size=16.5, colour = "#000000"),
                         panel.spacing = unit(2, "lines"))+
-  labs(x = "", y = " ", title=" ",  
-       colour="", fill="", shape="", group="" ) + facet_wrap(facets=~election18,nrow=1)
+  labs(x = "", y = " ", title=" " ) + facet_wrap(facets=~election18,nrow=1)
 
 
 pdf(this.path::path.join(fig_dir, "fig6.pdf"))
