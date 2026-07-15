@@ -100,7 +100,7 @@ Replication_data$profile_gross_personal_eu_2_fac <- factor(
     "No Answer / DK"
   )
 )
-Replication_data$income <- Replication_data$income
+
 Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
 
 #### Age
