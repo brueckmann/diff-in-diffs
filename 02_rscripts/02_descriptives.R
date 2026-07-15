@@ -9,7 +9,7 @@ current_script_dir <- this.path::this.dir()
 cat("Script directory:", current_script_dir, "\n")
 
 # Set project root
-project_root <- this.path::dirname2(current_script_dir)
+project_root <- this.path::this.proj() 
 setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 

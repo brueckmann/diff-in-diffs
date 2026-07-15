@@ -58,8 +58,8 @@ echo ""
 
 # Run final code processing
 echo "Step 4: Running final code processing..."
-echo "Executing: 99_code.R"
-Rscript "$SCRIPT_DIR/99_code.R"
+echo "Executing: 98_sessioninfo_and_cite.R"
+Rscript "$SCRIPT_DIR/98_sessioninfo_and_cite.R"
 if [ $? -eq 0 ]; then
     echo "✓ Final code processing completed successfully"
 else
