@@ -29,7 +29,8 @@ vignettes/*.pdf
 # produced output
 # /outputs
 # *.png
-# *.pdf
+*.pdf
+*.md
 # *.html
 
 # log outputs from run.sh
@@ -48,6 +49,7 @@ Githubinfos.html
 # anything in my input
 # /input_data
 *.csv
+*.dta
 # *.Rdata
 
 # Anything in the Archive
