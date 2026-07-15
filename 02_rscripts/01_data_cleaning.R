@@ -14,12 +14,11 @@ setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 
 
-# load data
-Replication_data <- haven::read_dta(file.path(project_root, "01_data/raw/Replication_Dataset.dta"))
 
 ### Import data ####
 
-# Replication_data <- haven::read_dta("01_data/raw/Replication_Dataset.dta")
+# load data
+Replication_data <- haven::read_dta(file.path(project_root, "01_data/raw/Replication_Dataset.dta"))
 
 ### Data cleaning of important variables ####
 
