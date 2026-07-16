@@ -175,4 +175,10 @@ Replication_data$area_b_cost_fact <- factor(
 # remove all haven labels.
 data <- Replication_data |> haven::zap_label()  |> haven::zap_labels()
 
-save(data, file = "./01_data/processed/data.Rdata")
+# Define the processed data directory using this.path
+data_dir <- this.path::path.join(project_root, "01_data", "processed")
+# Create directory if it doesn't exist
+dir.create(data_dir, showWarnings = FALSE, recursive = TRUE)
+
+save(data, file =
+this.path::path.join(data_dir, "data.Rdata")
