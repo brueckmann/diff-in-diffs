@@ -11,13 +11,25 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/02_rscripts"
 echo "=========================================="
 echo "Starting Analysis Pipeline"
 echo "=========================================="
-echo "Working directory: $SCRIPT_DIR"
+echo "Script working directory: $SCRIPT_DIR"
 echo ""
 
 # Install R packages
 echo "Installing R packages..."
 Rscript -e "renv::restore()"
 echo "✓ Packages installed"
+echo ""
+
+# Get data from Harvard dataverse 
+echo "Step 0: Running get data..."
+echo "Executing: 00_get_data.R"
+Rscript "$SCRIPT_DIR/00_get_data.R"
+if [ $? -eq 0 ]; then
+    echo "✓ Data download successfully"
+else
+    echo "✗ Data download failed"
+    exit 1
+fi
 echo ""
 
 # Run data cleaning
@@ -56,14 +68,14 @@ else
 fi
 echo ""
 
-# Run final code processing
-echo "Step 4: Running final code processing..."
+# Run session info generating code
+echo "Step 4: Running session info generating code..."
 echo "Executing: 98_sessioninfo_and_cite.R"
 Rscript "$SCRIPT_DIR/98_sessioninfo_and_cite.R"
 if [ $? -eq 0 ]; then
-    echo "✓ Final code processing completed successfully"
+    echo "✓ Make session info completed successfully"
 else
-    echo "✗ Final code processing failed"
+    echo "✗ Make session info failed"
     exit 1
 fi
 echo ""
