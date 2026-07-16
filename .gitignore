@@ -37,7 +37,7 @@ vignettes/*.pdf
 run.log
 
 # produced output from rendering GitHub infos to HTML format in the main branch
-Githubinfos.html
+github_info.html
 
 
 # sample_descriptives.html
