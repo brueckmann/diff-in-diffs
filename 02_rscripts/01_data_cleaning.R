@@ -181,4 +181,4 @@ data_dir <- this.path::path.join(project_root, "01_data", "processed")
 dir.create(data_dir, showWarnings = FALSE, recursive = TRUE)
 
 save(data, file =
-this.path::path.join(data_dir, "data.Rdata")
+this.path::path.join(data_dir, "data.Rdata"))
