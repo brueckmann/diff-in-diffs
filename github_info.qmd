@@ -61,7 +61,7 @@ And Linux or WSL users here:  https://git-scm.com/download/linux
 2)  `git pull` to make local an online the same (blue down arrow in RStudio, or with code)
 3)  Change something to fix it (add/delete,...) 
     - optional: and see the git status (type: `git status`)
-4)  select (far left in RStudio's git panel) or make (lilac symbol in RStudio's git panel) own branch for your changes
+4)  create (lilac symbol in RStudio's git panel or type: `git branch branchname`, replacing branchname with a descriptive name) or select (far left in RStudio's git panel or type: `git switch branchname` or use `git switch -c branchname` to create and switch in one) your own branch for your changes
 5)  in console type `git add filename` or `git add .` (the point means everything) 
 6) when you want to sync your local changes with online project save document first, then tick in RStudio's git panel the files and click on *Diff* (leftmost option; without ticking files you won't be able to use commit in the next step)
     - optional: and see the git status (type: `git status`)
