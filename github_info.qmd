@@ -31,51 +31,73 @@ execute:
 ## Preface
 
 ::: callout-caution
-#### This document is very information scarce. 
+#### This document is very information scarce.
 
-It only covers some basics. 
+It only covers some basics.
 :::
 
+On using Git and Github in RStudio, the official info is [here](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html), but IMHO a good resource is [Happy Git and Github for the useR](https://happygitwithr.com/), which is freely available on <https://happygitwithr.com/>.
 
+[There](https://happygitwithr.com/https-pat), I also learned that one should use `HTTPS` with a personal access token (PAT), not `SSH key pairs`, to connect your RStudio with GitHub.
 
-On using Git and Github in RStudio, the official info is [here](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html), but IMHO a good resource is [Happy Git and Github for the useR](https://happygitwithr.com/), which is freely available on [https://happygitwithr.com/](https://happygitwithr.com/). 
-
-
-[There](https://happygitwithr.com/https-pat), I also learned that one should use `HTTPS` with a personal access token (PAT), not `SSH key pairs`, to connect your RStudio with GitHub. Maybe try these steps? 
-
-
-
+- In @sec-workflow, the description of RStudio's Git panel will assume you followed these steps.
 
 ## Preparation
 
-- some people need to install git, I am on a Mac, have XCODE installed, so it was already there. For Mac users you can download git here: https://git-scm.com/downloads/mac
-Window users here: https://git-scm.com/downloads/win
-And Linux or WSL users here:  https://git-scm.com/download/linux
+### Install git
 
-- set working directory: cd"*write path*"
+- some people need to install git (but this is not always the case, e.g., on my Mac, I had XCODE installed, and git was already ther)
+- to find out if you need to install it, use `git --version`. When this doesn't return the git version, download git.
+
+#### Download git
+
+Mac users can download git [here](https://git-scm.com/downloads/mac), Window users [here](https://git-scm.com/downloads/win), and Linux or WSL users [here](https://git-scm.com/download/linux).
+
+### Preparing the workflow
+
+- set working directory `cd "write path"` to the place where you want to work with git
 - to create an empty Git repository or reinitialise an existing one: `git init`
 
-## Workflow (in general)
+## Workflow (in general) {#sec-workflow}
+
+Workflow as table
+
+|   | Description | Terminal | RStudio GUI Git panel |
+|-|----------------------------|----------------|----------------|
+| 1 | Create/Find issue to solve on GitHub (and remember the number of the issue) | \- | \- |
+| 2 | Download latest version from online (remote) | `git pull` | blue downwards arrow |
+| 3 | Change something locally and save it | (*depends*) | (*depends*) |
+| 4 | Create a branch | `git branch branchname` (replace branchname with a descriptive name) | purple symbol with squares |
+| 5 | Switch to a branch | `git switch branchname` | select in the dropdown on panel's right |
+| 6 | Add local changes to the commit | `git add filename` or `git add .` (the point means everything) | tick in "Diff" on the left side of the panel |
+| 7 | Commit changes with message (mention fix and issue number) | `git commit -m "Short note what you did"` | Add your message on the right in the panel and click commit |
+| 8 | Upload your local changes to remote | `git push` | green upwards arrow |
+| 9 | On Github, open a pull request to merge your changes (assign it to a collaborator) | \- | \- |
+| 10 | You're done when your pull request on GitHub is merged into `main`. | \- | \- |
+
+
 
 1)  create an issue on GitHub (remember the number of the issue)
 2)  `git pull` to make local an online the same (blue down arrow in RStudio, or with code)
-3)  Change something to fix it (add/delete,...) 
+3)  Change something to fix it (add/delete,...) and save those changes
     - optional: and see the git status (type: `git status`)
-4)  create (lilac symbol in RStudio's git panel or type: `git branch branchname`, replacing branchname with a descriptive name) or select (far left in RStudio's git panel or type: `git switch branchname` or use `git switch -c branchname` to create and switch in one) your own branch for your changes
-5)  in console type `git add filename` or `git add .` (the point means everything) 
-6) when you want to sync your local changes with online project save document first, then tick in RStudio's git panel the files and click on *Diff* (leftmost option; without ticking files you won't be able to use commit in the next step)
+4)  create  your own branch for your changes
+ (lilac symbol in RStudio's git panel or type: `git branch branchname`, replacing branchname with a descriptive name)
+5)  Select your branch (far left in RStudio's git panel or type: `git switch branchname`  
+    -  use `git switch -c branchname` to create and switch branches in one step 
+6)  Select and tick in RStudio's git panel the new/altered files and click on *Diff* (leftmost option; without ticking files you won't be able to use commit in the next step), or type `git add filename` or `git add .` (the point means everything)
     - optional: and see the git status (type: `git status`)
-7)  in console: `git commit -m "Short note what you did"` commit the changes (In RStudio's git panel under Diff, add your message and click commit), see @sec-closing on texts for closing issues
+7)  Commit the changes using texts for closing issues, such as "resolves #ISSUE-NUMBER" (see @sec-closing). Type: `git commit -m "Short note what you did"` or In RStudio's git panel under *Diff*, add your message and click commit)
     - optional: and see the git status (type: `git status`)
-8)  in console type: `git push` (green up arrow in RStudio, or with code)
+8)  Upload your changes. Either type `git push` or use green up arrow in RStudio
 9)  open a pull request for your changes (in GitHub (desktop))
-10)  assign it to the other person to merge it
+10) assign it to the other person to merge it
 
 ### Closing an Issue in GitHub {#sec-closing}
 
-Mention specific words in your `git commit -m "message"`, e.g., `git commit -m "closes #3 by doing xyz"` 
+Mention specific words (close, fix, resolve) in your `git commit -m "message"`, e.g., \`git commit -m "closes #3 by doing xyz
 
-Find the full list of phrases to close an issue on the [GitHub website](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
+Find the full list of phrases to close an issue on the [GitHub website](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
 
 ::: callout-tip
 #### Trouble?
@@ -87,7 +109,7 @@ When you have any errors, check the list below in @sec-errorhandling or (the cla
 
 ### Conflict resolution
 
-```bash
+``` bash
 $ git checkout --theirs -- path/to/conflicted-file.txt
 ```
 
@@ -95,7 +117,7 @@ You are good to repeat the process above :)
 
 ### Solve error: Unable to create 'Folder/.git/index.lock': File exists.
 
-```bash
+``` bash
 # copy .git directory outside the project  
 cp -r .git ../.git.bc  
   
@@ -111,26 +133,25 @@ mv ../.git.bc .git
 
 [Source](https://medium.com/@rizqyhi/how-to-fix-git-error-fatal-unable-to-create-git-index-lock-file-exists-bad8302d283f)
 
-
-
-
-
-
 ## Varying other infos
 
 ### Branches
 
 #### See all remote (=available online) branches
+
 - run `git branch -d <branch>` (twice) to see and then remove
 
 #### See all your local branches
- `git branch` 
- 
-#### See all branches (remote and local) 
- `git branch -a` 
- 
+
+`git branch`
+
+#### See all branches (remote and local)
+
+`git branch -a`
+
 #### Delete your local branches
- `git branch -d <branch>` 
+
+`git branch -d <branch>`
 
 ### Assume you created a repo in Github
 
@@ -145,32 +166,32 @@ mv ../.git.bc .git
 
 1.  Wherever you want to have it, open the terminal and a new folder will be created with the clone in it
 
-```bash
+``` bash
 git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
 ```
 
 2.  Make the origin to the original-origin
 
-```bash
+``` bash
 git remote rename origin original-origin 
 ```
 
 3.  Create repository on GitHub and add the your github as new remote and set your branch to main
 
-```bash
+``` bash
 git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
 git branch -M main
 ```
 
 4.  Push these changes to GitHub
 
-```bash
+``` bash
 git push -u origin main
 ```
 
 #### Full step-by-step code:
 
-```bash
+``` bash
 git clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template
 
 git remote rename origin original-origin 
@@ -189,7 +210,6 @@ A default for R projects: <https://github.com/github/gitignore/blob/main/R.gitig
 1.  **Delete it.** [Source](https://docs.github.com/en/get-started/git-basics/ignoring-files)\
 2.  Remove it from git
 
-```bash
+``` bash
 git rm --cached FILENAME
 ```
-
