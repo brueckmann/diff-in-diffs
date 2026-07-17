@@ -133,25 +133,50 @@ mv ../.git.bc .git
 
 [Source](https://medium.com/@rizqyhi/how-to-fix-git-error-fatal-unable-to-create-git-index-lock-file-exists-bad8302d283f)
 
-## Varying other infos
 
-### Branches
+## Branches
 
-#### See all remote (=available online) branches
+### Show your current branch 
 
-- run `git branch -d <branch>` (twice) to see and then remove
+`git branch --show-current`
 
-#### See all your local branches
-
-`git branch`
-
-#### See all branches (remote and local)
+### See all branches (remote and local)
 
 `git branch -a`
 
-#### Delete your local branches
+#### See only local branches
+
+`git branch`
+
+#### See only remote (=available online) branches
+
+`git branch -r`
+
+
+### Delete branches 
+- to delete your local branches
 
 `git branch -d <branch>`
+
+- to delete remotebranches
+`git branch -d -r <branch>`
+
+
+## Gitignore
+
+A default for R projects: <https://github.com/github/gitignore/blob/main/R.gitignore>
+
+### When an ignored file is still around:
+
+1.  **Delete it.** [Source](https://docs.github.com/en/get-started/git-basics/ignoring-files)\
+2.  Remove it from git
+
+``` bash
+git rm --cached FILENAME
+```
+
+
+## Varying other infos
 
 ### Assume you created a repo in Github
 
@@ -199,17 +224,4 @@ git remote rename origin original-origin
 git remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git
 git branch -M main
 git push -u origin main
-```
-
-## Gitignore
-
-A default for R projects: <https://github.com/github/gitignore/blob/main/R.gitignore>
-
-### When an ignored file is still around:
-
-1.  **Delete it.** [Source](https://docs.github.com/en/get-started/git-basics/ignoring-files)\
-2.  Remove it from git
-
-``` bash
-git rm --cached FILENAME
 ```
