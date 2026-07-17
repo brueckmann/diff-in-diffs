@@ -9,17 +9,16 @@ current_script_dir <- this.path::this.dir()
 cat("Script directory:", current_script_dir, "\n")
 
 # Set project root
-project_root <- this.path::dirname2(current_script_dir)
+project_root <- this.path::this.proj() 
 setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 
 
-# load data
-Replication_data <- haven::read_dta(file.path(project_root, "01_data/raw/Replication_Dataset.dta"))
 
 ### Import data ####
 
-# Replication_data <- haven::read_dta("01_data/raw/Replication_Dataset.dta")
+# load data
+Replication_data <- haven::read_dta(file.path(project_root, "01_data/raw/Replication_Dataset.dta"))
 
 ### Data cleaning of important variables ####
 
@@ -101,7 +100,7 @@ Replication_data$profile_gross_personal_eu_2_fac <- factor(
     "No Answer / DK"
   )
 )
-Replication_data$income <- Replication_data$income
+
 Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
 
 #### Age

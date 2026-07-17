@@ -9,13 +9,19 @@ current_script_dir <- this.path::this.dir()
 cat("Script directory:", current_script_dir, "\n")
 
 # Set project root
-project_root <- this.path::dirname2(current_script_dir)
+project_root <- this.path::this.proj() 
 setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 
 
 # load data
 load(file.path(project_root, "01_data/processed/data.Rdata"))
+
+
+# Define the table directory using this.path
+tab_dir <- this.path::path.join(project_root, "03_output", "tables")
+# Create directory if it doesn't exist
+dir.create(tab_dir, showWarnings = FALSE, recursive = TRUE)
 
 
 ### To produce Table 1 in the Paper ####
@@ -175,6 +181,9 @@ for_tab_1 <- rbind2(for_tab_1,
                     headers = FALSE,
                     use_names = FALSE)
 tab_1 <- rbind2(for_tab_1, n_tbl, headers = FALSE, use_names = FALSE)
+
+tab_1 |> tinytable::save_tt( this.path::path.join(tab_dir, "table1.md"), overwrite = TRUE)
+
 
 rm(age_tbl, gender_tbl, educ_tbl , income_tbl, n_tbl, for_tab_1)
 

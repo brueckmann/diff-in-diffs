@@ -9,7 +9,7 @@ current_script_dir <- this.path::this.dir()
 cat("Script directory:", current_script_dir, "\n")
 
 # Set project root
-project_root <- this.path::dirname2(current_script_dir)
+project_root <- this.path::this.proj() 
 setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 
@@ -17,7 +17,16 @@ cat("Project root set to:", getwd(), "\n")
 # load data
 load(file.path(project_root, "01_data/processed/data.Rdata"))
 
+# Define the table directory using this.path
+tab_dir <- this.path::path.join(project_root, "03_output", "tables")
+# Create directory if it doesn't exist
+dir.create(tab_dir, showWarnings = FALSE, recursive = TRUE)
 
+
+# Define the figure directory using this.path
+fig_dir <- this.path::path.join(project_root, "03_output", "figures")
+# Create directory if it doesn't exist
+dir.create(fig_dir, showWarnings = FALSE, recursive = TRUE)
 
 ### For Table 2 ####
 
@@ -38,13 +47,14 @@ dat <- data |>
   select( dummy_diesel_ass, dummy_diesel, dummy_euro_4_ass, dummy_euro_4, no_answer_euro)  
 
 
-modelsummary::datasummary_skim(     dat ,
+dataskim <- modelsummary::datasummary_skim(     dat ,
                       fun_numeric = list(Unique = NUnique,
                                          `Missing Pct.` = PercentMissing, Mean = Mean, `Std. Dev.` = SD, Min = Min, Median = Median,
                                          Max = Max), 
                       width = 1   )  
 
-
+# to view, uncomment: 
+# dataskim 
 
 
 tabdiesel <- data %>%
@@ -56,7 +66,9 @@ tabdiesel <- data %>%
 diesel_tbl <- tinytable::tt(tabdiesel,
                             width = 1,
                             digits = 0)
-diesel_tbl
+
+diesel_tbl |> tinytable::save_tt( this.path::path.join(tab_dir, "table2.md"), overwrite = TRUE)
+
 
 
 
@@ -121,11 +133,11 @@ Legaswitch_legis_all$term3<-factor(Legaswitch_legis_all$term2,
 #change the far right panel
 
 # Coefplot for figure 4  a   
-coefplot_2018Legislative<-
+coefplot_2018Legislative <-
   ggplot(Legaswitch_legis_all, aes(term3, estimate,colour=term3, fill=term3))+ 
   scale_fill_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
   scale_colour_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
-  geom_hline(yintercept=0, linetype="longdash", lwd=0.9, size=2, 
+  geom_hline(yintercept=0, linetype="longdash", lwd=0.9, 
              colour = "#6C7B8B", alpha=1) +
   geom_errorbar(stat = "identity", alpha = 1, 
                 position = position_dodge(width = 0.15),
@@ -141,10 +153,12 @@ coefplot_2018Legislative<-
                         strip.text.x = element_text(size = 14.5),
                         panel.spacing = unit(1.7, "lines"))+
   labs(x = "", y = " ", title="",  
-       colour="", fill="", shape="", group="" ) 
+       colour="", fill="" ) 
 
 
-
+pdf(this.path::path.join(fig_dir, "fig4a.pdf"))
+print(coefplot_2018Legislative)
+dev.off()
 
 # Panel (b) From Regional Elections 2018 --------
 # 1. no control
@@ -183,11 +197,11 @@ Legaswitch_region_all$term3<-factor(Legaswitch_region_all$term2,
                                     levels =c("Euro 4", "Diesel", "Diesel Euro 4"))
 
 # Coefplot for figure 4  b
-coefplot_2019Regional<-
+coefplot_2019Regional <-
   ggplot(Legaswitch_region_all, aes(term3, estimate,colour=term3, fill=term3))+ 
   scale_fill_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
   scale_colour_manual(values = c("#B8B8B8","#B8B8B8","#821212"))+
-  geom_hline(yintercept=0, linetype="longdash", lwd=0.9, size=2, 
+  geom_hline(yintercept=0, linetype="longdash", lwd=0.9,  
              colour = "#6C7B8B", alpha=1) +
   geom_errorbar(stat = "identity", alpha = 1, 
                 position = position_dodge(width = 0.15),
@@ -202,8 +216,12 @@ coefplot_2019Regional<-
                         strip.text.x = element_text(size = 14.5),
                         panel.spacing = unit(1.7, "lines"))+  
   labs(x = "", y = " ", title="",  
-       colour="", fill="", shape="", group="" ) 
+       colour="", fill="" ) 
 
+
+pdf(this.path::path.join(fig_dir, "fig4b.pdf"))
+print(coefplot_2019Regional)
+dev.off()
 
 
 # Panel (c) From Municipal Elections 2016  ----------
@@ -265,9 +283,12 @@ coefplot_2016Municipal<-
                         strip.text.x = element_text(size = 14.5),
                         panel.spacing = unit(1.7, "lines"))+
   labs(x = "", y = " ", title="",  
-       colour="", fill="", shape="", group="" ) 
+       colour="", fill="" ) 
 
 
+pdf(this.path::path.join(fig_dir, "fig4c.pdf"))
+print(coefplot_2016Municipal)
+dev.off()
 
 
 #### What happened before? Figure 6
@@ -281,15 +302,15 @@ coefplot_2016Municipal<-
 # Panel (a) From municipal 2016 to legislative 2018  -----------
 # 1. no control
 pl16_18v2_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4, 
-                           data=Replication_data, subset=c( target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
+                           data=data, subset=c( target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
 # 2. with controls
 pl16_18v2_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel+dummy_euro_4+diesel_euro4+
                                age+female+EDU+INC, 
-                             data=Replication_data, subset=c(target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
-# 3. Including unkown-car and assigning the treatment
+                             data=data, subset=c(target!=3 & target!=4 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+# 3. Including unknown-car and assigning the treatment
 pl16_18v2_lm_cont_Unkncar<-estimatr:: lm_robust(sw_to_lega_16_18~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                        age+female+EDU+INC+dummy_car_unknown, 
-                                     data=Replication_data, subset=c(target!=3 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                                     data=data, subset=c(target!=3 & no_answer_2018==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 ## Merge all models together
 M.pl16_18v2_lm_ms <-  tidy(pl16_18v2_lm_ms, conf.int = TRUE)
 M.pl16_18v2_lm_cont <-  tidy(pl16_18v2_lm_cont, conf.int = TRUE)
@@ -322,15 +343,15 @@ M.pl16_18v_all_mainsub_Sub$Model2<-factor(M.pl16_18v_all_mainsub_Sub$Model, leve
 # Panel (b) From municipal 2016 to regional 2018  ----------
 # 1. no control
 pl16_regv2_lm_ms<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4, 
-                            data=Replication_data, subset=c( target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
+                            data=data, subset=c( target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0  ))
 # 2. with controls
 pl16_regv2_lm_cont<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel+dummy_euro_4+diesel_euro4+
                                 age+female+EDU+INC, 
-                              data=Replication_data, subset=c(target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                              data=data, subset=c(target!=3 & target!=4 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 # 3. Including unkown-car and assigning the treatment
 pl16_regv2_lm_cont_Unkncar<-estimatr:: lm_robust(sw_to_lega_16_reg~dummy_diesel_ass+dummy_euro_4_ass+diesel_euro4_ass+
                                         age+female+EDU+INC+dummy_car_unknown, 
-                                      data=Replication_data, subset=c(target!=3 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
+                                      data=data, subset=c(target!=3 & no_answer_regional==0 & no_answer_municipal==0 & vote_lega_municipal==0))
 
 ## Merge all models together
 M.pl16_regv2_lm_ms <-  tidy(pl16_regv2_lm_ms, conf.int = TRUE)
@@ -391,5 +412,9 @@ coef_switch_16_19_placebo<- ggplot(switch_16_19_placebo, aes(Model2, estimate))+
                         axis.text.y=element_text(size=13.5, colour = "#000000"),
                         strip.text.x = element_text(size=16.5, colour = "#000000"),
                         panel.spacing = unit(2, "lines"))+
-  labs(x = "", y = " ", title=" ",  
-       colour="", fill="", shape="", group="" ) + facet_wrap(facets=~election18,nrow=1)
+  labs(x = "", y = " ", title=" " ) + facet_wrap(facets=~election18,nrow=1)
+
+
+pdf(this.path::path.join(fig_dir, "fig6.pdf"))
+print(coef_switch_16_19_placebo)
+dev.off()
