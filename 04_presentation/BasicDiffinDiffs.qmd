@@ -38,9 +38,8 @@ library(fixest) # for fixed-effects estimation
 
 ## Example 1: Cholera in London
 
-In [The Effect (Chapter 18)](https://theeffectbook.net/ch-DifferenceinDifference.html) Huntington-Klein cites *John Snows' (1855) study on cholera transmission* (through fecal matters) in London's drinking water. 
-
-Between 1849 and 1854 Lambeth moved their well upstream, thus the water becomes cleaner.
+In [The Effect (Chapter 18)](https://theeffectbook.net/ch-DifferenceinDifference.html) Huntington-Klein cites *John Snows' (1855)* study on cholera transmission (through faecal matters) in London's drinking water.
+Between 1849 and 1854 Lambeth moved their well upstream, thus, the water becomes cleaner.
 
 ```{r}
 #| label: tbl-lndtable
@@ -162,7 +161,7 @@ lnd_did_pe <- lnd_diffindiffs  |> filter(`Water Supplier` == "Difference (betwee
 
 <!-- This text appears later. -->
 ::: {.fragment}
-$\Rightarrow$ Differences in death rates between suppliers (1854-1849) (or differences in death rates over time between suppliers) gave you the diff-in-diffs point estimate of **`{r} lnd_did_pe`**.
+$\Rightarrow$ Differences in death rates between suppliers (1854-1849) (or differences in death rates over time between suppliers) gave you the *diff-in-diffs* point estimate of **`{r} lnd_did_pe`**.
 :::
   
   
@@ -320,7 +319,7 @@ londonplot_sidelegend <- ggplot(lnddata_long, aes(Year, Death_Rate)) +
 #| warning: false
 #| code-fold: true
 #| fig-align: center
-#| fig-cap: The Cholera in London example, where Lambeth is considered treated in 1854.
+#| fig-cap: The Cholera in London example, where Lambeth is considered *treated* in 1854.
 #| fig-height: 5
 #| fig-width: 5
 #| out-width: 55%
@@ -351,29 +350,21 @@ londonplot
 - visualise the resulting different $\beta$ coefficients in @fig-lnd
 :::
   
-## TEST
-```{r}
-#| label: fig-lnd-test
-#| message: false
-#| warning: false
-#| code-fold: true
-#| fig-align: center
-#| fig-cap: The Cholera in London example, where Lambeth is considered treated in 1854.
-#| fig-height: 5
-#| fig-width: 5
-
-londonplot_sidelegend
-```
-
-
+  
 ## Example 2: Organ donation system 
 Now, consider California's July 2011 switch from an opt-in to an active choice
 organ donation system. 
 
+This example also stems from [The Effect (Chapter 18)](https://theeffectbook.net/ch-DifferenceinDifference.html) by Huntington-Klein.
+
+------------------------------------------------------------------------
+  
+### Ex2: The effect of California's policy switch
 ::: {.callout-tip collapse="true"}
 #### Suggestion:
-Look at the R code and recall why there is only one coefficient here.
+Look at @tbl-californiaex on the next slide and recall why there is only one coefficient in the regression. You might want to look at the R Code.
 :::
+
 
 ```{r}
 #| label: tbl-californiaex
@@ -405,37 +396,40 @@ modelsummary(
 
 ```
 
-## Important R packages:
+## Important R functions & packages: {auto-animate="true"}
+`feols` from `fixest` and  `felm` from `lfe`.
 
-`lm`, `fixest`, and `lfe`
-
-```{r}
-#| label: tbl-otherpackages
-#| tbl-cap: Two-way fixed effects using the `lfe` package
-#| echo: true
-#| code-fold: true
-#| message: false
-#| warning: false
-
-library(lfe)
+::: {.callout-warning collapse="true"}
+#### Consider the different `lfe` syntax:
+```r
+library(lfe) 
 
 twfe <- list(
-  "Raw SE" <- felm(Rate ~ Treated | State + Quarter | 0 , od) ,  # note: there are only one vertical line (around the fixed-effects)
-  "Clustered SE" <- felm(Rate ~ Treated | State + Quarter | 0  | State, od) # note there is a third line for the clustering of the SEs (by State) at the very end!
+  "Raw SE" <- felm(Rate ~ Treated | State + Quarter | 0 , od) ,  
+  # Note: there are only two vertical lines
+  # (around the fixed-effects)
+  "Clustered SE" <- felm(Rate ~ Treated | State + Quarter | 0 | State, od) 
+  # NORE: the third vertical line 
+  # for clustering the SEs (by State) at the very end!
 )
-
+# Two see the differences, consider using modelsummary for display
 modelsummary(twfe,
              stars = TRUE,
              gof_omit = 'AIC|BIC' ,
              escape = FALSE) |> 
   theme_tt("revealjs")
-
 ```
+:::
+
+
+## Important R functions & packages: {auto-animate="true"}
+
+
 
 ::: callout-note
-Note that @tbl-otherpackages gives you the same point estimate as @tbl-californiaex in both columns but `modelsummary` (called after estimation for display) does not let you cluster the SEs the same way as in @tbl-californiaex (as `modelsummary` relies on the `sandwich` package, which can't handle `lfe` variance-covariance-matrix estimates, see <https://github.com/jepusto/clubSandwich/issues/40>). This means, use the second specification using `| SECLUSTERVAR` if you use `felm` from the `lfe` package.
-:::
-  
+### Note that `feols` from `fixest` works better with `modelsummary` (called after estimation for display) than `lfe` (which I want to warn against using). 
+Note that using `felm` from the `lfe` package gives you the same point estimate as @tbl-californiaex but `modelsummary` (called after estimation for display) does not let you cluster the SEs the same way as in @tbl-californiaex (as `modelsummary` relies on the `sandwich` package, which can't handle `lfe` variance-covariance-matrix estimates, see <https://github.com/jepusto/clubSandwich/issues/40>). This means, use the second specification using `| SE_CLUSTER_VARIABLE` if you use `felm` from the `lfe` package.
+:::  
 ## Additional Resources
   
 ### Basics:
