@@ -158,7 +158,7 @@ mv ../.git.bc .git
 
 `git branch -d <branch>`
 
-- to delete remotebranches
+- to delete remote branches
 `git branch -d -r <branch>`
 
 
