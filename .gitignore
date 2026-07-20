@@ -27,10 +27,10 @@ vignettes/*.html
 vignettes/*.pdf
 
 # produced output
-# /outputs
+# /output
 # *.png
 *.pdf
-*.md
+/03_output/tables/*.md
 **/*.html 
 
 # do not track the session info file
