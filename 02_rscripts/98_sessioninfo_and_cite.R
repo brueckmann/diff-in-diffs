@@ -16,5 +16,5 @@ softbib::softbib(output = "software.bib")
 #### Session Info 
 writeLines(
   capture.output(sessionInfo()),
-  ( "session-info.txt")
+  ( "session_info.txt")
 )
