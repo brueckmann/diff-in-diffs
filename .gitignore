@@ -54,6 +54,7 @@ github_info.html
 # /input_data
 *.csv
 *.dta
+*/**.dta
 # *.Rdata
 
 # Anything in the Archive
