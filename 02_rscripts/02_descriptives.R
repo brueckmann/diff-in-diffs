@@ -9,7 +9,7 @@ current_script_dir <- this.path::this.dir()
 cat("Script directory:", current_script_dir, "\n")
 
 # Set project root
-project_root <- this.path::this.proj() 
+project_root <- this.path::this.proj()
 setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 
@@ -41,8 +41,8 @@ age_tbl <- data |>
   select(!contains("NA")) |>   ### remove NA column
   mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
 
-age_tbl <- tinytable::tt(age_tbl ,
-                         width = c(.5, .1, .1, .1, .1, .1) ,
+age_tbl <- tinytable::tt(age_tbl,
+                         width = c(.5, .1, .1, .1, .1, .1),
                          digits = 2)
 
 # Gender
@@ -60,8 +60,8 @@ gender_tbl <- data |>
   select(!contains("NA")) |>   ### remove NA column
   mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
 
-gender_tbl <- tinytable::tt(gender_tbl ,
-                            width = c(.5, .1, .1, .1, .1, .1) ,
+gender_tbl <- tinytable::tt(gender_tbl,
+                            width = c(.5, .1, .1, .1, .1, .1),
                             digits = 2)
 
 # gender_table <- table(data$female_fac, data$groups)
@@ -93,8 +93,8 @@ educ_tbl <- data |>
   select(!contains("NA")) |>   ### remove NA column
   mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
 
-educ_tbl <- tinytable::tt(educ_tbl ,
-                          width = c(.5, .1, .1, .1, .1, .1) ,
+educ_tbl <- tinytable::tt(educ_tbl,
+                          width = c(.5, .1, .1, .1, .1, .1),
                           digits = 2)
 
 
@@ -131,7 +131,7 @@ income_tbl <- data |>
   mutate(across((2:6), ~ (.x / sum(.x)) * 100)) ### make everything percent
 
 income_tbl <- tinytable::tt(income_tbl,
-                            width = c(.5, .1, .1, .1, .1, .1) ,
+                            width = c(.5, .1, .1, .1, .1, .1),
                             digits = 2)
 
 # Obs per group
@@ -144,15 +144,20 @@ n_tbl <- data |>
   rowwise(income_fac) |>
   mutate(full_sample = sum(c_across(everything()))) |>
   ungroup()  |>
-  dplyr::relocate("full_sample") |> ### move to second position
-  dplyr::relocate("income_fac") |> ### move to 1st column
-  select(!contains("NA")) |>   ### remove NA column
-  summarise(across(where(is.numeric), \(x) sum(x, na.rm = TRUE))) |> ### Make just the sum
+  ### move to second position
+  dplyr::relocate("full_sample") |>
+  ### move to 1st column
+  dplyr::relocate("income_fac") |>
+  ### remove NA column
+  select(!contains("NA")) |>
+  ### Make just the sum
+  summarise(across(where(is.numeric), \(x) sum(x, na.rm = TRUE))) |>
   mutate(N = "N") |>
-  dplyr::relocate("N") ### move N to 1st column
+  ### move N to 1st column
+  dplyr::relocate("N")
 
-n_tbl <- tinytable::tt(n_tbl  ,
-                       width = c(.5, .1, .1, .1, .1, .1) ,
+n_tbl <- tinytable::tt(n_tbl,
+                       width = c(.5, .1, .1, .1, .1, .1),
                        digits = 2)
 
 #
@@ -182,11 +187,9 @@ for_tab_1 <- rbind2(for_tab_1,
                     use_names = FALSE)
 tab_1 <- rbind2(for_tab_1, n_tbl, headers = FALSE, use_names = FALSE)
 
-tab_1 |> tinytable::save_tt( this.path::path.join(tab_dir, "table1.md"), overwrite = TRUE)
+tab_1 |>
+  tinytable::save_tt(this.path::path.join(tab_dir,
+                                          "table1.md"), overwrite = TRUE)
 
 
-rm(age_tbl, gender_tbl, educ_tbl , income_tbl, n_tbl, for_tab_1)
-
-
-
-
+rm(age_tbl, gender_tbl, educ_tbl, income_tbl, n_tbl, for_tab_1)
