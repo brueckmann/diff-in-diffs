@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+echo "Running Binder postBuild: installing R packages..."
+
+# Prefer installing from the 02_rscripts folder (this script pins CRAN snapshot)
+if command -v Rscript >/dev/null 2>&1; then
+  Rscript 02_rscripts/install.R || { echo "R package installation failed"; exit 1; }
+else
+  echo "Rscript not found in PATH. Ensure the Binder/runtime image provides R." >&2
+  exit 1
+fi
+
+
+
+QUARTO_VERSION="1.9.38"
+QUARTO_TARBALL="quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+
+echo "Installing Quarto ${QUARTO_VERSION}..."
+curl -LO "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/${QUARTO_TARBALL}"
+mkdir -p "${HOME}/opt/quarto"
+tar -xzf "${QUARTO_TARBALL}" -C "${HOME}/opt/quarto" --strip-components=1
+rm "${QUARTO_TARBALL}"
+
+mkdir -p "${HOME}/.local/bin"
+ln -sf "${HOME}/opt/quarto/bin/quarto" "${HOME}/.local/bin/quarto"
+
+echo "postBuild finished."
