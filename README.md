@@ -24,7 +24,7 @@ In Binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/
 
 </details>
 
-Alternatively, if you want to use `RStudio` on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brueckmann/diff-in-diffs/HEAD?urlpath=rstudio), you may run `run.R`.
+Alternatively, if you want to use `RStudio` on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brueckmann/diff-in-diffs/HEAD?urlpath=rstudio), you may run `run.R`, e.g. using `source("run.R")`.
 
 <details>
 
@@ -53,7 +53,7 @@ Below is an overview of the repository layout:
 │   ├── 01_data_cleaning.R          # Data input and preparation script (R)
 │   ├── 02_descriptives.R           # Descriptive results (R)
 │   ├── 03_modeling.R               # Diff-in-diff modeling script (R)
-│   ├── 98_write_session_info.R      # Write R session information
+│   ├── 98_write_session_info.R     # Write R session information
 │   ├── install.R                   # install R packages
 │   └── README.md                   # Analysis workflow and script purposes
 ├── 03_output/                  # Output figures, tables and Quarto and HTML outpus
