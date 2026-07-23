@@ -24,7 +24,7 @@ In Binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/
 
 </details>
 
-Alternatively, if you want to use `RStudio` on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brueckmann/diff-in-diffs/HEAD?urlpath=rstudio), you may run `run.R`.
+Alternatively, if you want to use `RStudio` on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brueckmann/diff-in-diffs/HEAD?urlpath=rstudio), you may run `run.R`, e.g. using `source("run.R")`.
 
 <details>
 
