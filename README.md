@@ -53,7 +53,7 @@ Below is an overview of the repository layout:
 │   ├── 01_data_cleaning.R          # Data input and preparation script (R)
 │   ├── 02_descriptives.R           # Descriptive results (R)
 │   ├── 03_modeling.R               # Diff-in-diff modeling script (R)
-│   ├── 98_write_sessioninfo.R      # Write R session information
+│   ├── 98_write_session_info.R      # Write R session information
 │   ├── install.R                   # install R packages
 │   └── README.md                   # Analysis workflow and script purposes
 ├── 03_output/                  # Output figures, tables and Quarto and HTML outpus
