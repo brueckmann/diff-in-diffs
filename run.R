@@ -28,7 +28,7 @@ cat("==========================================")
 
 
 # Run session info generating code
-cat(  "Executing: 98_write_sessioninfo.R") 
-source("02_rscripts/98_write_sessioninfo.R")
+cat(  "Executing: 98_write_session_info.R") 
+source("02_rscripts/98_write_session_info.R")
 cat(  "✓ Make session info completed successfully") 
 
