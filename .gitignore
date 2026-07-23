@@ -27,11 +27,15 @@ vignettes/*.html
 vignettes/*.pdf
 
 # produced output
-# /outputs
+# /output
 # *.png
 *.pdf
-*.md
-# *.html
+/03_output/tables/*.md
+**/*.html 
+
+# do not track the session info file
+session_info.txt
+
 
 # log outputs from run.sh
 run.log
@@ -50,6 +54,7 @@ github_info.html
 # /input_data
 *.csv
 *.dta
+*/**.dta
 # *.Rdata
 
 # Anything in the Archive
@@ -85,6 +90,7 @@ rsconnect/
 # Mac and windows useless stuff
 .DS_Store
 ._.DS_Store
+*/.DS_Store
 **/.DS_Store
 **/._.DS_Store
 Thumbs.db

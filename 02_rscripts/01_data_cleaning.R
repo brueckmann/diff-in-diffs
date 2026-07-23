@@ -9,22 +9,23 @@ current_script_dir <- this.path::this.dir()
 cat("Script directory:", current_script_dir, "\n")
 
 # Set project root
-project_root <- this.path::this.proj() 
+project_root <- this.path::this.proj()
 setwd(project_root)
 cat("Project root set to:", getwd(), "\n")
 
 
 
 ### Import data ####
-
 # load data
-Replication_data <- haven::read_dta(file.path(project_root, "01_data/raw/Replication_Dataset.dta"))
+replication_data <- 
+  haven::read_dta(
+        file.path(project_root, "01_data/raw/replication_dataset.dta"))
 
 ### Data cleaning of important variables ####
 
 ####  Car Emission Groups
 
-Replication_data <- Replication_data %>%
+replication_data <- replication_data |>
   mutate(
     groups = case_when(
       dummy_euro_4 == 1 & dummy_diesel == 1 ~ "Diesel Euro 4",
@@ -37,7 +38,7 @@ Replication_data <- Replication_data %>%
 
 ### Education
 
-Replication_data <- Replication_data %>%
+replication_data <- replication_data |>
   mutate(
     education = case_when(
       education_level_it_original < 7 ~ 1,
@@ -52,19 +53,19 @@ Replication_data <- Replication_data %>%
     )
   )
 
-Replication_data$education_fac <- factor(
-  Replication_data$education,
+replication_data$education_fac <- factor(
+  replication_data$education,
   levels = c(1, 2, 3, 4),
   labels = c("High school diploma", "Bachelors", "MA or higher", "Unknown")
 )
 
-Replication_data$EDU <- factor(Replication_data$education_fac)
+replication_data$EDU <- factor(replication_data$education_fac)
 
 #### Income
 
-Replication_data$INC <- factor(Replication_data$profile_gross_personal_eu)
+replication_data$INC <- factor(replication_data$profile_gross_personal_eu)
 
-Replication_data <- Replication_data %>%
+replication_data <- replication_data |>
   mutate(
     profile_gross_personal_eu_2 = case_when(
       profile_gross_personal_eu == 1 |
@@ -88,8 +89,8 @@ Replication_data <- Replication_data %>%
     )
   )
 
-Replication_data$profile_gross_personal_eu_2_fac <- factor(
-  Replication_data$profile_gross_personal_eu_2,
+replication_data$profile_gross_personal_eu_2_fac <- factor(
+  replication_data$profile_gross_personal_eu_2,
   levels = c(1, 2, 3, 4, 5, 6),
   labels = c(
     "Less than 14.999 EUR per year",
@@ -101,11 +102,11 @@ Replication_data$profile_gross_personal_eu_2_fac <- factor(
   )
 )
 
-Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
+replication_data$income_fac <- replication_data$profile_gross_personal_eu_2_fac
 
 #### Age
 
-Replication_data <- Replication_data %>%
+replication_data <- replication_data |>
   mutate(
     age_rc = case_when(
       age == 18 |
@@ -133,18 +134,18 @@ Replication_data <- Replication_data %>%
     )
   )
 
-Replication_data$age_fac <- factor(
-  Replication_data$age_rc,
+replication_data$age_fac <- factor(
+  replication_data$age_rc,
   levels = c(1, 2, 3, 4, 5),
   labels = c("18-24", "25-34", "35-44", "45-54", "55+")
 )
 
 #### Gender
-Replication_data <- Replication_data %>%
+replication_data <- replication_data |>
   mutate(female_fac = case_when(female == 1 ~ "Female", female == 0 ~ "Male"))
 
-Replication_data$female_fac <- factor(
-  Replication_data$female_fac,
+replication_data$female_fac <- factor(
+  replication_data$female_fac,
   levels = c("Male", "Female"),
   labels = c("Male", "Female")
 )
@@ -153,9 +154,9 @@ Replication_data$female_fac <- factor(
 ### Area_B_costs
 
 
-Replication_data$diesel_euro4_fac <- factor(Replication_data$diesel_euro4)
-Replication_data$area_b_cost_fact <- factor(
-  Replication_data$cost_area_b,
+replication_data$diesel_euro4_fac <- factor(replication_data$diesel_euro4)
+replication_data$area_b_cost_fact <- factor(
+  replication_data$cost_area_b,
   levels = c(1, 2, 3, 4, 5, 6, 7, 8),
   labels = c(
     "No cost",
@@ -169,11 +170,8 @@ Replication_data$area_b_cost_fact <- factor(
   )
 )
 
-
-
-
 # remove all haven labels.
-data <- Replication_data |> haven::zap_label()  |> haven::zap_labels()
+data <- replication_data |> haven::zap_label()  |> haven::zap_labels()
 
 # Define the processed data directory using this.path
 data_dir <- this.path::path.join(project_root, "01_data", "processed")
@@ -181,4 +179,4 @@ data_dir <- this.path::path.join(project_root, "01_data", "processed")
 dir.create(data_dir, showWarnings = FALSE, recursive = TRUE)
 
 save(data, file =
-this.path::path.join(data_dir, "data.Rdata"))
+       this.path::path.join(data_dir, "data.Rdata"))

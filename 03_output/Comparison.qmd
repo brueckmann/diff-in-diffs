@@ -79,7 +79,7 @@ source_lines <- function(file, lines){
 #| warning: false
 #| code-fold: true
 
-source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (18:21))
+source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (20:22))
 ```
 
 ```{r}
@@ -92,21 +92,21 @@ source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (18:21))
 
 ### View some variables: 
 
-# table(Replication_data$class, exclude = NULL)
+# table(replication_data$class, exclude = NULL)
 
-Replication_data |>
+replication_data |>
   count(class, .drop = FALSE) |>
   mutate(pct = n / sum(n) * 100)
 
-# table(Replication_data$fuel, exclude = NULL)
+# table(replication_data$fuel, exclude = NULL)
 
-Replication_data |>
+replication_data |>
   count(fuel, .drop = FALSE) |>
   mutate(pct = n / sum(n) * 100)
 
 
-# table(Replication_data$target, exclude = NULL)
-Replication_data |>
+# table(replication_data$target, exclude = NULL)
+replication_data |>
   count(target, .drop = FALSE) |>
   mutate(pct = n / sum(n) * 100)
 
@@ -125,7 +125,7 @@ Replication_data |>
 
 # Source local code
 
-source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (23:176))
+source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (28:174))
 
 ```
 
@@ -141,27 +141,27 @@ source_lines(file.path(project_root, "02_rscripts/01_data_cleaning.R"), (23:176)
 
 ### Import data ####
 
-Replication_data <- haven::read_dta(file.path(project_root,"01_data/raw/Replication_Dataset.dta"))
+replication_data <- haven::read_dta(file.path(project_root,"01_data/raw/replication_dataset.dta"))
 
 ### View some variables: 
 
-table(Replication_data$class, exclude = NULL)
-table(Replication_data$fuel, exclude = NULL)
-table(Replication_data$target, exclude = NULL)
+table(replication_data$class, exclude = NULL)
+table(replication_data$fuel, exclude = NULL)
+table(replication_data$target, exclude = NULL)
 
 
 ### Data cleaning of important variables ####
 
 ####  Car Emission Groups
 
-Replication_data <- Replication_data |>
+replication_data <- replication_data |>
   mutate(dummy_euro_4 = case_when(class==5 ~1, .default = 0),
          dummy_euro_5 = case_when(class==6 ~1, .default = 0),
          dummy_diesel = case_when(fuel==1 ~1, .default = 0),
          dummy_petrol = case_when(fuel==2 ~1, .default = 0)
          )
 
-Replication_data <- Replication_data |>
+replication_data <- replication_data |>
   mutate(
     groups = case_when(
       dummy_euro_4 == 1 & dummy_diesel == 1 ~ "Diesel Euro 4",
@@ -174,7 +174,7 @@ Replication_data <- Replication_data |>
 
 ### Education
 
-Replication_data <- Replication_data |>
+replication_data <- replication_data |>
   mutate(
     education = case_when(
       education_level_it_original < 7 ~ 1,
@@ -189,19 +189,19 @@ Replication_data <- Replication_data |>
     )
   )
 
-Replication_data$education_fac <- factor(
-  Replication_data$education,
+replication_data$education_fac <- factor(
+  replication_data$education,
   levels = c(1, 2, 3, 4),
   labels = c("High school diploma", "Bachelors", "MA or higher", "Unknown")
 )
 
-Replication_data$EDU <- factor(Replication_data$education_fac)
+replication_data$EDU <- factor(replication_data$education_fac)
 
 #### Income
 
-Replication_data$INC <- factor(Replication_data$profile_gross_personal_eu)
+replication_data$INC <- factor(replication_data$profile_gross_personal_eu)
 
-Replication_data <- Replication_data |>
+replication_data <- replication_data |>
   mutate(
     profile_gross_personal_eu_2 = case_when(
       profile_gross_personal_eu == 1 |
@@ -225,8 +225,8 @@ Replication_data <- Replication_data |>
     )
   )
 
-Replication_data$profile_gross_personal_eu_2_fac <- factor(
-  Replication_data$profile_gross_personal_eu_2,
+replication_data$profile_gross_personal_eu_2_fac <- factor(
+  replication_data$profile_gross_personal_eu_2,
   levels = c(1, 2, 3, 4, 5, 6),
   labels = c(
     "Less than 14.999 EUR per year",
@@ -239,11 +239,11 @@ Replication_data$profile_gross_personal_eu_2_fac <- factor(
 )
 
 
-Replication_data$income_fac <- Replication_data$profile_gross_personal_eu_2_fac
+replication_data$income_fac <- replication_data$profile_gross_personal_eu_2_fac
 
 #### Age
 
-Replication_data <- Replication_data |>
+replication_data <- replication_data |>
   mutate(
     age_rc = case_when(
       age == 18 |
@@ -271,18 +271,18 @@ Replication_data <- Replication_data |>
     )
   )
 
-Replication_data$age_fac <- factor(
-  Replication_data$age_rc,
+replication_data$age_fac <- factor(
+  replication_data$age_rc,
   levels = c(1, 2, 3, 4, 5),
   labels = c("18-24", "25-34", "35-44", "45-54", "55+")
 )
 
 #### Gender
-Replication_data <- Replication_data |>
+replication_data <- replication_data |>
   mutate(female_fac = case_when(female == 1 ~ "Female", female == 0 ~ "Male"))
 
-Replication_data$female_fac <- factor(
-  Replication_data$female_fac,
+replication_data$female_fac <- factor(
+  replication_data$female_fac,
   levels = c("Male", "Female"),
   labels = c("Male", "Female")
 )
@@ -291,9 +291,9 @@ Replication_data$female_fac <- factor(
 ### Area_B_costs
 
 
-Replication_data$diesel_euro4_fac <- factor(Replication_data$diesel_euro4)
-Replication_data$area_b_cost_fact <- factor(
-  Replication_data$cost_area_b,
+replication_data$diesel_euro4_fac <- factor(replication_data$diesel_euro4)
+replication_data$area_b_cost_fact <- factor(
+  replication_data$cost_area_b,
   levels = c(1, 2, 3, 4, 5, 6, 7, 8),
   labels = c(
     "No cost",
@@ -309,9 +309,9 @@ Replication_data$area_b_cost_fact <- factor(
 
 
 # remove all haven labels.
-data <- Replication_data |> haven::zap_label()  |> haven::zap_labels()
+data <- replication_data |> haven::zap_label()  |> haven::zap_labels()
 
-rm(Replication_data)
+rm(replication_data)
 
 ```
 Note the variable `target` that is 4 if the car is unknown! (For some it is also 3, which is also not a car in the `groups` variable.)
@@ -451,7 +451,7 @@ rm(age_tbl, gender_tbl, educ_tbl , income_tbl, n_tbl, for_tab_1)
 
 # Source local code
 
-source_lines(file.path(project_root, "02_rscripts/02_descriptives.R"), (31:183))
+source_lines(file.path(project_root, "02_rscripts/02_descriptives.R"), (31:188))
 
 ```
 
