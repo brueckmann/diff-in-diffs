@@ -4,8 +4,9 @@ project:
 
 website:
   title: "Difference-in-Differences"
-  site-url: "https://brueckmann.github.io/diff-in-diffs"
+  site-url: "https://brueckmann.github.io/diff-in-diffs/"
   
 format:
   html:
     theme: default
+
