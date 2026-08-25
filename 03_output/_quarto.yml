@@ -1,0 +1,11 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Difference-in-Differences"
+  site-url: "https://brueckmann.github.io/diff-in-diffs"
+  
+format:
+  html:
+    theme: default

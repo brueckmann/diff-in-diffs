@@ -1,13 +1,14 @@
 ---
 title: "Difference-in-Differences"
 subtitle: "The very basics"
-date: 2026-07-10
+date: last-modified
 author: "G. Brueckmann"
 format: 
   revealjs:
     code-summary: "Display R code"
     code-tools: true
     embed-resources: true
+    slide-number: false
 ---
   
 ## What is  *Difference-in-Differences*?
@@ -359,12 +360,7 @@ This example also stems from [The Effect (Chapter 18)](https://theeffectbook.net
 
 ------------------------------------------------------------------------
   
-### Ex2: The effect of California's policy switch
-::: {.callout-tip collapse="true"}
-#### Suggestion:
-Look at @tbl-californiaex on the next slide and recall why there is only one coefficient in the regression. You might want to look at the R Code.
-:::
-
+### Ex2: The effect of California's policy switch  {auto-animate="true"}
 
 ```{r}
 #| label: tbl-californiaex
@@ -386,15 +382,34 @@ od <- od |>
 # feols clusters by the first
 # fixed effect by default, no adjustment necessary
 clfe <- feols(Rate ~ Treated | State + Quarter, data = od)
-modelsummary(
+ 
+
+
+tab <- modelsummary(
   clfe,
   stars = TRUE,
   vcov = ~ State,  # to display the same SE as in Table 18.2 of The Effect
-  gof_omit = 'AIC|BIC' ,
+  gof_omit = 'AIC|BIC|R2|RMSE' ,
+  col.names = NULL, 
   escape = FALSE
-) |> theme_tt("revealjs")
+)
+
+colnames(tab) <- c("", "")
+tab |> theme_tt("revealjs")
 
 ```
+
+
+
+
+------------------------------------------------------------------------
+  
+### Ex2: The effect of California's policy switch  {auto-animate="true"}
+::: {.callout-tip collapse="true"}
+#### Suggestion: As an additional exercise:
+Look at @tbl-californiaex on the previous slide and recall why there is only one coefficient in the regression. You might want to look at the R Code.
+:::
+
 
 ## Important R functions & packages: {auto-animate="true"}
 `feols` from `fixest` and  `felm` from `lfe`.
