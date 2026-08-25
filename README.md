@@ -56,11 +56,13 @@ Below is an overview of the repository layout:
 │   ├── 98_write_session_info.R     # Write R session information
 │   ├── install.R                   # install R packages
 │   └── README.md                   # Analysis workflow and script purposes
-├── 03_output/                  # Output figures, tables and Quarto and HTML outpus
+├── 03_output/                  # Output figures, tables and Quarto and HTML outputs
 │   ├── figures/                    # To store figures generated from R Code
 │   ├── tables/                     # To store tables generated from R Code
-│   ├── Basic_diff_in_diffs.qmd     # Basic diff-in-diffs presentation
-│   ├── Comparison.qmd              # Comparison analysis document
+│   ├── Basic_diff_in_diffs.qmd     # Basic diff-in-diffs presentation source 
+│   ├── Basic_diff_in_diffs.html    # Basic diff-in-diffs presentation as HTML
+│   ├── Comparison.qmd              # Comparison analysis document source
+│   ├── Comparison.html             # Comparison analysis document output
 │   ├── references.yaml             # Bibliography references
 │   └── README.md                   # Output documentation
 ├── diff_in_diffs.Rproj         # The RStudio R project
