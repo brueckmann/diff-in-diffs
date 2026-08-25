@@ -134,7 +134,7 @@ tt(diffs_time, width = c(0.45, 0.1, 0.1, 0.2))|>
   
 ```{r}
 #| label: tbl-lnddiffindiff
-#| tbl-cap: Differences in differnces of death rates over time and between suppliers
+#| tbl-cap: Differences-in-differnces of death rates over time and between suppliers
 #| echo: true
 #| code-fold: true
 #| message: false
@@ -161,11 +161,14 @@ lnd_did_pe <- lnd_diffindiffs  |> filter(`Water Supplier` == "Difference (betwee
 ```
 
 
+
+<!-- This text becomes smaller. -->
+::: {style="font-size: 90%;"}
 <!-- This text appears later. -->
 ::: {.fragment}
-$\Rightarrow$ Differences in death rates between suppliers (1854-1849) (or differences in death rates over time between suppliers) gave you the *diff-in-diffs* point estimate of **`{r} lnd_did_pe`**.
+$\Rightarrow$ Differences in death rates between suppliers (1854-1849) (or: differences in death rates over time between suppliers) gave you the *diff-in-diffs* point estimate of **`{r} lnd_did_pe`**.
 :::
-  
+:::
   
 ------------------------------------------------------------------------
   
@@ -324,7 +327,7 @@ londonplot_sidelegend <- ggplot(lnddata_long, aes(Year, Death_Rate)) +
 #| fig-cap: The Cholera in London example, where Lambeth is considered *treated* in 1854.
 #| fig-height: 5
 #| fig-width: 5
-#| out-width: 55%
+#| out-width: 52%
 londonplot
 ```
 ::: 
