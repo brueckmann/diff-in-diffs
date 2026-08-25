@@ -9,6 +9,7 @@ format:
     code-tools: true
     embed-resources: true
     slide-number: false
+    footer: "Slides available on [https://brueckmann.github.io/diff-in-diffs](https://brueckmann.github.io/diff-in-diffs)" 
 ---
   
 ## What is  *Difference-in-Differences*?
