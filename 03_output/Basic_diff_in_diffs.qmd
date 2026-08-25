@@ -2,7 +2,11 @@
 title: "Difference-in-Differences"
 subtitle: "The very basics"
 date: last-modified
-author: "G. Brueckmann"
+author:
+  - name: G. Brückmann
+    id: gb
+    orcid: 0000-0001-5674-2343
+    url: brueckmann.github.io
 format: 
   revealjs:
     code-summary: "Display R code"
@@ -163,7 +167,7 @@ lnd_did_pe <- lnd_diffindiffs  |> filter(`Water Supplier` == "Difference (betwee
 
 
 <!-- This text becomes smaller. -->
-::: {style="font-size: 90%;"}
+::: {style="font-size: 80%;"}
 <!-- This text appears later. -->
 ::: {.fragment}
 $\Rightarrow$ Differences in death rates between suppliers (1854-1849) (or: differences in death rates over time between suppliers) gave you the *diff-in-diffs* point estimate of **`{r} lnd_did_pe`**.
