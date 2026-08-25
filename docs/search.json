@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "Basic_diff_in_diffs.html#what-is-difference-in-differences",
+    "href": "Basic_diff_in_diffs.html#what-is-difference-in-differences",
+    "title": "Difference-in-Differences",
+    "section": "What is Difference-in-Differences?",
+    "text": "What is Difference-in-Differences?\n\n\n\n\n\n\nThe basic idea of difference-in-differences\n\n\nUsing the interaction of time and (quasi-)random assignment to the intervention to estimate the causal effect of the intervention.\n\n\n\n\n\n\nDisplay R code loading relevant R packages\nlibrary(tidyverse) # to do data wrangling\nlibrary(tinytable) # to report tables nicely\n\nlibrary(causaldata) # to get data accompanying Huntington-Klein's `The Effect` book¨\nlibrary(modelsummary) # to report results\n\nlibrary(fixest) # for fixed-effects estimation"
+  },
+  {
+    "objectID": "Basic_diff_in_diffs.html#example-1-cholera-in-london",
+    "href": "Basic_diff_in_diffs.html#example-1-cholera-in-london",
+    "title": "Difference-in-Differences",
+    "section": "Example 1: Cholera in London",
+    "text": "Example 1: Cholera in London\nIn The Effect (Chapter 18) Huntington-Klein cites John Snows’ (1855) study on cholera transmission (through faecal matters) in London’s drinking water. Between 1849 and 1854 Lambeth moved their well upstream, thus, the water becomes cleaner.\n\n\nDisplay R code\nlnddata &lt;- tibble::tribble(~'Water Supplier', ~ '1849',  ~ '1854',\n                           'Non-Lambeth', 134.9, 146.6,\n                           'Lambeth', 130.1, 84.9)\n\n\ntt(lnddata, width = c(0.45, 0.1, 0.1)) |&gt;\n  format_tt(replace = \"\") |&gt;\n  style_tt(j = c(2:3), align = \"c\") |&gt;\n  group_tt(j = list(\"Death Rates\" = c(2, 3)))  |&gt;\n  theme_tt(\"revealjs\")\n\n\n\n\nTable 1: Death rates by areas with different water suppliers\n\n\n\n\n\n    \n\n    \n\n    \n    \n    \n      \n        \n        \n\n \nDeath Rates\n\n              \n                Water Supplier\n                1849\n                1854\n              \n        \n        \n        \n                \n                  Non-Lambeth\n                  134.9\n                  146.6\n                \n                \n                  Lambeth\n                  130.1\n                  84.9"
+  },
+  {
+    "objectID": "Basic_diff_in_diffs.html#example-2-organ-donation-system",
+    "href": "Basic_diff_in_diffs.html#example-2-organ-donation-system",
+    "title": "Difference-in-Differences",
+    "section": "Example 2: Organ donation system",
+    "text": "Example 2: Organ donation system\nNow, consider California’s July 2011 switch from an opt-in to an active choice organ donation system.\nThis example also stems from The Effect (Chapter 18) by Huntington-Klein."
+  },
+  {
+    "objectID": "Basic_diff_in_diffs.html#important-r-functions-packages",
+    "href": "Basic_diff_in_diffs.html#important-r-functions-packages",
+    "title": "Difference-in-Differences",
+    "section": "Important R functions & packages:",
+    "text": "Important R functions & packages:\nfeols from fixest and felm from lfe.\n\n\n\n\n\n\nConsider the different lfe syntax:\n\n\nlibrary(lfe) \n\ntwfe &lt;- list(\n  \"Raw SE\" &lt;- felm(Rate ~ Treated | State + Quarter | 0 , od) ,  \n  # Note: there are only two vertical lines\n  # (around the fixed-effects)\n  \"Clustered SE\" &lt;- felm(Rate ~ Treated | State + Quarter | 0 | State, od) \n  # NORE: the third vertical line \n  # for clustering the SEs (by State) at the very end!\n)\n# Two see the differences, consider using modelsummary for display\nmodelsummary(twfe,\n             stars = TRUE,\n             gof_omit = 'AIC|BIC' ,\n             escape = FALSE) |&gt; \n  theme_tt(\"revealjs\")"
+  },
+  {
+    "objectID": "Basic_diff_in_diffs.html#important-r-functions-packages-1",
+    "href": "Basic_diff_in_diffs.html#important-r-functions-packages-1",
+    "title": "Difference-in-Differences",
+    "section": "Important R functions & packages:",
+    "text": "Important R functions & packages:\n\n\n\n\n\n\nNote that feols from fixest works better with modelsummary (called after estimation for display) than lfe (which I want to warn against using).\n\n\nNote that using felm from the lfe package gives you the same point estimate as Table 5 but modelsummary (called after estimation for display) does not let you cluster the SEs the same way as in Table 5 (as modelsummary relies on the sandwich package, which can’t handle lfe variance-covariance-matrix estimates, see https://github.com/jepusto/clubSandwich/issues/40). This means, use the second specification using | SE_CLUSTER_VARIABLE if you use felm from the lfe package."
+  },
+  {
+    "objectID": "Basic_diff_in_diffs.html#additional-resources",
+    "href": "Basic_diff_in_diffs.html#additional-resources",
+    "title": "Difference-in-Differences",
+    "section": "Additional Resources",
+    "text": "Additional Resources\nBasics:\nhttps://statisticsglobe.com/fixed-effects-linear-regression\nhttps://rpubs.com/corinne-riddell/guide-to-did-estimators\nAdvanced:\nhttps://asjadnaqvi.github.io/DiD/\nhttps://psantanna.com/did-resources/\n(has many resources!)"
+  }
+]
