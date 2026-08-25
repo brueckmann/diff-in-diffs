@@ -60,12 +60,18 @@ Below is an overview of the repository layout:
 │   ├── figures/                    # To store figures generated from R Code
 │   ├── tables/                     # To store tables generated from R Code
 │   ├── Basic_diff_in_diffs.qmd     # Basic diff-in-diffs presentation source 
-│   ├── Basic_diff_in_diffs.html    # Basic diff-in-diffs presentation as HTML
 │   ├── Comparison.qmd              # Comparison analysis document source
 │   ├── Comparison.html             # Comparison analysis document output
 │   ├── references.yaml             # Bibliography references
 │   └── README.md                   # Output documentation
 ├── diff_in_diffs.Rproj         # The RStudio R project
+├── docs/                       # To show the presentation on github pages
+│   ├── site_libs/                  # Assets to display the presentation on github pages
+│   ├── Basic_diff_in_diffs.html    # Basic diff-in-diffs presentation as HTML to display on github pages
+│   ├── index.html                  # Asset for github pages publication of presentation
+│   ├── robots.txt                  # Asset for github pages publication of presentation
+│   ├── search.json                 # Asset for github pages publication of presentation
+│   ├── sitemap.xml                 # Asset for github pages publication of presentation			
 ├── github_info.qmd             # Explains the very basics of Git and Github usage
 ├── .gitignore                  # Specifies what git should ignore
 ├── run.R                       # R script to run everything
