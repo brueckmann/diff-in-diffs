@@ -394,7 +394,7 @@ tab <- modelsummary(
   escape = FALSE
 )
 
-colnames(tab) <- c("", "")
+colnames(tab) <- c("", "") # remove the (1) on top of the table
 tab |> theme_tt("revealjs")
 
 ```
