@@ -31,7 +31,7 @@ vignettes/*.pdf
 # *.png
 *.pdf
 /03_output/tables/*.md
-**/*.html 
+# **/*.html 
 
 # do not track the session info file
 session_info.txt
