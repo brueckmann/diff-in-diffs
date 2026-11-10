@@ -202,7 +202,26 @@ londonplot <-
     # outline colour
     shape  = Supplier
   ), size = 9) +
-  geom_smooth(
+
+  scale_shape_manual(
+    values = c(
+      "Lambeth" = "square cross",       # treated gets a square
+      "Non-Lambeth" = "circle plus"     # circle for control
+    )
+    # ,
+    # labels = c( "Lambeth" = "Lambeth",  "Non-Lambeth"     = "Non-Lambeth")
+  )   +
+  # set outline colours manually and rename
+  scale_colour_manual(
+    values = c(
+      "Non-Lambeth"     = "#440154"  , # viridis purple-ish
+       "Lambeth" = "#5DC863"    # viridis light green-ish
+    )
+    # ,
+    # # labels = c( "Non-Lambeth"     = "Non-Lambeth", "Lambeth" = "Lambeth")
+    # labels = c( "Lambeth" = "Lambeth",  "Non-Lambeth"     = "Non-Lambeth")
+  ) +
+    geom_smooth(
     aes(colour = Supplier),
     # one line per supplier
     method  = "lm",
@@ -213,32 +232,15 @@ londonplot <-
     # set line transparency
     show.legend = FALSE
   ) +
-  scale_shape_manual(
-    values = c(
-      "Lambeth" = "square cross",
-      # treated gets a square
-      "Non-Lambeth" = "circle plus"     # circle for control
-    ),
-    labels = c( "Non-Lambeth"     = "Non-Lambeth", "Lambeth" = "Lambeth")
-  )   +
-  # set outline colours manually and rename
-  scale_colour_manual(
-    values = c(
-      "Lambeth" = "#5DC863",
-      # viridis light green-ish
-      "Non-Lambeth"     = "#440154"   # viridis purple-ish
-    ),
-    labels = c( "Non-Lambeth"     = "Non-Lambeth", "Lambeth" = "Lambeth")
-  ) +
   scale_x_continuous(
     labels = c("1849", "1854"),
     breaks = c(1849, 1854),
     minor_breaks = seq(1849, 1854, 1)
   ) +
   labs(y = "Death rates")   +
+  guides(col = guide_legend(reverse = TRUE), shape = guide_legend(reverse = TRUE) ) +
   coord_fixed(ratio = 0.08,
-              expand = TRUE,
-              reverse = "y")   +### make the plot more squared
+              expand = TRUE )   +
   theme_minimal(base_size = 20) +
   theme(
     panel.grid.minor = element_blank(),
@@ -256,7 +258,7 @@ londonplot <-
     legend.key = element_rect(fill = NA, color = NA),
     #define the legend inside the plot area
     legend.position = "inside",
-    legend.justification = c("left", "top")
+    legend.justification = c("left", "bottom")
   )
 
 
@@ -283,7 +285,8 @@ londonplot_sidelegend <- ggplot(lnddata_long, aes(Year, Death_Rate)) +
       # treated gets a square
       "Non-Lambeth" = "circle plus"     # circle for control
     ),
-    labels = c( "Non-Lambeth"     = "Non-Lambeth (Control)", "Lambeth" = "Lambeth (treated in 1854)")
+    labels = c( "Non-Lambeth"     = "Non-Lambeth (Control)", 
+                "Lambeth" = "Lambeth (treated in 1854)")
   )   +
   # set outline colours manually and rename
   scale_colour_manual(
@@ -292,7 +295,8 @@ londonplot_sidelegend <- ggplot(lnddata_long, aes(Year, Death_Rate)) +
       # viridis light green-ish
       "Non-Lambeth"     = "#440154"   # viridis purple-ish
     ),
-    labels = c( "Non-Lambeth"     = "Non-Lambeth (Control)", "Lambeth" = "Lambeth (treated in 1854)")
+    labels = c( "Non-Lambeth"     = "Non-Lambeth (Control)",
+                "Lambeth" = "Lambeth (treated in 1854)")
   ) +
   scale_x_continuous(
     labels = c("1849\n(pre-treatment)", "1854\n(post-treatment)"),
@@ -332,7 +336,7 @@ londonplot_sidelegend <- ggplot(lnddata_long, aes(Year, Death_Rate)) +
 #| fig-height: 5
 #| fig-width: 5
 #| out-width: 52%
-londonplot
+londonplot 
 ```
 ::: 
   
