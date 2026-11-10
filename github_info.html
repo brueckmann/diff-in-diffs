@@ -8,7 +8,7 @@
 
 <meta name="author" content="G.Brückmann">
 <meta name="author" content="Camilla Frericks">
-<meta name="dcterms.date" content="2026-07-23">
+<meta name="dcterms.date" content="2026-09-04">
 
 <title>Some infos on using Git and GitHub, mostly through CLI and within the RStudio IDE</title>
 <style>
@@ -2256,7 +2256,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">23 Jul 2026</p>
+      <p class="date">04 Sep 2026</p>
     </div>
   </div>
   
@@ -2489,14 +2489,18 @@ vertical-align: -.125em;
 <section id="gitignore" class="level2">
 <h2 class="anchored" data-anchor-id="gitignore">Gitignore</h2>
 <p>A default for R projects: <a href="https://github.com/github/gitignore/blob/main/R.gitignore" class="uri">https://github.com/github/gitignore/blob/main/R.gitignore</a></p>
+<section id="see-currently-ignored-files" class="level3">
+<h3 class="anchored" data-anchor-id="see-currently-ignored-files">See currently ignored files</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">git</span> status <span class="at">--ignored</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section id="when-an-ignored-file-is-still-around" class="level3">
 <h3 class="anchored" data-anchor-id="when-an-ignored-file-is-still-around">When an ignored file is still around:</h3>
 <ol type="1">
-<li><strong>Delete it.</strong> <a href="https://docs.github.com/en/get-started/git-basics/ignoring-files">Source</a><br>
+<li><strong>Delete the file.</strong> <a href="https://docs.github.com/en/get-started/git-basics/ignoring-files">Source</a><br>
 </li>
 <li>Remove it from git</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">git</span> rm <span class="at">--cached</span> FILENAME</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">git</span> rm <span class="at">--cached</span> FILENAME</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="varying-other-infos" class="level2">
@@ -2519,30 +2523,30 @@ vertical-align: -.125em;
 <ol type="1">
 <li>Wherever you want to have it, open the terminal and a new folder will be created with the clone in it</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">git</span> clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">git</span> clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>Make the origin to the original-origin</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">git</span> remote rename origin original-origin </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">git</span> remote rename origin original-origin </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li>Create repository on GitHub and add the your github as new remote and set your branch to main</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">git</span> remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">git</span> remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="4" type="1">
 <li>Push these changes to GitHub</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="full-step-by-step-code" class="level4">
 <h4 class="anchored" data-anchor-id="full-step-by-step-code">Full step-by-step code:</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">git</span> clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">git</span> remote rename origin original-origin </span>
-<span id="cb8-4"><a href="#cb8-4"></a></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="fu">git</span> remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git</span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">git</span> clone https://git.sr.ht/~tpapastylianou/a-tidy-latex-project-template</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">git</span> remote rename origin original-origin </span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="fu">git</span> remote add origin git@github.com:brueckmann/a-tidy-latex-project-template.git</span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 </section>
